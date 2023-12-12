@@ -15,7 +15,7 @@
           <Button
             type="button"
             icon="pi pi-user mr-2"
-            :label="'Profile'"
+            :label="userStore.getProfile.employeename ?? ''"
             @click="toggle"
             class="p-button-text shadow-none"
             aria-haspopup="true"
@@ -34,29 +34,31 @@
     </div>
     <Popup
       ref="modal"
-      :labelCancel="'No'"
-      :labelOk="'Confirm'"
-      :content="'Confirm Logout'"
+      :labelCancel="t('common.no')"
+      :labelOk="t('common.yes')"
+      :content="t('user.confirmLogout')"
       :ok="logout"
       :cancel="closeModal"
-      :header="'Logout'"
+      :header="t('user.headerConfirmLogout')"
     ></Popup>
   </div>
 </template>
 
 <script setup lang="ts">
 import { ref,onMounted } from "vue";
-
+import { useI18n } from "vue-i18n";
 import Popup from "@/components/PopupConfirm.vue";
 import api from "@/api";
-import { ApiConstant, AppConstant } from "@/const";
+import { useToast } from "primevue/usetoast";
+import { ApiConstant } from "@/const";
 import PAGE_ROUTE from "@/const/pageRoute";
 import router from "@/router";
-
+import { useUserStore } from "@/stores/employee";
 const emit = defineEmits(["toggleSidebar"]);
+const toast = useToast();
 const menu = ref(); 
-
-
+const { t } = useI18n();
+const userStore = useUserStore();
 const toggleSidebar = () => {
   emit("toggleSidebar");
 };
@@ -67,27 +69,55 @@ const modal = ref<InstanceType<typeof Popup> | null>(null);
 const openModal = () => {
   modal.value?.open();
 };
+const editProfile = () =>{
+  console.log(userStore.getProfile)
+  router.push(`/profile`);
+}
 const items = ref([
   {
     items: [
       {
-        label: 'Edit',
+        label: t("menu.editProfile"),
         icon: "pi pi-user-edit",
+        command: editProfile,
       },
       {
-        label: 'Logout',
+        label: t("menu.logout"),
         icon: "pi pi-sign-out",
         command: openModal,
       },
     ],
   },
 ]);
+const logout = async () => {
+  try {
+    toast.add({ severity: 'error', summary: 'Error Message', detail: 'Message Content', life: 10000 });
+    await api.post(ApiConstant.LOGOUT);
+    localStorage.clear();
+    sessionStorage.clear();
+    userStore.$reset();
+    modal.value?.close();
+    router.replace(PAGE_ROUTE.LOGIN);
+  } catch (e) {
+    console.log(e);
+  }
+};
+const back = () => {
+  router.back();
+};
+onMounted(
+  () => {
 
+    const token = localStorage.getItem("access_token");
+    console.log(userStore.getProfile)
+    if(token != ''){
+      userStore.getProfileDetail();
+    }
+      
+  }
+)
 </script>
 <style lang="scss" scoped>
-.p-button {
-  background-color: #fff;
-}
 .layout-topbar {
   position: fixed;
   height: var(--topbar-height);
@@ -125,5 +155,8 @@ const items = ref([
   align-items: center !important;
   justify-content: flex-end !important;
   display: flex;
+}
+button.p-button.p-component.p-button-icon-only.p-button-text.shadow-none {
+    background: #fff;
 }
 </style>

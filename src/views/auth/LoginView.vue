@@ -54,6 +54,7 @@
                       </div>
                   </div>
                   <div class="flex flex-column align-items-center gap-2 footer mt-2 pb-1">
+                    <Toast />
               <Button
                 :disabled="state.loading"
                 :label="('Login')"
@@ -78,7 +79,7 @@
   import Popup from "@/components/PopupConfirm.vue";
   import Sidebar from "@/layout/AuthSidebar.vue";
   import CONST, { ACCESS_TOKEN, AppConstant, ApiConstant, REMIND } from "@/const";
-  
+  import Toast from 'primevue/toast';
   import type { ResponseLogin } from "@/const/api.const";
   import PAGE_ROUTE from "@/const/pageRoute";
   import type { AxiosResponse } from "axios";
@@ -88,6 +89,7 @@
   import { Field, useForm } from "vee-validate";
   import { useI18n } from "vue-i18n";
   import * as yup from "yup";
+  
   const router = useRouter();
   const state = reactive({
     loading:false,
@@ -102,8 +104,8 @@ const { t } = useI18n();
     localStorage.removeItem(ACCESS_TOKEN);
     const info = localStorage.getItem(REMIND);
     if (info?.length) {
-      // state.email = "";
-      // state.password = "";
+      state.email = "";
+      state.password = "";
     }
   });
   
@@ -143,8 +145,12 @@ const { t } = useI18n();
         ApiConstant.LOGIN,
         user
       );
-      console.log(reponse)
-      await loginSuccessCallback(reponse.data.body);
+      if(reponse.data.statusCodeValue == 401){
+        toast.add({ group: "message", severity: "error", summary: reponse.data.body, life: CONST.TIME_DELAY, closable: false });
+      }else{
+        toast.add({ group: "message", severity: "success", summary: "Login Success !", life: CONST.TIME_DELAY, closable: false });
+        await loginSuccessCallback(reponse.data.body);
+      }
     } catch (e:any) {
       console.log(e);
     } finally {
@@ -153,7 +159,8 @@ const { t } = useI18n();
   });
   
   async function loginSuccessCallback(accessToken: string) {
-    localStorage.setItem(ACCESS_TOKEN, accessToken);
+    console.log(accessToken)
+    localStorage.setItem(ACCESS_TOKEN, accessToken.replace(/[{()}]/g, "").replace(/^.*token=/, ""));
     router.push(PAGE_ROUTE.EMPLOYEE_LIST);
   }
   </script>

@@ -2,15 +2,15 @@ import {defineStore} from "pinia";
 import api from "@/api";
 import {format} from "date-fns";
 import CONST, {ApiConstant, DEFAULT} from "@/const";
-import axios from "axios";
+import axios, { type AxiosRequestConfig } from "axios";
 import { da } from "date-fns/locale";
 export interface Employee {
     id?: number,
     employeeid: string;
     email: string;
-    role:string;
+    role:number;
     phone:string;
-    name?: string; 
+    employeename?: string; 
 }
 export interface ParamsSearch {
     search_text?: string;
@@ -38,12 +38,11 @@ export interface ParamsSearch {
     page?:number;
 }
 interface FormEmployee {
-    first_name: string;
-    last_name: string;
+    employeename: string;
     employeeid: string;
     phone: string;
     email: string;
-    role: string;
+    role: number;
     password?: string;
 }
 interface UserStore {
@@ -63,7 +62,7 @@ export const useUserStore = defineStore({
                 employeeid: "",
                 email: "",
                 phone: "",
-                name: "",
+                employeename: "",
                 role: DEFAULT.USER_ROLE[0].value,
             },
             users: [{
@@ -81,8 +80,7 @@ export const useUserStore = defineStore({
                 perPage: 0,
             },
             formUser:{
-                first_name: '',
-                last_name: '',
+                employeename:'',
                 employeeid: '',
                 email: '',
                 phone: '',
@@ -109,6 +107,7 @@ export const useUserStore = defineStore({
                 }
               });
             this.users = listUser.data.content;
+            
             this.pagination = {
                 currentPage: 1,
                 total: listUser.data.totalElements,
@@ -118,23 +117,29 @@ export const useUserStore = defineStore({
             console.log(this.pagination)
         },
 
-       
-        // async getUserDetail(id: number) {
-        //     const response = await api.get<any>(ApiConstant.GET_DETAIL_USER(id));
-        //     this.formUser = response.data.data;
-        // },
+        async getProfileDetail() {
+            try {
+                const access_token = localStorage.getItem('access_token');
+            
+                if (!access_token) {
+                  console.log('Access token not found.');
+                  return false;
+                }
+                const headers = {
+                  'Authorization' : `Bearer ${access_token}`,
+                };
+                    const response = await api.get(ApiConstant.GET_PROFILE, {headers});
+                    console.log(response)
+                    this.profile = response.data;
+              } catch (err) {
+                console.log(err);
+              }
+        },
 
-        // async getProfileDetail() {
-        //     try {
-        //         const response = await api.get<any>(ApiConstant.GET_PROFILE);
-        //         const profileInfo = response.data.data.user;
-        //         this.profile = {
-        //             ...profileInfo,
-        //             name: profileInfo.first_name + " " + profileInfo.last_name,
-        //         };
-        //     } catch (err) {
-        //         console.log(err);
-        //     }
-        // },
+        async getUserDetail(id: number) {
+            const response = await api.get<any>(ApiConstant.GET_EMPLOYEE_DETAIL(id));
+            this.formUser = response.data;
+            console.log(response);
+        },
     }
 })

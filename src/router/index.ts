@@ -4,7 +4,9 @@ import PAGE_ROUTE, { publicPath } from "@/const/pageRoute";
 import LoginView from "@/views/auth/LoginView.vue";
 import RegisterViewVue from '@/views/auth/RegisterView.vue';
 import LayoutViewVue from '@/views/LayoutView.vue';
-import ListUserVue from '@/views/user/ListUser.vue';
+import ListEmployee from '@/views/user/ListEmployee.vue';
+import DetailEmployee from '@/views/user/DetailEmployee.vue'
+
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -22,7 +24,12 @@ const router = createRouter({
         {
           path: '/employees',
           name: 'employees',
-          component: ListUserVue
+          component: ListEmployee
+        },
+        {
+          path: '/employee/:id/detail',
+          name: 'DetailEmployee',
+          component: DetailEmployee
         },
         
       ]

@@ -34,7 +34,10 @@ export const UPDATE_USER_HEADER = {
 export interface ResponseLogin {
   data: {
     access_token: string;
+    body: String| undefined;
   };
+  body:String
+  statusCodeValue: number;
   token_type: string;
   expires_in: number;
   refresh_token: string;
@@ -42,7 +45,7 @@ export interface ResponseLogin {
 
 //ROUTERS
 export const LOGIN = "/api/employee/login";
-export const LOGOUT = "/api/auth/logout";
+export const LOGOUT = "/api/employee/logout";
 // @ts-ignore
 export const CHECK_TOKEN_EXPIRED = (token:any) => `/api/auth/check-token-expired?token=${token}`;
 export const SEND_PASSWORD_RESET = `api/auth/password/reset`;
@@ -54,7 +57,7 @@ export const USER_REGISTER = (urlPrefix: string) =>
   )}&pathSuffix=medipurse`;
 export const SEND_MAIL_RESET_PASSWORD = "api/auth/password/email";
 
-export const GET_PROFILE =  "/api/auth/profile";
+export const GET_PROFILE =  "/api/employee/current-employee";
 export const UPDATE_PROFILE = "/api/auth/profile"
 export const GET_LIST_USER =  "/api/users";
 export const GET_DETAIL_USER = (id: number) => `/api/users/${id}`;
@@ -65,7 +68,7 @@ export const DELETE_USER = (id: number) => `/api/users/${id}`;
 //Employee
 
 export const GET_EMPLOYEE_LIST =  "/api/employee/list";
-export const CREATE_TEACHER = "/api/teachers";
+export const GET_EMPLOYEE_DETAIL = (id: number) => `/api/employee/${id}`;
 export const GET_DETAIL_TEACHER = (id: number) => `/api/teachers/${id}`;
 export const UPDATE_TEACHER = (id: number) => `/api/teachers/${id}`;
 

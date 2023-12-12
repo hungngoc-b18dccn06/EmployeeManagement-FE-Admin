@@ -34,7 +34,9 @@ img {
 .topbar-user-menu.p-menu .p-menuitem-text {
   white-space: nowrap;
 }
-
+i.p-toast-message-icon.pi.pi-times , i.p-toast-message-icon.pi.pi-check{
+  margin-right: 20px !important;
+}
 /* ----- Sidebar */
 
 .layout-wrapper .layout-menu li a,

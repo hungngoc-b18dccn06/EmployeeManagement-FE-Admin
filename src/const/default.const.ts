@@ -1,11 +1,11 @@
 export const USER_ROLE = [
     {
-        label: 'Admin',
-        value: '1',
+        label: 'Part Leader',
+        value: 1,
     },
     {
-        label: 'User',
-        value: '2',
+        label: 'Member',
+        value: 2,
     },
 ];
 export const DATE_ITEM = [
