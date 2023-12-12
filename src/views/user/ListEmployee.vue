@@ -1,12 +1,12 @@
 <script setup lang="ts">
-    import ListUser from "../../components/employee/List.vue"
+    import ListEmployee from "../../components/employee/List.vue"
 </script>
 
 <template>
-    <ListUser>
+    <ListEmployee>
         <template #main>
             <router-view />
         </template>
-    </ListUser>
+    </ListEmployee>
 </template>
 <style lang="scss"></style>

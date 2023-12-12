@@ -14,7 +14,6 @@ watch(
     const message: any = newValue?.response?.data;
     toast.add({
       severity: "error",
-      summary: message.errors ? message.errors[Object.keys(message.errors)[0]][0] : message.message,
       life: 3000,
       group: "message",
       closable: false,

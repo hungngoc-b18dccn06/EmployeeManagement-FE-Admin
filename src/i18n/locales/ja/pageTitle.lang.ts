@@ -1,8 +1,8 @@
 const PageTitleLang = {
-  userList: "管理者アカウント管理",
-  userCreate: "管理者アカウント管理   新規登録",
-  userUpdate: "管理者アカウント管理   編集",
-  categoryList: "カテゴリー",
-  updateProfile:"プロフィール",
+  userList: "관리자 계정 관리",
+  userCreate: "관리자 계정 관리   신규 등록",
+  userUpdate: "관리자 계정 관리   수정",
+  categoryList: "카테고리",
+  updateProfile:"프로필",
 };
 export default PageTitleLang;
