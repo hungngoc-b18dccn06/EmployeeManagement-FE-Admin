@@ -8,6 +8,16 @@ export const USER_ROLE = [
         value: 2,
     },
 ];
+export const FLAG_ITEM = [
+    {
+      label: 'Active',
+      value: 1,
+    },
+    {
+      label: 'Inactive',
+      value: 0,
+    },
+];
 export const DATE_ITEM = [
     {
       label: 'created_at',
@@ -17,7 +27,6 @@ export const DATE_ITEM = [
       label: 'date_of_birth',
       value: 'date_of_birth',
     },
-
 ];
 export const EXPORT_TYPE = {
     CSV: 1,
@@ -37,4 +46,8 @@ export const GENDER = [
         label: '他の',
         value: '3',
     },
+];
+
+export const OPTION_LANGUAGE = [
+  "kor", "en"
 ];

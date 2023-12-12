@@ -25,8 +25,6 @@ import AppTopBar from "@/layout/AppTopbar.vue";
 import AppSideBar from "@/layout/AppSidebar.vue";
 import AppFooter from "@/layout/AppFooter.vue";
 import Menu from "@/const/menu.const";
-
-
 const menu = Menu;
 const route = useRoute();
 const router = useRouter();

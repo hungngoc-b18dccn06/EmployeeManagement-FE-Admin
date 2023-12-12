@@ -145,7 +145,9 @@ const UserLang = {
   currentAddress: "현재 주소",
   permanentAddress: "본적지",
   employeeid: "직원 아이디",
-  employee_name: "직원 이름 "
+  employee_name: "직원 이름 ",
+  active: "활성",
+  inactive: "비활성"
 };
 
 export default UserLang;

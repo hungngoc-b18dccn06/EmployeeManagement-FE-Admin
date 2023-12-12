@@ -40,6 +40,7 @@
                                   class="w-full"
                                   aria-describedby="password-help"
                                   autocomplete="current-password"
+                                  placeholder="password"
                                   :type="showPass ? 'text' : 'password'"
                                   />
                                   <i class="pi"
@@ -108,7 +109,6 @@ const { t } = useI18n();
       state.password = "";
     }
   });
-  
   const openModal = () => {
     modal.value?.open();
   };
