@@ -12,7 +12,10 @@
       </div>
       <div class="flex justify-content-end align-items-center flex-1 pr-4">
         <div class="relative">
-          <Button
+          
+          <div class="card flex justify-content-center header-profile">
+              <SelectButton v-model="selectedLanguage" :options="DEFAULT.OPTION_LANGUAGE" aria-labelledby="basic" />
+              <Button
             type="button"
             icon="pi pi-user mr-2"
             :label="userStore.getProfile.employeename ?? ''"
@@ -21,8 +24,6 @@
             aria-haspopup="true"
             aria-controls="overlay_menu"
           />
-          <div class="card flex justify-content-center">
-              <SelectButton v-model="selectedLanguage" :options="DEFAULT.OPTION_LANGUAGE" aria-labelledby="basic" />
           </div>
           <Menu
             id="overlay_menu"
@@ -122,7 +123,13 @@ onMounted(
 )
 </script>
 <style lang="scss" scoped>
-
+.header-profile{
+  gap: 10px;
+}
+.p-selectbutton.p-buttonset.p-component{
+  border: 1px solid #2B9DCA;
+  border-radius: 7px;
+}
 .layout-topbar {
   position: fixed;
   height: var(--topbar-height);
@@ -174,5 +181,11 @@ button.p-button.p-component.p-button-icon-only.p-button-text.shadow-none {
 .p-selectbutton.p-buttonset.p-component .p-button{
   background: #fff !important;
   color: #fff;
+}
+button.p-button.p-component.p-button-icon-only.p-button-text.p-button-rounded.shadow-none.ml-3 {
+    color: black;
+}
+button.p-button.p-component.p-button-text.shadow-none {
+    color: #fff;
 }
 </style>

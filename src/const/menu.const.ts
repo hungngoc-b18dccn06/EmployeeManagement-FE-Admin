@@ -2,12 +2,21 @@
 import PAGE_ROUTE from "./pageRoute";
 
 export default [
-
+    {
+        items: [
+            {
+                label: "Dasboad",
+                icon: "pi pi-home",
+                to: PAGE_ROUTE.HOME,
+                public:false,
+            },
+        ],
+    },
     {
         items: [
             {
                 label: "List Employee",
-                icon: "pi pi-home",
+                icon: "pi pi-users",
                 to: PAGE_ROUTE.EMPLOYEE_LIST,
                 public:false,
             },

@@ -20,7 +20,7 @@ export const FLAG_ITEM = [
 ];
 export const DATE_ITEM = [
     {
-      label: 'created_at',
+      label: 'Start day',
       value: 'created_at',
     },
     {
@@ -50,4 +50,20 @@ export const GENDER = [
 
 export const OPTION_LANGUAGE = [
   "kor", "en"
+];
+
+
+export const INVENTORY_STATUS = [
+  {
+    label: 'LOWSTOCK',
+    value: 1,
+  },
+  {
+    label: 'OUTOFSTOCK',
+    value: 2,
+  },
+  {
+    label: 'INSTOCK',
+    value: 3,
+  },
 ];

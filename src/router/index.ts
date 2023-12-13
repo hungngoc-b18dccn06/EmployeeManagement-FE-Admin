@@ -6,7 +6,7 @@ import RegisterViewVue from '@/views/auth/RegisterView.vue';
 import LayoutViewVue from '@/views/LayoutView.vue';
 import ListEmployee from '@/views/user/ListEmployee.vue';
 import DetailEmployee from '@/views/user/DetailEmployee.vue'
-
+import ListEcormmerce from '@/views/ecommerce/ListEcommerce.vue'
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -19,7 +19,7 @@ const router = createRouter({
         {
           path: "/",
           name: "home",
-          component: ListEmployee,
+          component: HomeView,
         },
         {
           path: '/employees',
@@ -30,6 +30,11 @@ const router = createRouter({
           path: '/employee/:id/detail',
           name: 'DetailEmployee',
           component: DetailEmployee
+        },
+        {
+          path: '/ecommerce_manage',
+          name: 'ListEcormmerce',
+          component: ListEcormmerce
         },
         
       ]
