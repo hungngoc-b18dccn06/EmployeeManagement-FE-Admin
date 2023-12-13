@@ -69,7 +69,7 @@ export const useUserStore = defineStore({
                 id: 0,
                 employeeid: "",
                 email: "",
-                name: "",
+                employeename: "",
                 phone: "",
                 role: DEFAULT.USER_ROLE[0].value,
             }],
@@ -108,6 +108,10 @@ export const useUserStore = defineStore({
               });
             this.users = listUser.data.content;
             
+            this.users = listUser.data.content.map(e => ({
+                ...e,
+                status: e.status === 1 ? "active" : e.status === 0 ? "inactive" : e.status
+            }));
             this.pagination = {
                 currentPage: 1,
                 total: listUser.data.totalElements,

@@ -1,245 +1,139 @@
 <template>
     <div>
-      <div class="dowload-file-admin">
-        <Button
-          class="p-button-sm white-space-nowrap download mr-2"
-          icon="pi pi-download mr-2"
-          @click="downloadCSV(DEFAULT.EXPORT_TYPE.CSV, $t('employee.csvLabel'), 'csv')"
-          :label="$t('employee.csvLabel')"
-        ></Button>
-        <Button
-          class="p-button-sm white-space-nowrap download mr-2"
-          icon="pi pi-download mr-2"
-          @click="downloadCSV(DEFAULT.EXPORT_TYPE.EXCEL_TOTAL, $t('employee.excelLabel'), 'xlsx')"
-          :label="$t('employee.excelLabel')"
-        ></Button>
-      </div>
-      <TitleCommon :title="$t('page.userCreate')" />
-      <div class="lighten-4 rounded">
-        <div class="p-4 border-search pb-3">
-          <div class="key_search">
-            <span class="text-field-search">{{ $t('employee.keywordSearch') }}</span>
-            <div class="p-inputgroup flex-1">
-              <InputText
-                class="w-full"
-                v-model="storeUser.getParamSearch.search_text"
-                :placeholder="$t('employee.keywordSearchPlaceholder')"
-              />
-              <ButtonClearCommon
-                v-if="storeUser.getParamSearch.search_text"
-                :clearInput="() => clearInput('storeUser.getParamSearch.search_text')"
-              />
-            </div>
-          </div>
-  
-          <div class="mt-2">
-            <span class="text-field-search">{{ $t('employee.dateItemLabel') }}</span>
-            <div class="grid align-items-center">
-              <div class="col-3">
-                <div class="p-inputgroup">
-                  <div class="p-inputgroup flex-1">
-                    <Dropdown
-                      v-model="selectedDate"
-                      :options="DEFAULT.DATE_ITEM"
-                      :placeholder="$t('employee.dateItemPlaceholder')"
-                      optionLabel="label"
-                      class="w-full md:w-14rem"
-                      @change="handelSearchType"
-                    />
-                    <ButtonClearCommon
-                      v-if="selectedDate"
-                      :clearInput="() => clearInput('selectedDate')"
-                    />
-                  </div>
-                </div>
-              </div>
-              <div class="col-3">
-                <div class="p-inputgroup">
-                  <Calendar
-                    v-model="startMonth"
-                    view="date"
-                    dateFormat="yy/mm/dd"
-                    class="calendar_search"
-                    showIcon
-                    :manualInput="false"
-                    :max-date="endMonth"
-                    @date-select="handleChangeToStart"
-                    :disabled="!selectedDate"
-                    @update:model-value="startMonth = $event"
-                  />
-                </div>
-              </div>
-              <span class="mx-1">~</span>
-              <div class="col-3">
-                <div class="p-inputgroup">
-                  <Calendar
-                    v-model="endMonth"
-                    view="date"
-                    dateFormat="yy/mm/dd"
-                    class="calendar_search"
-                    showIcon
-                    :manualInput="false"
-                    :min-date="startMonth"
-                    @date-select="handleChangeToEnd"
-                    :disabled="!selectedDate"
-                    @update:model-value="endMonth = $event"
-                  />
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="mt-2">
-            <span class="text-field-search">{{ $t('employee.flagItemLabel') }}</span>
-            <div class="grid align-items-center">
-              <div class="col-3">
-                <div class="p-inputgroup">
-                  <Dropdown
-                    v-model="selectedFlag"
-                    :options="DEFAULT.FLAG_ITEM"
-                    :placeholder="$t('employee.flagItemPlaceholder')"
-                    optionLabel="label"
-                    class="w-full md:w-14rem"
-                    @change="handelSearchType"
-                  />
-                  <ButtonClearCommon
-                    v-if="selectedFlag"
-                    :clearInput="() => clearInput('selectedFlag')"
-                  />
-                </div>
-              </div>
-              <div class="col-3 flex align-items-center">
-                <div class="px-4">
-                  <RadioButton
-                    v-model="flagValue"
-                    inputId="ingredient1"
-                    :name="$t('employee.flagName')"
-                    :disabled="!selectedFlag"
-                    value="1"
-                    @change="handelChangeFlag"
-                  />
-                  <label for="ingredient1" class="ml-2 white-space-nowrap">{{ $t('employee.active') }}</label>
-                </div>
-                <div class="px-4">
-                  <RadioButton
-                    v-model="flagValue"
-                    inputId="ingredient2"
-                    :name="$t('employee.flagName')"
-                    :disabled="!selectedFlag"
-                    value="0"
-                    @change="handelChangeFlag"
-                  />
-                  <label for="ingredient2" class="ml-2 white-space-nowrap">{{ $t('employee.inactive') }}</label>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="mt-2">
-            <span class="text-field-search">{{ $t('employee.userRoleLabel') }}</span>
-            <div class="grid align-items-center">
-              <div class="col-3">
-                <div class="p-inputgroup">
-                  <Dropdown
-                    v-model="selectedFlag"
-                    :options="DEFAULT.USER_ROLE"
-                    :placeholder="$t('employee.userRolePlaceholder')"
-                    optionLabel="label"
-                    class="w-full md:w-14rem"
-                    @change="handelSearchType"
-                  />
-                  <ButtonClearCommon
-                    v-if="selectedFlag"
-                    :clearInput="() => clearInput('selectedFlag')"
-                  />
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="reset_search flex justify-content-center align-items-center mt-2">
-            <Button
-              class="p-button-sm white-space-nowrap refresh"
-              icon="pi pi-refresh mr-2"
-              @click="reloadSearch()"
-              :label="$t('employee.clearLabel')"
-            ></Button>
-          </div>
+        <div class="dowload-file-admin">
+            <Button class="p-button-sm white-space-nowrap download mr-2" icon="pi pi-download mr-2"
+                @click="downloadCSV(DEFAULT.EXPORT_TYPE.CSV, 'CSV出力', 'csv')" label="CSV 출력"></Button>
+            <Button class="p-button-sm white-space-nowrap download mr-2" icon="pi pi-download mr-2"
+                @click="downloadCSV(DEFAULT.EXPORT_TYPE.EXCEL_TOTAL, '집계 출력', 'xlsx')" label="집계 출력"></Button>
         </div>
-        <Toast />
-      </div>
-      <DataTable
-        :value="storeUser.getUsers"
-        class="p-datatable-sm"
-        ref="dt"
-        tableStyle="min-width: 75rem"
-        @row-click="gotToDetail($event)"
-        :rowHover="true"
-        responsive-layout="scroll"
-      >
-        <Column
-          style="padding-left:2rem; margin:auto"
-          v-for="col in columns"
-          :key="col.field"
-          :field="col.field"
-          :header="col.header"
-          :sortable="true"
-        ></Column>
-        <Column headerStyle=" text-align: center" bodyStyle="text-align: center; overflow: visible">
-          <template #body="slotProps">
-            <Button
-              class="p-button-danger p-button-sm white-space-nowrap"
-              icon="pi pi-trash"
-              v-if="slotProps.data.email !== storeUser.getProfile.email"
-              @click="deleteUser(slotProps.data.id)"
-              :label="$t('common.delete')"
-            ></Button>
-          </template>
-        </Column>
-        <template #empty>
-          <div class="text-center">{{ $t('user.userNotFound') }}</div>
-        </template>
-        <template #loading>
-          {{ $t('user.userLoading') }}
-        </template>
-        <template #header>
-          <div class="flex justify-content-between align-items-center">
-            <span class="p-input-icon-left w-5">
-              <i class="pi pi-search"></i>
-              <InputText :placeholder="$t('common.search')" class="w-full" />
-            </span>
-            <div>
-              <Button
-                class="white-space-nowrap"
-                @click="gotToCreate"
-                icon="pi pi-plus"
-                :label="$t('user.userRegister')"
-              ></Button>
+        <TitleCommon :title="t('page.userCreate')" />
+        <div class="lighten-4 rounded">
+            <div class="p-4 border-search pb-3">
+                <div class="key_search">
+                    <span class="text-field-search">키워드 검색</span>
+                    <div class="p-inputgroup flex-1">
+                        <InputText class="w-full" v-model="storeUser.getParamSearch.search_text" placeholder="키워드 검색" />
+                        <ButtonClearCommon v-if="storeUser.getParamSearch.search_text" :clearInput="() => clearInput('storeUser.getParamSearch.search_text')
+                            " />
+                    </div>
+                </div>
+            
+                <div class="mt-2">
+                    <span class="text-field-search">항목 지정(날짜 항목)</span>
+                    <div class="grid align-items-center">
+                        <div class="col-3">
+                            <div class="p-inputgroup">
+                                <div class="p-inputgroup flex-1">
+                                    <Dropdown v-model="selectedDate" :options="DEFAULT.DATE_ITEM" placeholder="항목 지정(날짜 항목)"
+                                        optionLabel="label" class="w-full md:w-14rem" @change="handelSearchType" />
+                                    <ButtonClearCommon v-if="selectedDate" :clearInput="() => clearInput('selectedDate')" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-3">
+                            <div class="p-inputgroup">
+                                <Calendar v-model="startMonth" view="date" dateFormat="yy/mm/dd" class="calendar_search"
+                                    showIcon :manualInput="false" :max-date="endMonth" @date-select="handleChangeToStart"
+                                    :disabled="!selectedDate" @update:model-value="startMonth = $event" />
+                            </div>
+                        </div>
+                        <span class="mx-1">~</span>
+                        <div class="col-3">
+                            <div class="p-inputgroup">
+                                <Calendar v-model="endMonth" view="date" dateFormat="yy/mm/dd" class="calendar_search"
+                                    showIcon :manualInput="false" :min-date="startMonth" @date-select="handleChangeToEnd"
+                                    :disabled="!selectedDate" @update:model-value="endMonth = $event" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="mt-2">
+                    <span class="text-field-search">項目指定（フラグ項目）</span>
+                    <div class="grid align-items-center">
+                        <div class="col-3">
+                            <div class="p-inputgroup">
+                                <Dropdown v-model="flagRadio" :options="DEFAULT.FLAG_ITEM" placeholder="選択してください"
+                                    optionLabel="label" class="w-full md:w-14rem" @change="handelSearchType" />
+                                <ButtonClearCommon v-if="flagRadio" :clearInput="() => clearInput('flagRadio')" />
+                            </div>
+                        </div>
+                        <div class="col-3 flex align-items-center">
+                            <div class="px-4">
+                                <RadioButton v-model="flagValue" inputId="ingredient1" name="있음" :disabled="!flagRadio"
+                                    value="1" @change="handelChangeFlag" />
+                                <label for="ingredient1" class="ml-2 white-space-nowrap">있음</label>
+                            </div>
+                            <div class="px-4">
+                                <RadioButton v-model="flagValue" inputId="ingredient2" name="있음" :disabled="!flagRadio"
+                                    value="0" @change="handelChangeFlag" />
+                                <label for="ingredient2" class="ml-2 white-space-nowrap">있음</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="mt-2">
+                    <span class="text-field-search">분산</span>
+                    <div class="grid align-items-center">
+                        <div class="col-3">
+                            <div class="p-inputgroup">
+                                <Dropdown v-model="selectedFlag" :options="DEFAULT.USER_ROLE" placeholder="분산"
+                                    optionLabel="label" class="w-full md:w-14rem" @change="handelSearchType" />
+                                <ButtonClearCommon v-if="selectedFlag" :clearInput="() => clearInput('selectedFlag')" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="reset_search flex justify-content-center align-items-center mt-2">
+                    <Button class="p-button-sm white-space-nowrap refresh" icon="pi pi-refresh" @click="reloadSearch()"
+                        label="クリア">
+                    </Button>   
+                </div>
             </div>
-          </div>
-        </template>
-        <template #footer>
-          <Paginator
-            v-if="storeUser.getPagination.total > 0"
-            :first="(storeUser.getPagination.currentPage - 1) * storeUser.getPagination.perPage"
-            :rows="storeUser.getPagination.perPage"
-            :totalRecords="storeUser.getPagination.total"
-            template="CurrentPageReport FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink RowsPerPageDropdown"
-            :currentPageReportTemplate="AppConstant.CURRENT_PAGE_REPORT_TEMPLATE"
-            @page="changePage"
-          ></Paginator>
-        </template>
-      </DataTable>
-  
-      <Popup
-        ref="modal"
-        :labelCancel="$t('common.no')"
-        :labelOk="$t('common.yes')"
-        :header="$t('common.confirm')"
-        :content="$t('common.popupDeleteContent')"
-        :ok="confirm"
-        :cancel="cancel"
-      ></Popup>
+            <Toast />
+            </div>
+            <DataTable :value="storeUser.getUsers" class="p-datatable-sm" ref="dt" tableStyle="min-width: 75rem"
+                @row-click="gotToDetail($event)" :rowHover="true" responsive-layout="scroll">
+                <Column style="padding-left:2rem; margin:auto" v-for="col in columns" :key="col.field" :field="col.field"
+                    :header="col.header" :sortable="true"></Column>
+                <Column headerStyle=" text-align: center" bodyStyle="text-align: center; overflow: visible">
+                    <template #body="slotProps">
+                        <Button class="p-button-danger p-button-sm white-space-nowrap" icon="pi pi-trash"
+                            v-if="slotProps.data.email !== storeUser.getProfile.email"
+                            @click="deleteUser(slotProps.data.id)" :label="t('common.delete')"></Button>
+                    </template>
+                </Column>
+                <template #empty>
+                    <div class="text-center">{{ $t('user.userNotFound') }}</div>
+                </template>
+                <template #loading>
+                    {{ $t('user.userLoading') }}
+                </template>
+                <template #header>
+                    <div class="flex justify-content-between align-items-center">
+                        <span class="p-input-icon-left w-5">
+                            <i class="pi pi-search"></i>
+                            <InputText class="w-full" :placeholder="$t('common.search')" />
+                        </span>
+                        <div>
+                            <Button class="white-space-nowrap" @click="gotToCreate" icon="pi pi-plus"
+                                :label="t('user.userRegister')"></Button>
+                        </div>
+                    </div>
+                </template>
+                <template #footer>
+                    <Paginator v-if="storeUser.getPagination.total > 0"
+                        :first="(storeUser.getPagination.currentPage - 1) * storeUser.getPagination.perPage"
+                        :rows="storeUser.getPagination.perPage" :totalRecords="storeUser.getPagination.total"
+                        template="CurrentPageReport FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink RowsPerPageDropdown"
+                        :currentPageReportTemplate="AppConstant.CURRENT_PAGE_REPORT_TEMPLATE" @page="changePage">
+                    </Paginator>
+                </template>
+            </DataTable>
+        
+        <Popup ref="modal" :labelCancel="t('common.no')" :labelOk="t('common.yes')" :header="t('common.confirm')"
+            :content="t('common.popupDeleteContent')" :ok="confirm" :cancel="cancel"></Popup>
     </div>
-  </template>
-  
+</template>
 <script setup lang="ts">
 import { PrimeIcons, FilterMatchMode, FilterOperator } from 'primevue/api';
 import Paginator from 'primevue/paginator';
@@ -268,6 +162,7 @@ const selectedDate = ref();
 const startMonth = ref();
 const endMonth = ref();
 const selectedFlag = ref();
+const flagRadio = ref();
 const flagValue = ref();
 const columns = [
     { field: 'employeeid', header: 'EmployeeID' },
@@ -275,6 +170,7 @@ const columns = [
     { field: 'email', header: 'Email' },
     { field: 'role', header: 'Role' },
     { field: 'phone', header: 'Phone Number' },
+    { field: 'status', header: 'Status' },
 ];
 
 const schema = yup.object({
@@ -337,6 +233,7 @@ const cancel = () => {
 const downloadCSV = async (type: number, name: string, ext: string) => {
     console.log(1)
 };
+
 const checkNumeric = (event: any) => {
   const keyCode = event.keyCode;
   if (keyCode < 48 || keyCode > 57) {
@@ -350,11 +247,15 @@ const handelSearchType = async () => {
     console.log(selectedFlag.value.value)
     storeUser.getParamSearch.role_type = selectedFlag.value.value;
     storeUser.getListUser();
+  }else if(flagValue.value){
+    console.log(flagValue)
+    storeUser.getParamSearch.status = flagValue.value.value;
+    storeUser.getListUser();
   }
 };
 const handelChangeFlag = async () => {
-  storeUser.getParamSearch.flag_type = selectedFlag.value.value;
-  storeUser.getParamSearch.flag_value = flagValue.value;
+  storeUser.getParamSearch.status = flagValue.value;
+  console.log(flagValue.value)
   storeUser.getListUser();
 };
 
@@ -392,6 +293,7 @@ const reloadSearch = () => {
   [
     startMonth,
     endMonth,
+
     selectedDate,
     selectedNumbericType,
     selectedFlag,
@@ -409,11 +311,10 @@ const clearInput = (inputName: any) => {
     storeUser.getParamSearch.end_date = null;
     endMonth.value = "";
     storeUser.getListUser();
-  } else if (inputName === "selectedNumbericType") {
-    selectedNumbericType.value = "";
-    storeUser.getParamSearch.numberic_type = undefined;
-    storeUser.getParamSearch.start_number = undefined;
-    storeUser.getParamSearch.end_number = undefined;
+  } else if (inputName === "flagRadio") {
+    storeUser.getParamSearch.status = undefined;
+    flagRadio.value = null;
+    flagRadio.value = "";
     storeUser.getListUser();
   } else if (inputName === "selectedDate") {
     selectedDate.value = "";
@@ -431,12 +332,17 @@ const clearInput = (inputName: any) => {
     flagValue.value = null;
     selectedFlag.value = "";
     storeUser.getListUser();
+  } else if (inputName === "storeUser.getParamSearch.start_number") {
+    storeUser.getParamSearch.start_number = undefined;
+    storeUser.getListUser();
+  } else if (inputName === "storeUser.getParamSearch.end_number") {
+    storeUser.getParamSearch.end_number = undefined;
+    storeUser.getListUser();
   }
 };
 onMounted(
     () => {
         storeUser.getListUser();
-       
     }
 )
 </script>
@@ -446,17 +352,21 @@ onMounted(
     align-items: center;
     justify-content: space-between;
 }
+
 .product-image {
     width: 50px;
     box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
 }
+
 span.text-field-search {
     font-weight: bold;
 }
+
 h5.m-0 {
     font-size: 26px;
     font-weight: 600;
 }
+
 .dowload-file-admin {
     display: flex;
     justify-content: end;
