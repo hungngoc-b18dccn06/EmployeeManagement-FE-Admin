@@ -21,6 +21,9 @@
             aria-haspopup="true"
             aria-controls="overlay_menu"
           />
+          <div class="card flex justify-content-center">
+              <SelectButton v-model="selectedLanguage" :options="DEFAULT.OPTION_LANGUAGE" aria-labelledby="basic" />
+          </div>
           <Menu
             id="overlay_menu"
             class="topbar-user-menu"
@@ -39,12 +42,13 @@
       :content="t('user.confirmLogout')"
       :ok="logout"
       :cancel="closeModal"
-      :header="t('user.headerConfirmLogout')"
-    ></Popup>
+      :header="t('user.headerConfirmLogout')">
+    </Popup>
   </div>
 </template>
 
 <script setup lang="ts">
+
 import { ref,onMounted } from "vue";
 import { useI18n } from "vue-i18n";
 import Popup from "@/components/PopupConfirm.vue";
@@ -54,6 +58,7 @@ import { ApiConstant } from "@/const";
 import PAGE_ROUTE from "@/const/pageRoute";
 import router from "@/router";
 import { useUserStore } from "@/stores/employee";
+import CONST, { AppConstant, DEFAULT } from "@/const";
 const emit = defineEmits(["toggleSidebar"]);
 const toast = useToast();
 const menu = ref(); 
@@ -62,6 +67,7 @@ const userStore = useUserStore();
 const toggleSidebar = () => {
   emit("toggleSidebar");
 };
+const selectedLanguage = ref('kor');
 const toggle = (event: any) => {
   menu.value.toggle(event);
 };
@@ -78,12 +84,12 @@ const items = ref([
     items: [
       {
         label: t("menu.editProfile"),
-        icon: "pi pi-user-edit",
+        icon: "pi pi-user-edit mr-2",
         command: editProfile,
       },
       {
         label: t("menu.logout"),
-        icon: "pi pi-sign-out",
+        icon: "pi pi-sign-out mr-2",
         command: openModal,
       },
     ],
@@ -107,9 +113,7 @@ const back = () => {
 };
 onMounted(
   () => {
-
     const token = localStorage.getItem("access_token");
-    console.log(userStore.getProfile)
     if(token != ''){
       userStore.getProfileDetail();
     }
@@ -118,6 +122,7 @@ onMounted(
 )
 </script>
 <style lang="scss" scoped>
+
 .layout-topbar {
   position: fixed;
   height: var(--topbar-height);
@@ -141,6 +146,11 @@ onMounted(
     .p-button-label {
       font-weight: 400;
     }
+    .p-button.p-component.p-highlight {
+    background: #fff;
+    color: black;
+}
+
   }
 }
 
@@ -158,5 +168,11 @@ onMounted(
 }
 button.p-button.p-component.p-button-icon-only.p-button-text.shadow-none {
     background: #fff;
+}
+
+
+.p-selectbutton.p-buttonset.p-component .p-button{
+  background: #fff !important;
+  color: #fff;
 }
 </style>

@@ -7,6 +7,7 @@ import PasswordLang from "./password.lang";
 import CustomLang from "./custom.lang";
 import PageTitleLang from "./pageTitle.lang";
 import MessageLang from "./message.lang";
+import EmployeeLang from "./emloyee.lang";
 const Lang = {
   menu: MenuLang,
   common: CommonLang,
@@ -17,5 +18,6 @@ const Lang = {
   custom: CustomLang,
   page: PageTitleLang,
   message: MessageLang,
+  employee: EmployeeLang
 };
 export default Lang;

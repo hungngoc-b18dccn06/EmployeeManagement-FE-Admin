@@ -113,23 +113,18 @@ export const useUserStore = defineStore({
                 total: listUser.data.totalElements,
                 perPage: listUser.data.totalPages,
             };
-            console.log(listUser.data)
-            console.log(this.pagination)
         },
 
         async getProfileDetail() {
             try {
                 const access_token = localStorage.getItem('access_token');
-            
                 if (!access_token) {
-                  console.log('Access token not found.');
                   return false;
                 }
                 const headers = {
                   'Authorization' : `Bearer ${access_token}`,
                 };
                     const response = await api.get(ApiConstant.GET_PROFILE, {headers});
-                    console.log(response)
                     this.profile = response.data;
               } catch (err) {
                 console.log(err);

@@ -2,9 +2,13 @@
 import { RouterView } from "vue-router";
 import { useRequestStore } from "@/stores/request";
 import { useToast } from "primevue/usetoast";
-import { watch } from "vue";
+import { watch ,ref,onMounted} from "vue";
+import { useUserStore } from "@/stores/employee";
 const toast = useToast();
+import { useRoute, useRouter } from "vue-router";
 const requestStore = useRequestStore();
+const userStore = useUserStore();
+const router = useRouter();
 watch(
   () => requestStore.error,
   (newValue) => {
@@ -25,6 +29,15 @@ watch(
   () => requestStore.getIsFetcing.length,
   (newValue) => (document.body.style.overflowY = newValue ? "hidden" : ""),
 );
+onMounted(
+  () => {
+    const token = localStorage.getItem("access_token");
+    if(!token){
+      router.push(`/auth/signin`);
+    }
+      
+  }
+)
 </script>
 <template>
   <div

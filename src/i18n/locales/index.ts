@@ -1,8 +1,8 @@
 import enLang from "./en";
-import jaLang from "./ja";
+import KoLang from "./kor";
 
 const messages = {
   en: enLang,
-  ja: jaLang,
+  kor: KoLang,
 };
 export default messages;

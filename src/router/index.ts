@@ -19,7 +19,7 @@ const router = createRouter({
         {
           path: "/",
           name: "home",
-          component: HomeView,
+          component: ListEmployee,
         },
         {
           path: '/employees',
@@ -33,11 +33,6 @@ const router = createRouter({
         },
         
       ]
-    },
-    {
-      path: '/',
-      name: 'home',
-      component: HomeView
     },
     {
       path: PAGE_ROUTE.LOGIN,
