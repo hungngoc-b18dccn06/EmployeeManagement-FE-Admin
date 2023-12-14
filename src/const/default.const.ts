@@ -18,6 +18,7 @@ export const FLAG_ITEM = [
       value: 0,
     },
 ];
+
 export const DATE_ITEM = [
     {
       label: 'Start day',
@@ -49,7 +50,8 @@ export const GENDER = [
 ];
 
 export const OPTION_LANGUAGE = [
-  "kor", "en"
+  { label: '한국어', value: 'kor', imgSrc: 'src/assets/img/kor8.jpg' },
+  { label: 'English', value: 'en', imgSrc: 'src/assets/img/en8.png' }
 ];
 
 

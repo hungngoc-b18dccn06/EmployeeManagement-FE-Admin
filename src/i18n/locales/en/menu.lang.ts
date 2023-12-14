@@ -24,6 +24,9 @@ const Lang = {
   menu_notion: "Notions",
   menu_privacy: "Privacy policy",
   menu_ai_tech: "AI Tech",
-  editProfile:"Edit Profile"
+  editProfile:"Edit Profile",
+  dashboard: "Dashboard",
+  employeeList: "Employee List",
+  eCommerce: "eCommerce",
 };
 export default Lang;

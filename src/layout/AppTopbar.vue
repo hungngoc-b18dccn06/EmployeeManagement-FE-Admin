@@ -14,7 +14,17 @@
         <div class="relative">
           
           <div class="card flex justify-content-center header-profile">
-              <SelectButton v-model="selectedLanguage" :options="DEFAULT.OPTION_LANGUAGE" aria-labelledby="basic" />
+              <div>
+                <div @click="showDropdown = !showDropdown" class="img-language-container">
+                  <img :src="selectedLanguage.imgSrc" alt="" class="img-language" style="height: 35px; width: 40px;">
+                </div>
+                <Dropdown v-if="showDropdown" v-model="selectedLanguage" :options="DEFAULT.OPTION_LANGUAGE" option-label="label" @change="changeLanguage(selectedLanguage.value)">
+                  <template #option="{ option }">
+                    <img :src="option.imgSrc" alt="" class="img-language" style="height: 35px; width: 40px;">
+                    {{ option.label }}
+                  </template>
+                </Dropdown>
+              </div>
               <Button
             type="button"
             icon="pi pi-user mr-2"
@@ -60,18 +70,24 @@ import PAGE_ROUTE from "@/const/pageRoute";
 import router from "@/router";
 import { useUserStore } from "@/stores/employee";
 import CONST, { AppConstant, DEFAULT } from "@/const";
+import i18n  from '@/i18n/index';
 const emit = defineEmits(["toggleSidebar"]);
 const toast = useToast();
 const menu = ref(); 
-const { t } = useI18n();
+const selectedLanguage = ref({ label: '한국어', imgSrc: 'src/assets/img/kor8.jpg', value: 'kor' });
+const { t  } = useI18n();
 const userStore = useUserStore();
 const toggleSidebar = () => {
   emit("toggleSidebar");
 };
-const selectedLanguage = ref('kor');
+const showDropdown = ref(false);
 const toggle = (event: any) => {
   menu.value.toggle(event);
 };
+const changeLanguage = (e: any) =>{
+  i18n.global.locale.value = e;
+  console.log(e)
+}
 const modal = ref<InstanceType<typeof Popup> | null>(null);
 const openModal = () => {
   modal.value?.open();
@@ -125,6 +141,26 @@ onMounted(
 <style lang="scss" scoped>
 .header-profile{
   gap: 10px;
+}
+.img-language {
+  vertical-align: middle;
+  margin-right: 5px;
+  cursor: pointer;
+}
+
+.img-language-container {
+  display: inline-block;
+}
+.p-dropdown-panel .p-dropdown-items .p-dropdown-item.p-highlight{
+    display: flex !important;
+    justify-content: center  !important;
+    align-items: center  !important;
+    gap: 10px
+}
+img.img-language {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
 }
 .p-selectbutton.p-buttonset.p-component{
   border: 1px solid #2B9DCA;
