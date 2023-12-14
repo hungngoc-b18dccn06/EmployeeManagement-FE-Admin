@@ -25,5 +25,10 @@ const Lang = {
   menu_privacy: "개인 정보 정책",
   menu_ai_tech: "이용하기 전에",
   editProfile : "프로필 편집",
+  dashboard: "대시보드",
+  employeeList: "직원 목록",
+  eCommerce: "전자 상거래",
+
+
 };
 export default Lang;

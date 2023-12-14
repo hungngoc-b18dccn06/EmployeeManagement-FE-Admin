@@ -5,7 +5,7 @@ const EmployeeLang = {
     dateItemSelection: "항목 지정(날짜 항목)",
     selectDateItem: "선택하세요",
     exist: "있음",
-    distribution: "분산",
+    distribution: "위치",
     clear: "클리어",
     pageNavigation: "페이지 이동",
     rowsPerPage: "행/페이지",
@@ -20,8 +20,15 @@ const EmployeeLang = {
     inactive: "비활성",
     excelLabel: "Excel 출력",
     flagItemLabel: "직원 상태",
-  dateItemLabel: "날짜 필터",
-  userRoleLabel: "시스템 역할"
+    dateItemLabel: "날짜 필터",
+    userRoleLabel: "시스템 역할",
+    employeeid: '사원 번호',
+    employeename: '사원 이름',
+    email: '이메일',
+    role: '역할',
+    phone: '전화번호',
+    status: '상태',
+    reload: '재장전하다'
   };
   export default EmployeeLang;
   

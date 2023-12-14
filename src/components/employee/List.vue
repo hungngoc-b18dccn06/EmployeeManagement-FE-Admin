@@ -2,29 +2,28 @@
     <div>
         <div class="dowload-file-admin">
             <Button class="p-button-sm white-space-nowrap download mr-2" icon="pi pi-download mr-2"
-                @click="downloadCSV(DEFAULT.EXPORT_TYPE.CSV, 'CSV出力', 'csv')" label="CSV 출력"></Button>
+                @click="downloadCSV(DEFAULT.EXPORT_TYPE.CSV, 'CSV出力', 'csv')" :label="t('employee.csvLabel')"></Button>
             <Button class="p-button-sm white-space-nowrap download mr-2" icon="pi pi-download mr-2"
-                @click="downloadCSV(DEFAULT.EXPORT_TYPE.EXCEL_TOTAL, '집계 출력', 'xlsx')" label="집계 출력"></Button>
+                @click="downloadCSV(DEFAULT.EXPORT_TYPE.EXCEL_TOTAL, '집계 출력', 'xlsx')" :label="t('employee.excelLabel')"></Button>
         </div>
         <TitleCommon :title="t('page.userCreate')" />
         <div class="lighten-4 rounded">
             <div class="p-4 border-search pb-3">
                 <div class="key_search">
-                    <span class="text-field-search">키워드 검색</span>
+                    <span class="text-field-search">{{ t('employee.keywordSearch') }}</span>
                     <div class="p-inputgroup flex-1">
-                        <InputText class="w-full" v-model="storeUser.getParamSearch.search_text" placeholder="키워드 검색" />
-                        <ButtonClearCommon v-if="storeUser.getParamSearch.search_text" :clearInput="() => clearInput('storeUser.getParamSearch.search_text')
-                            " />
+                        <InputText class="w-full" v-model="storeUser.getParamSearch.search_text" :placeholder="t('employee.keywordSearch')" />
+                        <ButtonClearCommon v-if="storeUser.getParamSearch.search_text" :clearInput="() => clearInput('storeUser.getParamSearch.search_text') " />
                     </div>
                 </div>
             
                 <div class="mt-2">
-                    <span class="text-field-search">항목 지정(날짜 항목)</span>
+                    <span class="text-field-search">{{ t('employee.dateItemSelection') }}</span>
                     <div class="grid align-items-center">
                         <div class="col-3">
                             <div class="p-inputgroup">
                                 <div class="p-inputgroup flex-1">
-                                    <Dropdown v-model="selectedDate" :options="DEFAULT.DATE_ITEM" placeholder="항목 지정(날짜 항목)"
+                                    <Dropdown v-model="selectedDate" :options="DEFAULT.DATE_ITEM" :placeholder="t('employee.dateItemSelection')"
                                         optionLabel="label" class="w-full md:w-14rem" @change="handelSearchType" />
                                     <ButtonClearCommon v-if="selectedDate" :clearInput="() => clearInput('selectedDate')" />
                                 </div>
@@ -48,35 +47,35 @@
                     </div>
                 </div>
                 <div class="mt-2">
-                    <span class="text-field-search">項目指定（フラグ項目）</span>
+                    <span class="text-field-search">{{ t('employee.selectDateItem') }}</span>
                     <div class="grid align-items-center">
                         <div class="col-3">
                             <div class="p-inputgroup">
-                                <Dropdown v-model="flagRadio" :options="DEFAULT.FLAG_ITEM" placeholder="選択してください"
+                                <Dropdown v-model="flagRadio" :options="DEFAULT.FLAG_ITEM" :placeholder="t('employee.selectDateItem')"
                                     optionLabel="label" class="w-full md:w-14rem" @change="handelSearchType" />
                                 <ButtonClearCommon v-if="flagRadio" :clearInput="() => clearInput('flagRadio')" />
                             </div>
                         </div>
                         <div class="col-3 flex align-items-center">
                             <div class="px-4">
-                                <RadioButton v-model="flagValue" inputId="ingredient1" name="있음" :disabled="!flagRadio"
+                                <RadioButton v-model="flagValue" inputId="ingredient1" :name="t('employee.active')" :disabled="!flagRadio"
                                     value="1" @change="handelChangeFlag" />
-                                <label for="ingredient1" class="ml-2 white-space-nowrap">있음</label>
+                                <label for="ingredient1" class="ml-2 white-space-nowrap">{{ t('employee.active') }}</label>
                             </div>
                             <div class="px-4">
-                                <RadioButton v-model="flagValue" inputId="ingredient2" name="있음" :disabled="!flagRadio"
+                                <RadioButton v-model="flagValue" inputId="ingredient2" :name="t('employee.inactive')" :disabled="!flagRadio"
                                     value="0" @change="handelChangeFlag" />
-                                <label for="ingredient2" class="ml-2 white-space-nowrap">있음</label>
+                                <label for="ingredient2" class="ml-2 white-space-nowrap">{{ t('employee.inactive') }}</label>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="mt-2">
-                    <span class="text-field-search">분산</span>
+                    <span class="text-field-search">{{ t('employee.distribution')  }}</span>
                     <div class="grid align-items-center">
                         <div class="col-3">
                             <div class="p-inputgroup">
-                                <Dropdown v-model="selectedFlag" :options="DEFAULT.USER_ROLE" placeholder="분산"
+                                <Dropdown v-model="selectedFlag" :options="DEFAULT.USER_ROLE" :placeholder="t('employee.distribution')"
                                     optionLabel="label" class="w-full md:w-14rem" @change="handelSearchType" />
                                 <ButtonClearCommon v-if="selectedFlag" :clearInput="() => clearInput('selectedFlag')" />
                             </div>
@@ -84,8 +83,8 @@
                     </div>
                 </div>
                 <div class="reset_search flex justify-content-center align-items-center mt-2">
-                    <Button class="p-button-sm white-space-nowrap refresh" icon="pi pi-refresh" @click="reloadSearch()"
-                        label="クリア">
+                    <Button class="p-button-sm white-space-nowrap refresh" icon="pi pi-refresh mr-2" @click="reloadSearch()"
+                        :label=" t('employee.reload') ">
                     </Button>   
                 </div>
             </div>
@@ -93,7 +92,7 @@
             </div>
             <DataTable :value="storeUser.getUsers" class="p-datatable-sm" ref="dt" tableStyle="min-width: 75rem"
                 @row-click="gotToDetail($event)" :rowHover="true" responsive-layout="scroll">
-                <Column style="padding-left:2rem; margin:auto" v-for="col in columns" :key="col.field" :field="col.field"
+                <Column style="padding-left:2rem; margin:auto" v-for="col in translatedColumns" :key="col.field" :field="col.field"
                     :header="col.header" :sortable="true"></Column>
                 <Column headerStyle=" text-align: center" bodyStyle="text-align: center; overflow: visible">
                     <template #body="slotProps">
@@ -115,7 +114,7 @@
                             <InputText class="w-full" :placeholder="$t('common.search')" />
                         </span>
                         <div>
-                            <Button class="white-space-nowrap" @click="gotToCreate" icon="pi pi-plus"
+                            <Button class="white-space-nowrap" @click="gotToCreate" icon="pi pi-plus mr-2"
                                 :label="t('user.userRegister')"></Button>
                         </div>
                     </div>
@@ -142,7 +141,7 @@ import Popup from "@/components/PopupConfirm.vue";
 import ButtonClearCommon from "@/components/common/ButtonClearCommon.vue";
 import { useUserStore } from "@/stores/employee";
 import FooterCommon from "@/components/common/FooterCommon.vue";
-import { ref, onMounted, watch } from "vue";
+import { ref, onMounted, watch, computed } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import CONST, { AppConstant, DEFAULT } from "@/const";
 import { Field, ErrorMessage, useForm } from "vee-validate";
@@ -153,7 +152,6 @@ import { number } from "yup";
 import { format } from "date-fns";
 const router = useRouter();
 const storeUser = useUserStore();
-const totalRecords = ref();
 const idUser = ref(0);
 const toast = useToast();
 const { t } = useI18n();
@@ -164,15 +162,22 @@ const endMonth = ref();
 const selectedFlag = ref();
 const flagRadio = ref();
 const flagValue = ref();
-const columns = [
-    { field: 'employeeid', header: 'EmployeeID' },
-    { field: 'employeename', header: 'Employee Name' },
-    { field: 'email', header: 'Email' },
-    { field: 'role', header: 'Role' },
-    { field: 'phone', header: 'Phone Number' },
-    { field: 'status', header: 'Status' },
-];
 
+const columns = ref([
+  'employeeid',
+  'employeename',
+  'email',
+  'role',
+  'phone',
+  'status',
+]);
+
+const translatedColumns = computed(() => {
+  return columns.value.map((field) => ({
+    field,
+    header: t(`employee.${field}`), 
+  }));
+});
 const schema = yup.object({
     start_number: yup
         .number()

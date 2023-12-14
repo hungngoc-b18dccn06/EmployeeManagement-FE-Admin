@@ -5,7 +5,7 @@ const EmployeeLang = {
   dateItemSelection: "Date Item Selection",
   selectDateItem: "Please Select",
   exist: "Exist",
-  distribution: "Distribution",
+  distribution: "Position",
   clear: "Clear",
   pageNavigation: "Page Navigation",
   rowsPerPage: "Rows per Page",
@@ -20,7 +20,14 @@ const EmployeeLang = {
   inactive: "Inactive",
   flagItemLabel: "Employee Status",
   dateItemLabel: "Date Filter",
-  userRoleLabel: "Role System"
+  userRoleLabel: "Role System",
+  employeeid: 'EmployeeID',
+  employeename: 'Employee Name',
+  email: 'Email',
+  role: 'Role',
+  phone: 'Phone Number',
+  status: 'Status',
+  reload: 'Reload',
   };
   export default EmployeeLang;
   

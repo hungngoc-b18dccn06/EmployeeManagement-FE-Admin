@@ -4,7 +4,7 @@
       <div class="layout-title flex justify-content-center align-items-center">
         <Image :src="logo" class="logo" @click="clickToHome()" style="cursor:pointer"></Image>
       </div>
-      <app-side-bar :items="menu" :root="true" class="layout-menu" :index="1"/>
+      <app-side-bar :items="menuItems" :root="true" class="layout-menu" :index="1"/>
     </div>
     <div class="layout-main-container">
       <app-top-bar @toggleSidebar="toggleSidebar"/>
@@ -24,12 +24,45 @@ import {useRoute, useRouter} from "vue-router";
 import AppTopBar from "@/layout/AppTopbar.vue";
 import AppSideBar from "@/layout/AppSidebar.vue";
 import AppFooter from "@/layout/AppFooter.vue";
-import Menu from "@/const/menu.const";
-const menu = Menu;
+import PAGE_ROUTE from "../const/pageRoute";
+import { useI18n } from 'vue-i18n';
+
 const route = useRoute();
 const router = useRouter();
 const openSidebar = ref(true);
-
+const { t } = useI18n();
+const menuItems = ref([
+      {
+        items: [
+          {
+            label: t('menu.dashboard'), 
+            icon: "pi pi-home",
+            to: PAGE_ROUTE.HOME,
+            public: false,
+          },
+        ],
+      },
+      {
+        items: [
+          {
+            label: t('menu.employeeList'), 
+            icon: "pi pi-users",
+            to: PAGE_ROUTE.EMPLOYEE_LIST,
+            public: false,
+          },
+        ],
+      },
+      {
+        items: [
+          {
+            label: t('menu.eCommerce'),
+            icon: "pi pi-shopping-cart",
+            to: PAGE_ROUTE.ORDER_COFFEE,
+            public: false,
+          },
+        ],
+      },
+    ]);
 const toggleSidebar = () => {
   openSidebar.value = !openSidebar.value;
 }
