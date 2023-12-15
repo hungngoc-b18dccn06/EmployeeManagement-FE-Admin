@@ -20,6 +20,13 @@ export interface Pagination {
     total: number,
     perPage: number
 }
+export interface filterValue{
+    search_text : any;
+    status: any;
+    role: any;
+    startDate: any;
+    endDate: any;
+}
 export interface ParamsSearch {
     search_text?: string;
     status?: string;
@@ -50,7 +57,8 @@ interface UserStore {
     users: Employee[],
     paramSearch: ParamsSearch,
     pagination: Pagination,
-    formUser: FormEmployee
+    formUser: FormEmployee,
+    filterValue: filterValue
     
 }
 export const useUserStore = defineStore({
@@ -85,7 +93,14 @@ export const useUserStore = defineStore({
                 email: '',
                 phone: '',
                 role: DEFAULT.USER_ROLE[0].value,
-            }   
+            },
+            filterValue: {
+                search_text : null,
+                status: null,
+                role: null ,
+                startDate: null,
+                endDate: null,
+            }
         }
     },
     getters:{
@@ -96,16 +111,20 @@ export const useUserStore = defineStore({
             ...e,
             role: (DEFAULT.USER_ROLE.find(el => el.value == e.role) ?? DEFAULT.USER_ROLE[0]).label,
         }))),
-        getFormUser: (state => state.formUser)
+        getFormUser: (state => state.formUser),
+        getFilterValue: (state => state.filterValue)
     },
     actions:{
         async getListUser(page?: number) {
-            const listUser = await api.get(ApiConstant.GET_EMPLOYEE_LIST, {
-                params: {
-                  page: page ?? 1,
-                  ...this.paramSearch
-                }
-              });
+            const requestData = {
+                filterValue : {},
+                sort: "",
+                pageSize: "10",
+                pageIndex: "0",
+                ... this.paramSearch
+              };
+
+            const listUser = await api.post(ApiConstant.GET_EMPLOYEE_LIST, requestData);
             this.users = listUser.data.content;
             
             this.users = listUser.data.content.map(e => ({
