@@ -250,7 +250,7 @@ const handelSearchType = async () => {
     storeUser.getParamSearch.date_type = selectedDate.value.value;
   } else if (selectedFlag.value) {
     console.log(selectedFlag.value.value)
-    storeUser.getParamSearch.role_type = selectedFlag.value.value;
+    storeUser.getParamSearch.role = selectedFlag.value.value;
     storeUser.getListUser();
   }else if(flagValue.value){
     console.log(flagValue)
