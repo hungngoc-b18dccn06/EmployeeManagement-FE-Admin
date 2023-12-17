@@ -18,7 +18,7 @@
                 <div @click="showDropdown = !showDropdown" class="img-language-container">
                   <img :src="selectedLanguage.imgSrc" alt="" class="img-language" style="height: 35px; width: 40px;">
                 </div>
-                <Dropdown v-if="showDropdown" v-model="selectedLanguage" :options="DEFAULT.OPTION_LANGUAGE" option-label="label" @change="changeLanguage(selectedLanguage.value)">
+                <Dropdown v-if="languageStore.showLanguageDropdown" v-model="selectedLanguage" :options="DEFAULT.OPTION_LANGUAGE" option-label="label" @change="changeLanguage(selectedLanguage.value)">
                   <template #option="{ option }">
                     <img :src="option.imgSrc" alt="" class="img-language" style="height: 35px; width: 40px;">
                     {{ option.label }}
@@ -59,7 +59,7 @@
 </template>
 
 <script setup lang="ts">
-
+import { useLanguageStore } from '@/stores/language';
 import { ref,onMounted } from "vue";
 import { useI18n } from "vue-i18n";
 import Popup from "@/components/PopupConfirm.vue";
@@ -71,15 +71,16 @@ import router from "@/router";
 import { useUserStore } from "@/stores/employee";
 import CONST, { AppConstant, DEFAULT } from "@/const";
 import i18n  from '@/i18n/index';
+
+const languageStore = useLanguageStore();
+const openSidebar = ref(true);
 const emit = defineEmits(["toggleSidebar"]);
 const toast = useToast();
 const menu = ref(); 
 const selectedLanguage = ref({ label: '한국어', imgSrc: 'src/assets/img/kor8.jpg', value: 'kor' });
 const { t  } = useI18n();
 const userStore = useUserStore();
-const toggleSidebar = () => {
-  emit("toggleSidebar");
-};
+
 const showDropdown = ref(false);
 const toggle = (event: any) => {
   menu.value.toggle(event);
@@ -88,6 +89,15 @@ const changeLanguage = (e: any) =>{
   i18n.global.locale.value = e;
   console.log(e)
 }
+
+const toggleSidebar = () => {
+  openSidebar.value = !openSidebar.value;
+}
+
+const toggleLanguageDropdown = () => {
+  languageStore.toggleLanguageDropdown();
+}
+
 const modal = ref<InstanceType<typeof Popup> | null>(null);
 const openModal = () => {
   modal.value?.open();

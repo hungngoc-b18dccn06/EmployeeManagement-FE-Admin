@@ -88,6 +88,7 @@ const saveProduct = async () => {
   productDialog.value = false
 }
 const onUpload = (event) => {
+    console.log(event)
   producImage.value = event.files
 }
 const editProduct = (editProduct) => {
@@ -168,7 +169,7 @@ const initFilters = () => {
 
           <template v-slot:end>
             <Button
-            :label="t('product.export')"
+              :label="t('product.export')"
               icon="pi pi-download mr-2"
               class="p-button-help"
               @click="exportCSV($event)"
@@ -326,7 +327,11 @@ const initFilters = () => {
               accept="image/*"
               :maxFileSize="1000000"
               customUpload
-            />
+            >
+              <template #empty>
+                <p>{{ t('product.dragFile') }}.</p>
+              </template>
+            </FileUpload>
           </div>
           <div class="field">
             <label for="name">{{ t('product.productName') }}</label>
@@ -494,6 +499,9 @@ const initFilters = () => {
 </template>
 
 <style scoped>
+textarea#description {
+  height: 300px !important;
+}
 button.p-button.p-component.p-button-icon-only.p-button-danger.p-button-rounded.p-button-text.p-fileupload-file-remove {
   background: #fff;
   border-radius: 50%;

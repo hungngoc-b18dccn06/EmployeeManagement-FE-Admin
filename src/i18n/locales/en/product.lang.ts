@@ -18,7 +18,8 @@ const ProductLang = {
     cancel: "Cancel",
     save: "Save",
     new: "Add new Product",
-    export:"Export Excel"
+    export:"Export Excel",
+    dragFile: "Drag and drop files to here to upload"
 };
 export default ProductLang;
   

@@ -19,7 +19,7 @@
 
 <script setup lang="ts">
 import logo from '@/assets/logo.png'
-import {ref, onMounted} from "vue";
+import {ref, onMounted , watch, computed} from "vue";
 import {useRoute, useRouter} from "vue-router";
 import AppTopBar from "@/layout/AppTopbar.vue";
 import AppSideBar from "@/layout/AppSidebar.vue";
@@ -31,8 +31,9 @@ const route = useRoute();
 const router = useRouter();
 const openSidebar = ref(true);
 const { t } = useI18n();
-const menuItems = ref([
-      {
+const menuItems = computed(() => {
+  return [
+  {
         items: [
           {
             label: t('menu.dashboard'), 
@@ -62,7 +63,9 @@ const menuItems = ref([
           },
         ],
       },
-    ]);
+  
+  ];
+});
 const toggleSidebar = () => {
   openSidebar.value = !openSidebar.value;
 }

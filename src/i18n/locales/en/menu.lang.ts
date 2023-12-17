@@ -1,4 +1,4 @@
-const Lang = {
+const MenuLang = {
   home: "Home",
   user_manager: "User manager",
   profile_manager: "Profile manager",
@@ -29,4 +29,4 @@ const Lang = {
   employeeList: "Employee List",
   eCommerce: "eCommerce",
 };
-export default Lang;
+export default MenuLang;

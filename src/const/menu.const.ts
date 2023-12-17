@@ -3,13 +3,13 @@ import { useI18n } from 'vue-i18n';
 
 export default {
   setup() {
-    const { t } = useI18n(); // Use useI18n within setup
+    const { t } = useI18n();
 
     const menuItems = [
       {
         items: [
           {
-            label: t('menu.dashboard'), // Use translation for the label
+            label: t('menu.dashboard'), 
             icon: "pi pi-home",
             to: PAGE_ROUTE.HOME,
             public: false,
@@ -19,7 +19,7 @@ export default {
       {
         items: [
           {
-            label: t('menu.employeeList'), // Use translation for the label
+            label: t('menu.employeeList'), 
             icon: "pi pi-users",
             to: PAGE_ROUTE.EMPLOYEE_LIST,
             public: false,
@@ -29,7 +29,7 @@ export default {
       {
         items: [
           {
-            label: t('menu.eCommerce'), // Use translation for the label
+            label: t('menu.eCommerce'),
             icon: "pi pi-shopping-cart",
             to: PAGE_ROUTE.ORDER_COFFEE,
             public: false,

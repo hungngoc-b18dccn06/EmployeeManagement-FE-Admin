@@ -18,7 +18,8 @@ const ProductLang = {
     cancel: "취소",
     save: "저장",
     new: "새 제품 추가",
-    export:"엑셀 내보내기"
+    export:"엑셀 내보내기",
+    dragFile: "업로드할 파일을 여기에 끌어다 놓으세요."
 
 };
 export default ProductLang;

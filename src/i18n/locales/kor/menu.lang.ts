@@ -1,4 +1,4 @@
-const Lang = {
+const MenuLang = {
   home: "홈",
   user_manager: "사용자 관리",
   profile_manager: "업로드 관리",
@@ -31,4 +31,4 @@ const Lang = {
 
 
 };
-export default Lang;
+export default MenuLang;
