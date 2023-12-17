@@ -117,7 +117,7 @@ export const useUserStore = defineStore({
     actions:{
         async getListUser(page?: number) {
             const requestData = {
-                filterValue : {},
+                filterValue: this.filterValue,
                 sort: "",
                 pageSize: "10",
                 pageIndex: "0",

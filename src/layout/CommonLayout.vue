@@ -67,7 +67,7 @@ const toggleSidebar = () => {
   openSidebar.value = !openSidebar.value;
 }
 const clickToHome = () => {
-  router.push(`/employees`);
+  router.push(`/`);
 };
 
 </script>

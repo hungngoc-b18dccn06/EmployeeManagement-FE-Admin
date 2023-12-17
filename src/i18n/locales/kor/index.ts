@@ -8,6 +8,8 @@ import CustomLang from "./custom.lang";
 import PageTitleLang from "./pageTitle.lang";
 import MessageLang from "./message.lang";
 import EmployeeLang from "./emloyee.lang";
+import NotifileLang from "./notifile.lang";
+import ProductLang from "./product.lang";
 const Lang = {
   menu: MenuLang,
   common: CommonLang,
@@ -18,6 +20,8 @@ const Lang = {
   custom: CustomLang,
   page: PageTitleLang,
   message: MessageLang,
-  employee: EmployeeLang
+  employee: EmployeeLang,
+  notifile: NotifileLang,
+  product: ProductLang
 };
 export default Lang;

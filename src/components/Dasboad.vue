@@ -1,6 +1,6 @@
 <script setup>
 import { onMounted, ref, watch } from 'vue';
-
+import { useProductStore } from "@/stores/product";
 const products = ref(null);
 
 const lineData = ref({
@@ -24,7 +24,7 @@ const lineData = ref({
     },
   ],
 });
-
+const storeProduct = useProductStore();
 const items = ref([
   { label: 'Add New', icon: 'pi pi-fw pi-plus' },
   { label: 'Remove', icon: 'pi pi-fw pi-minus' },
@@ -35,7 +35,10 @@ const lineOptions = ref(null);
 const formatCurrency = (value) => {
   return value.toLocaleString('en-US', { style: 'currency', currency: 'USD' });
 };
-
+onMounted(() => {
+  storeProduct.getListProduct();
+ 
+});
 const productService = {
   async getProductsSmall() {
     try {
@@ -124,23 +127,17 @@ onMounted(() => {
         <div class="col-12 xl:col-6">
             <div class="card">
                 <h5>Recent Sales</h5>
-                <DataTable :value="products" :rows="5" :paginator="true" responsiveLayout="scroll">
-                    <Column style="width: 15%">
+                <DataTable :value="storeProduct.getProducts" :rows="5" :paginator="true" responsiveLayout="scroll">
+                    <Column style="width: 20%">
                         <template #header> Image </template>
                         <template #body="slotProps">
-                            <img :src="'demo/images/product/' + slotProps.data.image" :alt="slotProps.data.image" width="50" class="shadow-2" />
+                            <img :src="slotProps.data.productImage" :alt="slotProps.data.image" width="50" class="shadow-2" />
                         </template>
                     </Column>
-                    <Column field="name" header="Name" :sortable="true" style="width: 35%"></Column>
+                    <Column field="productName" header="Name" :sortable="true" style="width: 35%"></Column>
                     <Column field="price" header="Price" :sortable="true" style="width: 35%">
                         <template #body="slotProps">
-                            {{ formatCurrency(slotProps.data.price) }}
-                        </template>
-                    </Column>
-                    <Column style="width: 15%">
-                        <template #header> View </template>
-                        <template #body>
-                            <Button icon="pi pi-search" type="button" class="p-button-text"></Button>
+                            {{ formatCurrency(slotProps.data.price) }} $
                         </template>
                     </Column>
                 </DataTable>
