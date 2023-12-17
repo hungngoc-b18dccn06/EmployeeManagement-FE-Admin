@@ -7,13 +7,14 @@
                 @click="downloadCSV(DEFAULT.EXPORT_TYPE.EXCEL_TOTAL, '집계 출력', 'xlsx')" :label="t('employee.excelLabel')"></Button>
         </div>
         <TitleCommon :title="t('page.userCreate')" />
+        
         <div class="lighten-4 rounded">
             <div class="p-4 border-search pb-3">
                 <div class="key_search">
                     <span class="text-field-search">{{ t('employee.keywordSearch') }}</span>
                     <div class="p-inputgroup flex-1">
-                        <InputText class="w-full" v-model="storeUser.getParamSearch.search_text" :placeholder="t('employee.keywordSearch')" />
-                        <ButtonClearCommon v-if="storeUser.getParamSearch.search_text" :clearInput="() => clearInput('storeUser.getParamSearch.search_text') " />
+                        <InputText class="w-full" v-model="storeUser.getFilterValue.search_text" :placeholder="t('employee.keywordSearch')" />
+                        <ButtonClearCommon v-if="storeUser.getFilterValue.search_text" :clearInput="() => clearInput('storeUser.getFilterValue.search_text') " />
                     </div>
                 </div>
             
@@ -51,7 +52,7 @@
                     <div class="grid align-items-center">
                         <div class="col-3">
                             <div class="p-inputgroup">
-                                <Dropdown v-model="flagRadio" :options="DEFAULT.FLAG_ITEM" :placeholder="t('employee.selectDateItem')"
+                                <Dropdown v-model="flagRadio" :options="DEFAULT.STATUS_ITEM" :placeholder="t('employee.selectDateItem')"
                                     optionLabel="label" class="w-full md:w-14rem" @change="handelSearchType" />
                                 <ButtonClearCommon v-if="flagRadio" :clearInput="() => clearInput('flagRadio')" />
                             </div>
@@ -59,12 +60,12 @@
                         <div class="col-3 flex align-items-center">
                             <div class="px-4">
                                 <RadioButton v-model="flagValue" inputId="ingredient1" :name="t('employee.active')" :disabled="!flagRadio"
-                                    value="1" @change="handelChangeFlag" />
+                                    value = "1" @change="handelChangeFlag" />
                                 <label for="ingredient1" class="ml-2 white-space-nowrap">{{ t('employee.active') }}</label>
                             </div>
                             <div class="px-4">
                                 <RadioButton v-model="flagValue" inputId="ingredient2" :name="t('employee.inactive')" :disabled="!flagRadio"
-                                    value="0" @change="handelChangeFlag" />
+                                    value = "0" @change="handelChangeFlag" />
                                 <label for="ingredient2" class="ml-2 white-space-nowrap">{{ t('employee.inactive') }}</label>
                             </div>
                         </div>
@@ -239,36 +240,26 @@ const downloadCSV = async (type: number, name: string, ext: string) => {
     console.log(1)
 };
 
-const checkNumeric = (event: any) => {
-  const keyCode = event.keyCode;
-  if (keyCode < 48 || keyCode > 57) {
-    event.preventDefault();
-  }
-};
 const handelSearchType = async () => {
- if (selectedDate.value) {
-    storeUser.getParamSearch.date_type = selectedDate.value.value;
-  } else if (selectedFlag.value) {
-    console.log(selectedFlag.value.value)
-    storeUser.getParamSearch.role = selectedFlag.value.value;
+  if(selectedFlag.value) {
+    storeUser.getFilterValue.role = selectedFlag.value.value;
     storeUser.getListUser();
   }else if(flagValue.value){
-    console.log(flagValue)
-    storeUser.getParamSearch.status = flagValue.value.value;
+    console.log(flagValue.value)
+    storeUser.getFilterValue.status = flagValue.value;
     storeUser.getListUser();
   }
 };
 const handelChangeFlag = async () => {
-  storeUser.getParamSearch.status = flagValue.value;
-  console.log(flagValue.value)
+  storeUser.getFilterValue.status = Number(flagValue.value);
   storeUser.getListUser();
 };
 
 watch(
-  () => storeUser.getParamSearch.search_text,
+  () => storeUser.getFilterValue.search_text,
   (value) => {
     setTimeout(function () {
-      if (value === storeUser.getParamSearch.search_text) {
+      if (value === storeUser.getFilterValue.search_text) {
         storeUser.getListUser();
       }
     }, 1000);
@@ -276,29 +267,28 @@ watch(
 );
 
 const handleChangeToStart = async () => {
-    storeUser.getParamSearch.start_date = format(
+    storeUser.getFilterValue.startDate = format(
       new Date(startMonth.value),
-      CONST.FORMAT_DATE
+      CONST.DATE_FORMAT
     );
     storeUser.getListUser();
   
 };
 const handleChangeToEnd = async () => {
-    storeUser.getParamSearch.end_date = format(
+    storeUser.getFilterValue.endDate = format(
       new Date(endMonth.value),
-      CONST.FORMAT_DATE
+      CONST.DATE_FORMAT
     );
     storeUser.getListUser();
 };
 const reloadSearch = () => {
-  const { getParamSearch }: any = storeUser;
-  Object.keys(getParamSearch).forEach(
-    (key) => (getParamSearch[key] = undefined)
+  const { getFilterValue }: any = storeUser;
+  Object.keys(getFilterValue).forEach(
+    (key) => (getFilterValue[key] = undefined)
   );
   [
     startMonth,
     endMonth,
-
     selectedDate,
     selectedNumbericType,
     selectedFlag,
@@ -307,41 +297,36 @@ const reloadSearch = () => {
   storeUser.getListUser();
 };
 const clearInput = (inputName: any) => {
-    console.log(selectedNumbericType);
+    console.log(inputName);
   if (inputName === "start_date") {
     startMonth.value = "";
-    storeUser.getParamSearch.start_date = null;
+    storeUser.getFilterValue.startDate = null;
     storeUser.getListUser();
   } else if (inputName === "end_date") {
-    storeUser.getParamSearch.end_date = null;
+    storeUser.getFilterValue.endDate = null;
     endMonth.value = "";
     storeUser.getListUser();
   } else if (inputName === "flagRadio") {
-    storeUser.getParamSearch.status = undefined;
+    storeUser.getFilterValue.status = null;
+    console.log(flagRadio, flagValue)
     flagRadio.value = null;
+    flagValue.value = null;
     flagRadio.value = "";
     storeUser.getListUser();
   } else if (inputName === "selectedDate") {
     selectedDate.value = "";
     storeUser.getParamSearch.date_type = undefined;
-    storeUser.getParamSearch.start_date = undefined;
-    storeUser.getParamSearch.end_date = undefined;
+    storeUser.getFilterValue.startDate = undefined;
+    storeUser.getFilterValue.endDate = undefined;
     startMonth.value = "";
     endMonth.value = "";
     storeUser.getListUser();
-  } else if (inputName === "storeUser.getParamSearch.search_text") {
-    storeUser.getParamSearch.search_text = "";
-    storeUser.getListUser();
+  } else if (inputName === "storeUser.getFilterValue.search_text") {
+    storeUser.getFilterValue.search_text = "";
   } else if (inputName === "selectedFlag") {
-    storeUser.getParamSearch.role_type = undefined;
+    storeUser.getFilterValue.role = null;
     flagValue.value = null;
-    selectedFlag.value = "";
-    storeUser.getListUser();
-  } else if (inputName === "storeUser.getParamSearch.start_number") {
-    storeUser.getParamSearch.start_number = undefined;
-    storeUser.getListUser();
-  } else if (inputName === "storeUser.getParamSearch.end_number") {
-    storeUser.getParamSearch.end_number = undefined;
+    selectedFlag.value = null;
     storeUser.getListUser();
   }
 };

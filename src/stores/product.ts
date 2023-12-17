@@ -6,15 +6,26 @@ import { da } from "date-fns/locale";
 
 export interface Product {
   id?: number;
-  product_name: string;
-  code: string;
+  productName: string;
+  productCode: string;
   description: string;
-  image: string;
+  productImage: string;
   price: string;
   category: string;
   quantity: number;
-  rating: number;
-  inventoryStatus: string;
+  average_rating: number;
+  status: string;
+}
+
+export interface FormProduct {
+  file: File;
+  productName: string;
+  description: string;
+  price: string;
+  category: string;
+  quantity: string;
+  average_rating: number;
+  status: number;
 }
 
 export interface ParamsSearch {
@@ -31,6 +42,7 @@ interface ProductStore {
   product: Product[];
   paramSearch: ParamsSearch;
   pagination: Pagination;
+  formProduct: FormProduct;
 }
 
 export const useProductStore = defineStore({
@@ -39,17 +51,27 @@ export const useProductStore = defineStore({
     product: [
       {
         id: 0,
-        product_name: "",
-        code: "",
+        productName: "",
+        productCode: "",
         description: "",
-        image: "",
+        productImage: "",
         price: "",
         category: "",
         quantity: 1,
-        rating: 5,
-        inventoryStatus: DEFAULT.INVENTORY_STATUS[1].label,
+        average_rating: 5,
+        status: DEFAULT.INVENTORY_STATUS[1].label,
       },
     ],
+    formProduct: {
+      file: null,
+      productName: '',
+      description: '',
+      price: '',
+      category: '',
+      quantity: '10',
+      average_rating: 5,
+      status: 2,
+    },
     paramSearch: {},
     pagination: {
       currentPage: 1,
@@ -61,59 +83,30 @@ export const useProductStore = defineStore({
     getProducts: (state) => state.product,
     getPagination: (state) => state.pagination,
     getParamSearch: (state) => state.paramSearch,
+    getFormProduct: (state) => state.formProduct
   },
   actions: {
     async getListProduct(page?: number) {
-      this.product = [
-        {
-          id: 11,
-          code: "plb34234v",
-          product_name: "Gold Phone Case",
-          description: "Product Description",
-          image: "../../src/assets/default.png",
-          price: "222",
-          category: "Accessories",
-          quantity: 0,
-          inventoryStatus: "OUTOFSTOCK",
-          rating: 4,
-        },
-        {
-          id: 22,
-          code: "4920nnc2d",
-          product_name: "Green Earbuds",
-          description: "Product Description",
-          image: "../../src/assets/default.png",
-          price: "89",
-          category: "Electronics",
-          quantity: 23,
-          inventoryStatus: "INSTOCK",
-          rating: 4,
-        },
-        {
-          id: 32,
-          code: "4920nnc2d",
-          product_name: "Green Earbuds",
-          description: "Product Description",
-          image: "../../src/assets/default.png",
-          price: "89",
-          category: "Electronics",
-          quantity: 23,
-          inventoryStatus: "INSTOCK",
-          rating: 4,
-        },
-        {
-          id: 52,
-          code: "4920nnc2d",
-          product_name: "Green Earbuds",
-          description: "Product Description",
-          image: "../../src/assets/default.png",
-          price: "89",
-          category: "Electronics",
-          quantity: 23,
-          inventoryStatus: "LOWSTOCK",
-          rating: 4,
-        },
-      ];
+      const listProduct = await api.get(ApiConstant.GET_PRODUCT_LIST);
+      const statusMap = {
+        1: 'INSTOCK',
+        2: 'LOWSTOCK',
+        3: 'OUTOFSTOCK',
+      };
+    
+      const updatedProductList = listProduct.data.content.map(product => ({
+        ...product,
+        productImage: `http://localhost:8084/api/product/images/${product.productImage}`,
+        status: statusMap[product.status] || 'Unknown',
+      }));
+    
+      this.product = updatedProductList;
+    },
+
+      async apiCreateProduct(data: FormProduct){
+        const res = await api.post(ApiConstant.CREATE_PRODUCT,data);
+        await this.getListProduct();
+        return res
     },
   },
 });

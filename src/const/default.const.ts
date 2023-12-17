@@ -8,7 +8,7 @@ export const USER_ROLE = [
         value: 2,
     },
 ];
-export const FLAG_ITEM = [
+export const STATUS_ITEM = [
     {
       label: 'Active',
       value: 1,
@@ -21,11 +21,11 @@ export const FLAG_ITEM = [
 
 export const DATE_ITEM = [
     {
-      label: 'Start day',
+      label: '시작일',
       value: 'created_at',
     },
     {
-      label: 'date_of_birth',
+      label: '생일',
       value: 'date_of_birth',
     },
 ];
@@ -68,4 +68,11 @@ export const INVENTORY_STATUS = [
     label: 'INSTOCK',
     value: 3,
   },
+];
+
+export const CATEGORY_OPTION = [
+  { value: "Smartphone", label: "Smartphone" },
+  { value: "Clothing", label: "Clothing" },
+  { value: "Electronics", label: "Electronics" },
+  { value: "Fitness", label: "Fitness" },
 ];

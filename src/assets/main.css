@@ -180,3 +180,20 @@ span.p-column-title {
 .p-button.p-button{
   --button-bg-hover: #2B9DCA
 }
+
+
+button.p-button.p-component.p-button-icon-only.p-button-danger.p-button-rounded.p-button-text.p-fileupload-file-remove {
+  background: #fff;
+  border-radius: 50%;
+  border: 1px solid;
+  width: 25px;
+  height: 25px;
+}
+img.p-fileupload-file-thumbnail {
+  width: 50%;
+  max-width: 130px;
+}
+.p-fileupload-file {
+  gap: 20px;
+  
+}

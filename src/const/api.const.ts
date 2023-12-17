@@ -61,7 +61,7 @@ export const GET_PROFILE =  "/api/employee/current-employee";
 export const UPDATE_PROFILE = "/api/auth/profile"
 export const GET_LIST_USER =  "/api/users";
 export const GET_DETAIL_USER = (id: number) => `/api/users/${id}`;
-export const CREATE_USER = "/api/users";
+
 export const UPDATE_USER = (id: number) => `/api/users/${id}`;
 export const DELETE_USER = (id: number) => `/api/users/${id}`;
 
@@ -72,3 +72,6 @@ export const GET_EMPLOYEE_DETAIL = (id: number) => `/api/employee/${id}`;
 export const GET_DETAIL_TEACHER = (id: number) => `/api/teachers/${id}`;
 export const UPDATE_TEACHER = (id: number) => `/api/teachers/${id}`;
 
+//product
+export const GET_PRODUCT_LIST =  "/api/product/list";
+export const CREATE_PRODUCT = "/api/product/add";
