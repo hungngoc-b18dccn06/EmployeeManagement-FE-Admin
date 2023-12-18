@@ -9,22 +9,7 @@ import { useRoute, useRouter } from "vue-router";
 const requestStore = useRequestStore();
 const userStore = useUserStore();
 const router = useRouter();
-watch(
-  () => requestStore.error,
-  (newValue) => {
-    if (!newValue) {
-      return;
-    }
-    const message: any = newValue?.response?.data;
-    toast.add({
-      severity: "error",
-      life: 3000,
-      group: "message",
-      closable: false,
-      contentStyleClass: "py-1",
-    });
-  }
-);
+
 watch(
   () => requestStore.getIsFetcing.length,
   (newValue) => (document.body.style.overflowY = newValue ? "hidden" : ""),

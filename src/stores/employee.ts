@@ -49,6 +49,7 @@ interface FormEmployee {
     employeeid: string;
     phone: string;
     email: string;
+    status: number;
     role: number;
     password?: string;
 }
@@ -92,6 +93,7 @@ export const useUserStore = defineStore({
                 employeeid: '',
                 email: '',
                 phone: '',
+                status: DEFAULT.STATUS_ITEM[0].value,
                 role: DEFAULT.USER_ROLE[0].value,
             },
             filterValue: {
@@ -159,5 +161,39 @@ export const useUserStore = defineStore({
             this.formUser = response.data;
             console.log(response);
         },
+
+        async dowloadEmployee(type : any, name: any, ext: any) {
+            try {
+                const requestData = {
+                    filterValue: this.filterValue,
+                    sort: "",
+                    pageSize: "10",
+                    pageIndex: "0",
+                    ...this.paramSearch
+                };
+        
+                let response;
+        
+                if (type === 1) {
+                    response = await api.post(ApiConstant.EXPORT_CSV, requestData, {
+                        responseType: 'blob',
+                    });
+                } else if (type === 3) {
+                    response = await api.post(ApiConstant.EXPORT_EXCEL, requestData, {
+                        responseType: 'blob',
+                    });
+                }
+                const blob = new Blob([response.data], { type: 'application/octet-stream' });
+        
+                const link = document.createElement('a');
+                link.href = window.URL.createObjectURL(blob);
+                link.download = `${name}.${ext}`;
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+            } catch (error) {
+                console.error('Error downloading file:', error);       
+            }
+        }
     }
 })

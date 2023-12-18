@@ -72,10 +72,10 @@ defineExpose({
     <div class="col-10">
       <div class="grid mt-3">
         <div class="title-card col-4">
-          <label class="title-field mt-2 required">{{t('user.employee_name')}}</label>
+          <label class="title-field mt-2 required">{{t('employee.employee_name')}}</label>
         </div>
         <div class="col-4">
-          <label class="d-block mb-1 font-weight-bold">{{t('user.employee_name')}}</label>
+          <label class="d-block mb-1 font-weight-bold">{{t('employee.employee_name')}}</label>
           <Field
             :class="{ 'is-invalid': errors.employeename }"
             name="employeename"
@@ -85,7 +85,7 @@ defineExpose({
             <div class="p-inputgroup">
               <InputText
                 class="w-full"
-                :placeholder="t('user.employee_name')"
+                :placeholder="t('employee.employee_name')"
                 v-bind="field"
                 :modelValue="value"
               />
@@ -119,7 +119,7 @@ defineExpose({
       </div>
       <div class="grid mt-6">
         <div class="title-card col-4">
-          <label class="title-field inline-block mt-2 required">{{ t('user.employeeid') }}</label>
+          <label class="title-field inline-block mt-2 required">{{ t('employee.employeeid') }}</label>
         </div>
         <div class="col-8">
           <Field
@@ -131,7 +131,7 @@ defineExpose({
             <div class="p-inputgroup">
               <InputText
                 class="w-full"
-                :placeholder="t('user.employeeid')"
+                :placeholder="t('employee.employeeid')"
                 v-bind="field"
                 :modelValue="value"
               />
@@ -142,7 +142,7 @@ defineExpose({
       </div>
       <div class="grid mt-6">
         <div class="title-card col-4">
-          <label class="title-field inline-block mt-2 required">{{ t('user.phone') }}</label>
+          <label class="title-field inline-block mt-2 required">{{ t('employee.phone') }}</label>
         </div>
         <div class="col-8">
           <Field
@@ -154,7 +154,7 @@ defineExpose({
             <div class="p-inputgroup">
               <InputText
                 class="w-full"
-                :placeholder="t('user.phone')"
+                :placeholder="t('employee.phone')"
                 v-bind="field"
                 :modelValue="value"
               />
@@ -165,7 +165,7 @@ defineExpose({
       </div>
       <div class="grid mt-6">
         <div class="title-card col-4">
-          <label class="title-field">権限設定</label>
+          <label class="title-field">{{ t('employee.role') }}</label>
         </div>
         <div class="col-8">
           <div class="grid">
@@ -179,6 +179,38 @@ defineExpose({
                   name="role"
                   v-slot="{ field, value }"
                   v-model="storeUser.getFormUser.role"
+                >
+                  <label class="cursor-pointer flex align-items-center">
+                    <RadioButton
+                      v-bind="field"
+                      :value="ele.value"
+                      :modelValue="value"
+                    />
+                    <span class="px-2">{{ ele.label }}</span>
+                  </label>
+                </Field>
+              </div>
+            </div>
+            <ErrorMessage class="subtext p-error absolute pt-1" name="is_valid" />
+          </div>
+        </div>
+      </div>
+      <div class="grid mt-6">
+        <div class="title-card col-4">
+          <label class="title-field">{{ t('employee.status') }}</label>
+        </div>
+        <div class="col-8">
+          <div class="grid">
+            <div
+              class="col-12 pl-0"
+              v-for="(ele, i) in DEFAULT.STATUS_ITEM"
+              :key="i"
+            >
+              <div class="field-radiobutton mb-1">
+                <Field
+                  name="status"
+                  v-slot="{ field, value }"
+                  v-model="storeUser.getFormUser.status"
                 >
                   <label class="cursor-pointer flex align-items-center">
                     <RadioButton

@@ -43,8 +43,17 @@ export interface ResponseLogin {
   refresh_token: string;
 }
 
+export interface RequestRegist{
+  employeeid: String,
+  employeename: String,
+  email: String,
+  phone: String,
+  password: String
+}
+
 //ROUTERS
 export const LOGIN = "/api/employee/login";
+export const REGISTER = "/api/employee/register";
 export const LOGOUT = "/api/employee/logout";
 // @ts-ignore
 export const CHECK_TOKEN_EXPIRED = (token:any) => `/api/auth/check-token-expired?token=${token}`;
@@ -71,7 +80,9 @@ export const GET_EMPLOYEE_LIST =  "/api/employee/list";
 export const GET_EMPLOYEE_DETAIL = (id: number) => `/api/employee/${id}`;
 export const GET_DETAIL_TEACHER = (id: number) => `/api/teachers/${id}`;
 export const UPDATE_TEACHER = (id: number) => `/api/teachers/${id}`;
-
+export const EXPORT_EXCEL =  "/api/employee/export-excel";
+export const EXPORT_CSV =  "/api/employee/export-csv";
 //product
 export const GET_PRODUCT_LIST =  "/api/product/list";
 export const CREATE_PRODUCT = "/api/product/add";
+

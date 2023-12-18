@@ -8,7 +8,7 @@ import axios, {AxiosError} from "axios";
 const RESPONSE_TIMEOUT = 30000;
 
 const api = axios.create({
-  baseURL: 'http://localhost:8084',
+  baseURL: 'http://localhost:8085',
   headers: {
     "Content-Type": "application/json",
   },

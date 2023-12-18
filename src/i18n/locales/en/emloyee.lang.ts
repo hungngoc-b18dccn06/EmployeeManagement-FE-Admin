@@ -22,12 +22,15 @@ const EmployeeLang = {
   dateItemLabel: "Date Filter",
   userRoleLabel: "Role System",
   employeeid: 'EmployeeID',
+  employee_name: 'Employee Name',
   employeename: 'Employee Name',
   email: 'Email',
   role: 'Role',
   phone: 'Phone Number',
   status: 'Status',
+  excelName: 'Employee Management',
   reload: 'Reload',
+  
   };
   export default EmployeeLang;
   
