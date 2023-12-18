@@ -96,7 +96,7 @@ export const useProductStore = defineStore({
     
       const updatedProductList = listProduct.data.content.map(product => ({
         ...product,
-        productImage: `http://localhost:8084/api/product/images/${product.productImage}`,
+        productImage: `http://localhost:8085/api/product/images/${product.productImage}`,
         status: statusMap[product.status] || 'Unknown',
       }));
     

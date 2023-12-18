@@ -45,6 +45,26 @@ const MessageLang =  {
     categoryDuplicate: "카테고리가 중복되었습니다.",
 
     validateStartNumber: "종료 값은 시작 값 이상으로 설정하세요.",
-    validateEndNumber: "종료 값은 시작 값 이상으로 설정하세요."
+    validateEndNumber: "종료 값은 시작 값 이상으로 설정하세요.",
+    passwordsMustMatch: "확인 비밀번호가 일치하지 않습니다",
+
+    idLength: 'ID는 최소 4자 이상이어야 합니다',
+    idRequired: 'ID가 필요합니다',
+    passwordPattern: '비밀번호는 문자, 숫자 및 특수 문자만 포함해야 합니다: !@#$%^&*',
+    passwordUppercase: '비밀번호에는 대문자가 하나 이상 포함되어야 합니다',
+    passwordLowercase: '비밀번호에는 소문자가 하나 이상 포함되어야 합니다',
+    passwordNumber: '비밀번호에는 숫자가 하나 이상 포함되어야 합니다',
+    passwordSpecialChar: '비밀번호에는 다음 특수 문자 중 하나 이상 포함되어야 합니다: !@#$%^&*',
+    passwordConsecutive: '비밀번호는 연속으로 3자 이상 포함될 수 없습니다',
+    passwordLengthMin: '비밀번호는 최소 10자 이상이어야 합니다',
+    passwordLengthMax: '비밀번호는 최대 20자를 초과할 수 없습니다',
+    
+    passwordMatch: '비밀번호가 일치하지 않습니다',
+    namePattern: '이름은 문자와 공백만 포함해야 합니다',
+    nameRequired: '이름이 필요합니다',
+    phonePattern: '전화번호는 숫자만 포함해야 합니다',
+    phoneRequired: '전화번호가 필요합니다',
+    emailFormat: '유효하지 않은 이메일 형식입니다',
+    emailDomain: '유효하지 않은 이메일 도메인입니다'
 }
 export default MessageLang;

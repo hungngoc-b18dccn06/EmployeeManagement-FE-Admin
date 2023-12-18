@@ -49,10 +49,6 @@ export const GENDER = [
     },
 ];
 
-export const OPTION_LANGUAGE = [
-  { label: '한국어', value: 'kor', imgSrc: 'src/assets/img/kor8.jpg' },
-  { label: 'English', value: 'en', imgSrc: 'src/assets/img/en8.png' }
-];
 
 
 export const INVENTORY_STATUS = [

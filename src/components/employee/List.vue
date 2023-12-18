@@ -4,7 +4,7 @@
             <Button class="p-button-sm white-space-nowrap download mr-2" icon="pi pi-download mr-2"
                 @click="downloadCSV(DEFAULT.EXPORT_TYPE.CSV, 'CSV出力', 'csv')" :label="t('employee.csvLabel')"></Button>
             <Button class="p-button-sm white-space-nowrap download mr-2" icon="pi pi-download mr-2"
-                @click="downloadCSV(DEFAULT.EXPORT_TYPE.EXCEL_TOTAL, '집계 출력', 'xlsx')" :label="t('employee.excelLabel')"></Button>
+                @click="downloadCSV(DEFAULT.EXPORT_TYPE.EXCEL_TOTAL, t('employee.excelName') , 'xlsx')" :label="t('employee.excelLabel')"></Button>
         </div>
         <TitleCommon :title="t('page.userCreate')" />
         
@@ -151,6 +151,7 @@ import { useI18n } from "vue-i18n";
 import * as yup from "yup";
 import { number } from "yup";
 import { format } from "date-fns";
+import axios from 'axios';
 const router = useRouter();
 const storeUser = useUserStore();
 const idUser = ref(0);
@@ -237,8 +238,9 @@ const cancel = () => {
     closeModal();
 }
 const downloadCSV = async (type: number, name: string, ext: string) => {
-    console.log(1)
+    storeUser.dowloadEmployee(type, name, ext);
 };
+
 
 const handelSearchType = async () => {
   if(selectedFlag.value) {

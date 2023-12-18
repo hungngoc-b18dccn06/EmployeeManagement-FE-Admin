@@ -23,12 +23,14 @@ const EmployeeLang = {
     dateItemLabel: "날짜 필터",
     userRoleLabel: "시스템 역할",
     employeeid: '사원 번호',
+    employee_name: '사원 이름',
     employeename: '사원 이름',
     email: '이메일',
     role: '역할',
     phone: '전화번호',
     status: '상태',
-    reload: '재장전하다'
+    reload: '재장전하다',
+    excelName: '직원 관리',
   };
   export default EmployeeLang;
   

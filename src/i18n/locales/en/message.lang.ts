@@ -43,5 +43,23 @@ const MessageLang = {
     phoneNumberRequired: "The phone number is malformed.",
     passwordNotMatch: "Password confirmations do not match.",
     categoryDuplicate: "Duplicate category.",
+    passwordsMustMatch: "Confirmation password does not match !",
+    idLength: 'ID must be at least 4 characters long',
+    idRequired: 'ID is required',
+    passwordPattern: 'Password must only contain letters, numbers, and special characters: !@#$%^&*',
+    passwordUppercase: 'Password must contain at least one uppercase letter',
+    passwordLowercase: 'Password must contain at least one lowercase letter',
+    passwordNumber: 'Password must contain at least one number',
+    passwordSpecialChar: 'Password must contain at least one of the following special characters: !@#$%^&*',
+    passwordConsecutive: 'Password must not contain more than 3 consecutive characters',
+    passwordLengthMin: 'Password must be at least 10 characters long',
+    passwordLengthMax: 'Password must not exceed 20 characters',
+    passwordMatch: 'Passwords must match',
+    namePattern: 'Name must only contain letters and spaces',
+    nameRequired: 'Name is required',
+    phonePattern: 'Phone number must only contain numbers',
+    phoneRequired: 'Phone number is required',
+    emailFormat: 'Invalid email format',
+    emailDomain: 'Invalid email domain'
 }
 export default MessageLang;

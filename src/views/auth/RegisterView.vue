@@ -10,9 +10,26 @@
                        Register Page
                       </div>
                       <div class="field field-input my-5">
+                          <Field name="employeeid" v-slot="{meta: metaField, field, errorMessage}">
+                              <div class="p-inputgroup common-group">
+                              <span class ="w-span">EmployeeID: </span>
+                              <InputText
+                                  v-bind="field"
+                                  type="text"
+                                  :class="{'p-invalid': errorMessage && !metaField.valid && metaField.touched}"
+                                  :placeholder="'EmployeeID'"
+                                  autocomplete="off"
+                              />
+                              </div>
+                              <div class="absolute line-height-1 pt-2">
+                                <small v-if="errorMessage && !metaField.valid && metaField.touched" class="p-error">{{ errorMessage }}</small>
+                              </div>
+                          </Field>
+                      </div>
+                      <div class="field field-input my-5">
                           <Field name="email" v-slot="{meta: metaField, field, errorMessage}">
                               <div class="p-inputgroup common-group">
-                              <span class ="w-span">ID: </span>
+                              <span class ="w-span">Email: </span>
                               <InputText
                                   v-bind="field"
                                   type="text"
@@ -51,7 +68,7 @@
                           </Field>
                       </div>
                       <div class="field-input custom-password my-5 pb-1">
-                          <Field name="password" v-slot="{meta: metaField, field, errorMessage}">
+                          <Field name="password_confirm" v-slot="{meta: metaField, field, errorMessage}">
                             <div class="p-inputgroup common-group">
                               <span class = "w-span">
                                   Password Confirm
@@ -75,14 +92,14 @@
                           </Field>
                       </div>
                       <div class="field field-input my-5">
-                          <Field name="email" v-slot="{meta: metaField, field, errorMessage}">
+                          <Field name="employeename" v-slot="{meta: metaField, field, errorMessage}">
                               <div class="p-inputgroup common-group">
-                              <span class ="w-span">Name: </span>
+                              <span class ="w-span">Employee Name: </span>
                               <InputText
                                   v-bind="field"
                                   type="text"
                                   :class="{'p-invalid': errorMessage && !metaField.valid && metaField.touched}"
-                                  :placeholder="'Name'"
+                                  :placeholder="'EmployeeName'"
                                   autocomplete="off"
                               />
                               </div>
@@ -93,7 +110,7 @@
                       </div>
 
                       <div class="field field-input my-5">
-                          <Field name="email" v-slot="{meta: metaField, field, errorMessage}">
+                          <Field name="phone" v-slot="{meta: metaField, field, errorMessage}">
                               <div class="p-inputgroup common-group">
                               <span class ="w-span">Phone: </span>
                               <InputText
@@ -101,24 +118,6 @@
                                   type="text"
                                   :class="{'p-invalid': errorMessage && !metaField.valid && metaField.touched}"
                                   :placeholder="'Phone'"
-                                  autocomplete="off"
-                              />
-                              </div>
-                              <div class="absolute line-height-1 pt-2">
-                                <small v-if="errorMessage && !metaField.valid && metaField.touched" class="p-error">{{ errorMessage }}</small>
-                              </div>
-                          </Field>
-                      </div>
-
-                      <div class="field field-input my-5">
-                          <Field name="email" v-slot="{meta: metaField, field, errorMessage}">
-                              <div class="p-inputgroup common-group">
-                              <span class ="w-span">Email: </span>
-                              <InputText
-                                  v-bind="field"
-                                  type="text"
-                                  :class="{'p-invalid': errorMessage && !metaField.valid && metaField.touched}"
-                                  :placeholder="'Email'"
                                   autocomplete="off"
                               />
                               </div>
@@ -135,6 +134,7 @@
                 class="btn-submit w-full mb-2 p-0"
                 type="submit"
               />
+              <Toast></Toast>
               <router-link
                 :to="PAGE_ROUTE.LOGIN"
                 class="text-color underline font-semibold mt-4"
@@ -152,16 +152,17 @@
   import api from "@/api";
   import Popup from "@/components/PopupConfirm.vue";
   import Sidebar from "@/layout/AuthSidebar.vue";
-  import CONST, { ACCESS_TOKEN, AppConstant, ApiConstant, REMIND } from "@/const";
-  
-  import type { ResponseLogin } from "@/const/api.const";
+  import CONST, { ACCESS_TOKEN, ApiConstant } from "@/const";
+  import type { RequestRegist } from "@/const/api.const";
   import PAGE_ROUTE from "@/const/pageRoute";
   import type { AxiosResponse } from "axios";
   import { useToast } from "primevue/usetoast";
   import { onMounted, reactive, ref } from "vue";
   import { useRouter } from "vue-router";
   import { Field, useForm } from "vee-validate";
+  import { useI18n } from "vue-i18n";
   import * as yup from "yup";
+  import Toast from 'primevue/toast';
   const router = useRouter();
   const state = reactive({
     loading:false,
@@ -170,63 +171,100 @@
   const submitted = ref(false);
   const showPass = ref(false);
   const toast = useToast();
+  
+  const { t } = useI18n();
   onMounted(() => {
     localStorage.removeItem(ACCESS_TOKEN);
-    const info = localStorage.getItem(REMIND);
-    if (info?.length) {
-      // state.email = "";
-      // state.password = "";
-    }
   });
-  
   const openModal = () => {
     modal.value?.open();
   };
+  const schema = yup.object({
+    employeeid: yup
+      .string()
+      .min(4, t('message.idLength'))
+      .required(t('message.idRequired')),
+    password: yup
+      .string()
+      .matches(/^[A-Za-z0-9!@#$%^&*]*$/, t('message.passwordPattern'))
+      .matches(/[A-Z]/, t('message.passwordUppercase'))
+      .matches(/[a-z]/, t('message.passwordLowercase'))
+      .matches(/[0-9]/, t('message.passwordNumber'))
+      .matches(/[!@#\$%\^&\*]/, t('message.passwordSpecialChar'))
+      .test('notConsecutive', t('message.passwordConsecutive'), function (value) {
+        return !/(.)\1\1\1/.test(value);
+      })
+      .min(10, t('message.passwordLengthMin'))
+      .max(20, t('message.passwordLengthMax'))
+      .required(t('message.passwordRequired')),
+    password_confirm: yup
+      .string()
+      .oneOf([yup.ref('password'), null], t('message.passwordMatch'))
+      .required(t('message.passwordRequired')),
+    employeename: yup
+      .string()
+      .matches(/^[A-Za-z\s]+$/, t('message.namePattern'))
+      .required(t('message.nameRequired')),
+    phone: yup
+      .string()
+      .matches(/^[0-9]+$/, t('message.phonePattern'))
+      .required(t('message.phoneRequired')),
+    // email: yup
+    //   .string()
+    //   .trim()
+    //   .matches(
+    //   /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/,
+    //   'Invalid email format'
+    // )
+    //   .required(t('message.required'))
+    //   .oneOf(['naver.com', 'daum.net', 'gmail.com', 'nate.com', 'hotmail.com'], t('message.emailDomain')),
+      email: yup
+      .string()
+      .trim()
+      .required(t('message.required'))
+      .email(t('message.emailInvalid'))
+      // .oneOf(['naver.com', 'daum.net', 'gmail.com', 'nate.com', 'hotmail.com'], t('message.emailDomain'))
+      .max(100, t('message.maxLength100')),  
+  });
+
+  const {resetForm, values, errors, handleSubmit} = useForm({
+    validationSchema: schema,
+    initialValues: {
+      email: "",
+      password: "",
+      phone: "",
+      employeeid: "",
+      employeename:"",
+      password_confirm: ""
+    },
+  });
   
-  // const schema = yup.object({
-  //   email: yup
-  //     .string()
-  //     .trim()
-  //     .email(t('message.emailInvalid'))
-  //     .required(t('message.required'))
-  //     .max(100, t('message.maxLength100')),
-  //   password: yup
-  //     .string()
-  //     .matches(CONST.REGEX_PASSWORD, t('message.passwordInvalid'))
-  //     .required(t('message.required'))
-  // });
-  
-  // const {resetForm, values, errors, handleSubmit} = useForm({
-  //   validationSchema: schema,
-  //   initialValues: {
-  //     email: "",
-  //     password: "",
-  //   },
-  // });
-  
-  // const handleSubmitForm = handleSubmit(async (data) => {
-  //   submitted.value = true;
-  //   const user = {
-  //     ...data
-  //     // role: "user",
-  //   };
-  //   state.loading = true;
-  //   try {
-  //     const reponse: AxiosResponse<ResponseLogin> = await api.post(
-  //       ApiConstant.LOGIN,
-  //       user
-  //     );
-  //     await loginSuccessCallback(reponse.data.data.access_token);
-  //   } catch (e:any) {
-  //     console.log(e);
-  //   } finally {
-  //     state.loading = false;
-  //   }
-  // });
-  
-  async function loginSuccessCallback(accessToken: string) {
-    localStorage.setItem(ACCESS_TOKEN, accessToken);
-    router.push(PAGE_ROUTE.USER_LIST);
+  const handleSubmitForm = handleSubmit(async (data) => {
+  submitted.value = true;
+  const user = {
+    ...data,
+  };
+  state.loading = true;
+  try {
+    const response: AxiosResponse<RequestRegist> = await api.post(
+      ApiConstant.REGISTER,
+      user
+    );
+    if (response.status == 500) {
+      toast.add({ group: "message", severity: "error", summary: response.data, life: CONST.TIME_DELAY, closable: false });
+    } else if (response.status === 200) {
+      toast.add({ group: "message", severity: "success", summary: response.data, life: CONST.TIME_DELAY, closable: false });
+      await registSuccess();
+    }
+  } catch (e) {
+    toast.add({ group: "message", severity: "error", summary: e.response.data, life: CONST.TIME_DELAY, closable: false });
+  } finally {
+    state.loading = false;
+  }
+});
+
+  async function registSuccess() {
+    router.push('/auth/signin');
   }
   </script>
   
