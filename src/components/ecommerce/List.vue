@@ -480,13 +480,13 @@ const initFilters = () => {
           </div>
           <template #footer>
             <Button
-              label="{{ t('product.no') }}"
+              :label="t('product.no')"
               icon="pi pi-times"
               class="p-button-text"
               @click="deleteProductsDialog = false"
             />
             <Button
-              label="{{ t('product.yes') }}"
+              :label="t('product.yes')"
               icon="pi pi-check"
               class="p-button-text"
               @click="deleteSelectedProducts"
