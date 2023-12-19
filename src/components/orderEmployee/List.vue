@@ -11,28 +11,6 @@ const toast = useToast()
 const { t } = useI18n()
 
 const storeProduct = useProductStore()
-const picklistValue = ref([
-    [
-        { name: 'San Francisco', code: 'SF' },
-        { name: 'London', code: 'LDN' },
-        { name: 'Paris', code: 'PRS' },
-        { name: 'Istanbul', code: 'IST' },
-        { name: 'Berlin', code: 'BRL' },
-        { name: 'Barcelona', code: 'BRC' },
-        { name: 'Rome', code: 'RM' }
-    ],
-    []
-]);
-
-const orderlistValue = ref([
-    { name: 'San Francisco', code: 'SF' },
-    { name: 'London', code: 'LDN' },
-    { name: 'Paris', code: 'PRS' },
-    { name: 'Istanbul', code: 'IST' },
-    { name: 'Berlin', code: 'BRL' },
-    { name: 'Barcelona', code: 'BRC' },
-    { name: 'Rome', code: 'RM' }
-]);
 
 const getSeverity = (product) => {
     switch (product.status) {
@@ -106,7 +84,7 @@ const onSortChange = (event) => {
                                 <div class="flex-1 text-center md:text-left">
                                     <div class="font-bold text-2xl">{{ item.productName }}</div>
                                     <div class="mb-3">{{ item.description }}</div>
-                                    <Rating :modelValue="item.rating" :readonly="true" :cancel="false" class="mb-2"></Rating>
+                                    <Rating :modelValue="item.average_rating" :readonly="true" :cancel="false" class="mb-2"></Rating>
                                     <div class="flex align-items-center">
                                         <i class="pi pi-tag mr-2"></i>
                                         <span class="font-semibold">{{ item.category }}</span>
@@ -115,7 +93,8 @@ const onSortChange = (event) => {
                                 <div class="flex flex-row md:flex-column justify-content-between w-full md:w-auto align-items-center md:align-items-end mt-5 md:mt-0">
                                     <span class="text-2xl font-semibold mb-2 align-self-center md:align-self-end">${{ item.price }}</span>
                                     <Button icon="pi pi-shopping-cart" label="Add to Cart" :disabled="item.status === 'OUTOFSTOCK'" class="mb-2"></Button>
-                                    <span :class="'product-badge status-' + item.status.toLowerCase()">{{ item.status }}</span>
+                                    <Tag :class="'product-badge status-' + item.status.toLowerCase()" :value="item.status" :severity="getSeverity(item)"></Tag>
+                                   
                                 </div>
                             </div>
                         </div>
@@ -171,6 +150,6 @@ const onSortChange = (event) => {
 }
 
 img.w-9.shadow-2.my-3.mx-0 {
-    height: 180px;
+    height: 200px;
 }
 </style>

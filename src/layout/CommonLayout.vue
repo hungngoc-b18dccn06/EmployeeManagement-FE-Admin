@@ -26,12 +26,15 @@ import AppSideBar from "@/layout/AppSidebar.vue";
 import AppFooter from "@/layout/AppFooter.vue";
 import PAGE_ROUTE from "../const/pageRoute";
 import { useI18n } from 'vue-i18n';
-
+import { useUserStore } from '@/stores/employee';
 const route = useRoute();
 const router = useRouter();
+const storeUser = useUserStore();
 const openSidebar = ref(true);
 const { t } = useI18n();
+const roleCurrent = storeUser.getProfile;
 const menuItems = computed(() => {
+
   return [
   {
         items: [
