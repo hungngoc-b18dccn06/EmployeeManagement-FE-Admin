@@ -58,7 +58,17 @@ const menuItems = computed(() => {
           {
             label: t('menu.eCommerce'),
             icon: "pi pi-shopping-cart",
-            to: PAGE_ROUTE.ORDER_COFFEE,
+            to: PAGE_ROUTE.MANAGE_ORDER,
+            public: false,
+          },
+        ],
+      },
+      {
+        items: [
+          {
+            label: t('menu.employee_order'),
+            icon: "pi pi-shopping-cart",
+            to: PAGE_ROUTE.EMPLOYEE_ORDER,
             public: false,
           },
         ],

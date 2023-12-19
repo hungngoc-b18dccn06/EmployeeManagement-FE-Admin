@@ -197,3 +197,8 @@ img.p-fileupload-file-thumbnail {
   gap: 20px;
   
 }
+
+.grid-list-product{
+  display: flex;
+  flex-wrap: wrap;
+}

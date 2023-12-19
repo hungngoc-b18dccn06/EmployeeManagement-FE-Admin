@@ -18,6 +18,8 @@ import DataTable from "primevue/datatable";
 import Chart from 'primevue/chart';
 import Paginator from "primevue/paginator";
 import Column from "primevue/column";
+import DataView from 'primevue/dataview';
+import DataViewLayoutOptions from 'primevue/dataviewlayoutoptions'
 import ColumnGroup from "primevue/columngroup";
 import Row from "primevue/row";
 import Dialog from "primevue/dialog";
@@ -223,6 +225,8 @@ app.component("Column", Column);
 app.component("Row", Row);
 app.component("ColumnGroup", ColumnGroup);
 app.component("InputSwitch", InputSwitch);
+app.component("DataView", DataView);
+app.component("DataViewLayoutOptions", DataViewLayoutOptions);
 app.component("RadioButton", RadioButton);
 app.component("Dropdown", Dropdown);
 app.component("Sidebar", Sidebar);

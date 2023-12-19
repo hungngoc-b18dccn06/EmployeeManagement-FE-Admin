@@ -5,7 +5,8 @@ const enum PAGE_ROUTE {
 
   // USER
   EMPLOYEE_LIST = "/employees",
-  ORDER_COFFEE = "/ecommerce_manage",
+  EMPLOYEE_ORDER = "/ecommerce_order",
+  MANAGE_ORDER = "/ecommerce_manage",
   USER_UPDATE = "/user/:userId/update",
 
 }

@@ -28,7 +28,7 @@ const MenuLang = {
   dashboard: "대시보드",
   employeeList: "직원 목록",
   eCommerce: "전자 상거래",
-
+  employee_order: "LG전자상거래"
 
 };
 export default MenuLang;
