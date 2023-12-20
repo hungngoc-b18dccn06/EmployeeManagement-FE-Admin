@@ -22,6 +22,7 @@ import DataView from 'primevue/dataview';
 import DataViewLayoutOptions from 'primevue/dataviewlayoutoptions'
 import ColumnGroup from "primevue/columngroup";
 import Row from "primevue/row";
+import Badge from 'primevue/badge';
 import Dialog from "primevue/dialog";
 import InputSwitch from "primevue/inputswitch";
 import RadioButton from "primevue/radiobutton";
@@ -235,6 +236,7 @@ app.component("InputNumber", InputNumber);
 app.component("Dialog", Dialog);
 app.component("Avatar", Avatar);
 app.component("Image", Image);
+app.component("Badge", Badge);
 app.component("Menu", Menu);
 app.component("Chart", Chart);
 app.mount("#app");

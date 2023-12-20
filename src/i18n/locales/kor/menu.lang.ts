@@ -27,7 +27,7 @@ const MenuLang = {
   editProfile : "프로필 편집",
   dashboard: "대시보드",
   employeeList: "직원 목록",
-  eCommerce: "전자 상거래",
+  eCommerce: "제품 관리",
   employee_order: "LG전자상거래"
 
 };

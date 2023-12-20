@@ -27,7 +27,7 @@ const MenuLang = {
   editProfile:"Edit Profile",
   dashboard: "Dashboard",
   employeeList: "Employee List",
-  eCommerce: "eCommerce",
+  eCommerce: "Product Management",
   employee_order: "LG e-commerce"
 };
 export default MenuLang;

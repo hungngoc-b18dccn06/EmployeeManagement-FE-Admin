@@ -117,12 +117,14 @@ export const useUserStore = defineStore({
         getFilterValue: (state => state.filterValue)
     },
     actions:{
-        async getListUser(page?: number) {
+        async getListUser(page) {
+            const currentPage = page == null ? 0 : page - 1 ;
+
             const requestData = {
                 filterValue: this.filterValue,
                 sort: "",
-                pageSize: "10",
-                pageIndex: "0",
+                pageSize: 10 ?? this.pagination.total,
+                pageIndex: currentPage,
                 ... this.paramSearch
               };
 
@@ -133,11 +135,13 @@ export const useUserStore = defineStore({
                 ...e,
                 status: e.status === 1 ? "active" : e.status === 0 ? "inactive" : e.status
             }));
+            
             this.pagination = {
-                currentPage: 1,
+                currentPage: currentPage,
                 total: listUser.data.totalElements,
                 perPage: listUser.data.totalPages,
             };
+            console.log(this.pagination)
         },
 
         async getProfileDetail() {
