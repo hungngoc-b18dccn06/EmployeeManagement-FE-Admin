@@ -19,6 +19,7 @@ const ProductLang = {
     save: "저장",
     new: "새 제품 추가",
     export:"엑셀 내보내기",
+    confirm: "삭제 확인",
     dragFile: "업로드할 파일을 여기에 끌어다 놓으세요.",
     no: "아니요",
     yes: "예",

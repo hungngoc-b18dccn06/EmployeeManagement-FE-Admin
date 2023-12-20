@@ -101,11 +101,14 @@ const confirmDeleteProduct = (editProduct) => {
   deleteProductDialog.value = true
 }
 
-const deleteProduct = () => {
-  products.value = products.value.filter((val) => val.id !== product.value.id)
-  deleteProductDialog.value = false
-  product.value = {}
-  toast.add({ severity: 'success', summary: 'Successful', detail: 'Product Deleted', life: 3000 })
+const deleteProduct = async(id) => {
+    const res = await storeProduct.deleteProduct(id);
+    deleteProductDialog.value = false
+    product.value = {}
+    toast.add({group: "message", severity: "success", summary: res.data, life: CONST.TIME_DELAY, closable: false});
+    closeModal();
+    router.push({path: PAGE_ROUTE.USER_LIST});
+
 }
 
 const findIndexById = (id) => {
@@ -135,8 +138,10 @@ const exportCSV = () => {
 const confirmDeleteSelected = () => {
   deleteProductsDialog.value = true
 }
-const deleteSelectedProducts = () => {
+const deleteSelectedProducts = (e) => {
+  console.locale(e)
   products.value = products.value.filter((val) => !selectedProducts.value.includes(val))
+  
   deleteProductsDialog.value = false
   selectedProducts.value = null
   toast.add({ severity: 'success', summary: 'Successful', detail: 'Products Deleted', life: 3000 })
@@ -454,16 +459,16 @@ const initFilters = () => {
           </div>
           <template #footer>
             <Button
-              label="{{ t('product.no') }}"
+              :label="t('product.no')"
               icon="pi pi-times"
               class="p-button-text"
               @click="deleteProductDialog = false"
             />
             <Button
-              label="{{ t('product.yes') }}"
+              :label="t('product.yes')"
               icon="pi pi-check"
               class="p-button-text"
-              @click="deleteProduct"
+              @click="deleteProduct(product.id)"
             />
           </template>
         </Dialog>
@@ -481,6 +486,7 @@ const initFilters = () => {
           <template #footer>
             <Button
               :label="t('product.no')"
+           
               icon="pi pi-times"
               class="p-button-text"
               @click="deleteProductsDialog = false"
@@ -489,7 +495,7 @@ const initFilters = () => {
               :label="t('product.yes')"
               icon="pi pi-check"
               class="p-button-text"
-              @click="deleteSelectedProducts"
+              @click="deleteSelectedProducts(product.id)"
             />
           </template>
         </Dialog>

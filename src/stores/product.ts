@@ -108,5 +108,11 @@ export const useProductStore = defineStore({
         await this.getListProduct();
         return res
     },
+
+    async deleteProduct(id: number) {
+      const res = await api.delete<any>(ApiConstant.DELETE_PRODUCT(id));
+      await this.getListProduct();
+        return res
+  },
   },
 });

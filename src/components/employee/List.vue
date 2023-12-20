@@ -108,21 +108,10 @@
                 <template #loading>
                     {{ $t('user.userLoading') }}
                 </template>
-                <template #header>
-                    <div class="flex justify-content-between align-items-center">
-                        <span class="p-input-icon-left w-5">
-                            <i class="pi pi-search"></i>
-                            <InputText class="w-full" :placeholder="$t('common.search')" />
-                        </span>
-                        <div>
-                            <Button class="white-space-nowrap" @click="gotToCreate" icon="pi pi-plus mr-2"
-                                :label="t('user.userRegister')"></Button>
-                        </div>
-                    </div>
-                </template>
+                
                 <template #footer>
                     <Paginator v-if="storeUser.getPagination.total > 0"
-                        :first="(storeUser.getPagination.currentPage - 1) * storeUser.getPagination.perPage"
+                        :first="(storeUser.getPagination.currentPage) * storeUser.getPagination.perPage"
                         :rows="storeUser.getPagination.perPage" :totalRecords="storeUser.getPagination.total"
                         template="CurrentPageReport FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink RowsPerPageDropdown"
                         :currentPageReportTemplate="AppConstant.CURRENT_PAGE_REPORT_TEMPLATE" @page="changePage">
@@ -204,9 +193,6 @@ const { values, errors, validate } = useForm({
 function gotToDetail(event: any) {
     router.push(`/employee/${event.data.id}/detail`);
 }
-const gotToCreate = () => {
-    router.push(`/employee/create`);
-}
 const filters = ref({
     global: { value: null, matchMode: FilterMatchMode.CONTAINS },
 });
@@ -222,6 +208,7 @@ const deleteUser = (event: any) => {
     modal.value?.open();
 };
 const changePage = async (event: any) => {
+
     storeUser.getListUser(event.page + 1);
 };
 const confirm = async () => {

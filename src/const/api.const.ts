@@ -85,4 +85,6 @@ export const EXPORT_CSV =  "/api/employee/export-csv";
 //product
 export const GET_PRODUCT_LIST =  "/api/product/list";
 export const CREATE_PRODUCT = "/api/product/add";
+export const DELETE_PRODUCT =  (id: number) => `/api/product/delete/${id}`;
+
 
