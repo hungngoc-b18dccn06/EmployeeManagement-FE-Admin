@@ -23,6 +23,8 @@ const ProductLang = {
     dragFile: "업로드할 파일을 여기에 끌어다 놓으세요.",
     no: "아니요",
     yes: "예",
-
+    totalprice: '총 가격',
+    lgEcommerce: "LG전자상거래",
+    totalPrice: "총 가격"
 };
 export default ProductLang;

@@ -43,6 +43,7 @@ const LabelLang = {
   setting: "설정",
   max_30: "30자 이내",
   scope: "입력 가능 범위: {min} ~ {max}",
+  goToOrder: "주문으로 이동"
 };
 
 export default LabelLang;

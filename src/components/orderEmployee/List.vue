@@ -1,17 +1,23 @@
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, watch } from 'vue'
 import { useProductStore } from '@/stores/product'
+import { useCartItemStore } from '@/stores/cart'
+import { useUserStore } from '@/stores/employee'
 import { useToast } from 'primevue/usetoast'
 import Rating from 'primevue/rating'
 import Tag from 'primevue/tag'
 import { useI18n } from 'vue-i18n'
 import CONST, { AppConstant, DEFAULT } from '@/const'
 import Badge from 'primevue/badge'
+
+import OverlayPanel from 'primevue/overlaypanel'
+import { useRoute, useRouter } from "vue-router";
 const toast = useToast()
 const { t } = useI18n()
 
 const storeProduct = useProductStore()
-
+const storeEmployee = useUserStore()
+const storeCart = useCartItemStore()
 const getSeverity = (product) => {
   switch (product.status) {
     case 'INSTOCK':
@@ -27,22 +33,43 @@ const getSeverity = (product) => {
       return null
   }
 }
-
+const op = ref()
 const dataviewValue = ref(null)
 const layout = ref('grid')
 const sortKey = ref(null)
 const sortOrder = ref(null)
 const sortField = ref(null)
+const totalQuantity = ref();
 const sortOptions = ref([
   { label: 'Price High to Low', value: '!price' },
   { label: 'Price Low to High', value: 'price' }
 ])
-
+const router = useRouter();
 onMounted(() => {
   dataviewValue.value = storeProduct.getProducts
   storeProduct.getListProduct()
+  storeCart.getListCart()
 })
+const listItem = storeCart.getCart
+const toggle = (event) => {
+  op.value.toggle(event)
+}
+const addToCart = async (e) => {
+  const formData = new FormData()
+  formData.append('employeeId', storeEmployee.getProfile.id)
+  formData.append('productId', e.id)
+  formData.append('quantity', 1)
 
+  const res = await storeCart.addToCart(formData)
+  storeCart.getListCart()
+  toast.add({
+    group: 'message',
+    severity: 'success',
+    summary: t('notifile.addCartSucceess'),
+    life: CONST.TIME_DELAY,
+    closable: false
+  })
+}
 const onSortChange = (event) => {
   const value = event.value.value
   const sortValue = event.value
@@ -57,17 +84,69 @@ const onSortChange = (event) => {
     sortKey.value = sortValue
   }
 }
+
+watch(() => storeCart.getCart, () => {
+  calculateTotalQuantity();
+}, { deep: true });
+
+function calculateTotalQuantity() {
+  totalQuantity.value = storeCart.getCart.reduce((total, item) => total + item.quantity, 0);
+}
+const toggleAlt = (event) => {
+  op.value.toggle(event)
+  console.log(listItem)
+}
+const goToOrder = () =>{
+  router.push(`/order_detail`);
+}
 </script>
 
 <template>
   <div class="grid">
     <div class="col-12">
       <div class="card">
-        <h2>LG Ecommerce</h2>
+        <h2>{{ t('product.lgEcommerce') }}</h2>
         <div class="badges cart-order">
-          <i badge="2" class="pi pi-shopping-cart p-overlay-badge" style="font-size: 2rem" />
-          <Badge :value="2" class="mr-2" severity="danger"></Badge>
+          <i
+            badge="2"
+            class="pi pi-shopping-cart p-overlay-badge"
+            @click="toggleAlt"
+            style="font-size: 2rem"
+          />
+
+          <Badge :value="totalQuantity" class="mr-2" severity="danger"></Badge>
+          <OverlayPanel ref="op">
+            <div
+              id="list-box"
+              ref="cartList"
+              class="h-full max-w-bd-sm mx-auto relative overflow-auto"
+            >
+              <ul class="px-2 pt-20">
+                <li
+                  v-for="item of storeCart.getCart"
+                  :key="item.cartItemId"
+                  class="text-secondary mb-4"
+                >
+                  <div class="flex text-sm text-secondary dark:text-white font-mont font-bold">
+                    <img
+                    :src="'http://localhost:8085/api/product/images/' + item.productImage"
+                    :alt="item.productImage"
+                    class="my-4 md:my-0 w-9 md:w-10rem shadow-2 mr-5"
+                    />
+                    <div class="mb-2">
+                      <span class="font-bold">{{ t('product.productName') }} : {{ item.productName }}</span><br>
+                      <span class="font-bold">{{ t('product.quantity') }}: {{ item.quantity }}</span><br>
+                      <span class="font-bold">{{ t('product.totalprice') }}:: {{ item.productPrice * item.quantity }} $</span>
+                    </div>
+                  </div>
+                </li>
+              </ul>
+              
+            </div>
+            <Button class="go_order" @click="goToOrder()">{{ t('label.goToOrder') }}<i class="pi pi-fast-forward ml-2"></i></Button>
+          </OverlayPanel>
         </div>
+
         <DataView
           :value="storeProduct.getProducts"
           :layout="layout"
@@ -92,6 +171,7 @@ const onSortChange = (event) => {
               </div>
             </div>
           </template>
+
           <template #list="slotProps">
             <div class="col-12">
               <div
@@ -127,6 +207,7 @@ const onSortChange = (event) => {
                   <Button
                     icon="pi pi-shopping-cart"
                     label="Add to Cart"
+                    @click="addToCart(item)"
                     :disabled="item.status === 'OUTOFSTOCK'"
                     class="mb-2"
                   ></Button>
@@ -141,6 +222,7 @@ const onSortChange = (event) => {
           </template>
 
           <template #grid="slotProps">
+   
             <div class="grid-list-product">
               <div class="col-12 md:col-4" v-for="(item, index) in slotProps.items" :key="index">
                 <div class="card m-3 border-1 surface-border">
@@ -173,6 +255,7 @@ const onSortChange = (event) => {
                     <span class="text-2xl font-semibold">${{ item.price }}</span>
                     <Button
                       icon="pi pi-shopping-cart"
+                      @click="addToCart(item)"
                       :disabled="item.status === 'OUTOFSTOCK'"
                     ></Button>
                   </div>
@@ -206,13 +289,14 @@ img.w-9.shadow-2.my-3.mx-0 {
   height: 200px;
 }
 span.p-badge.p-component.p-badge-no-gutter.p-badge-danger.mr-2 {
-    top: -8px;
-    left: -11px;
+  top: -8px;
+  left: -11px;
 }
 .badges.cart-order {
-    position: relative;
-    margin-bottom: 10px;
-    display: flex;
-    justify-content: end;
+  position: relative;
+  margin-bottom: 10px;
+  display: flex;
+  justify-content: end;
 }
+
 </style>

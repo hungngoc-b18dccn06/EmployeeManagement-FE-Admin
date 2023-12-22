@@ -39,6 +39,7 @@ const LabelLang = {
   ai: "ai",
   setting: "setting",
   scope: "Scope: {min} ~ {max}",
+  goToOrder: "Go To Order"
 };
 
 export default LabelLang;

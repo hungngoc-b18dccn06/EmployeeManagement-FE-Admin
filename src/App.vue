@@ -25,7 +25,7 @@ onMounted(
 )
 </script>
 <template>
-  <div
+  <!-- <div
     v-if="requestStore.getIsFetcing.length"
     class="absolute w-screen h-screen flex align-items-center justify-content-center"
     style="z-index: 99999999"
@@ -33,9 +33,9 @@ onMounted(
     <div
       class="w-screen h-screen"
       style="background-color: black; opacity: 0.15"
-    ></div>
-    <ProgressSpinner class="absolute z-1" />
-  </div>
+    ></div> -->
+    <!-- <ProgressSpinner class="absolute z-1" /> -->
+  <!-- </div> -->
   <Toast group="message" position="top-center">
       <template #message="slotProps">
         <i v-if="slotProps.message.severity == 'error'" class="p-toast-message-icon pi pi-times"></i>
