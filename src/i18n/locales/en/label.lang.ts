@@ -39,6 +39,9 @@ const LabelLang = {
   ai: "ai",
   setting: "setting",
   scope: "Scope: {min} ~ {max}",
+  login: "Login",
+  regist_new_mem: "Register New Member",
+  back_login: 'Back To Login'
 };
 
 export default LabelLang;
