@@ -10,6 +10,12 @@ import CONST, { AppConstant, DEFAULT } from '@/const'
 import { useProductStore } from '@/stores/product'
 import PAGE_ROUTE from '@/const/pageRoute'
 import { useI18n } from 'vue-i18n'
+import { useCartItemStore } from '@/stores/cart'
+
+import InputGroup from 'primevue/inputgroup'
+import InputGroupAddon from 'primevue/inputgroupaddon'
+
+const storeCart = useCartItemStore()
 const toast = useToast()
 const { t } = useI18n()
 const products = ref(null)
@@ -36,11 +42,8 @@ onBeforeMount(() => {
 onMounted(() => {
   products.value = storeProduct.getProducts
   storeProduct.getListProduct()
+  storeCart.getListCart()
 })
-
-const formatCurrency = (value) => {
-  return value.toLocaleString('en-US', { style: 'currency', currency: 'USD' })
-}
 
 const openNew = () => {
   product.value = {}
@@ -88,7 +91,7 @@ const saveProduct = async () => {
   productDialog.value = false
 }
 const onUpload = (event) => {
-    console.log(event)
+  console.log(event)
   producImage.value = event.files
 }
 const editProduct = (editProduct) => {
@@ -101,14 +104,19 @@ const confirmDeleteProduct = (editProduct) => {
   deleteProductDialog.value = true
 }
 
-const deleteProduct = async(id) => {
-    const res = await storeProduct.deleteProduct(id);
-    deleteProductDialog.value = false
-    product.value = {}
-    toast.add({group: "message", severity: "success", summary: res.data, life: CONST.TIME_DELAY, closable: false});
-    closeModal();
-    router.push({path: PAGE_ROUTE.USER_LIST});
-
+const deleteProduct = async (id) => {
+  const res = await storeProduct.deleteProduct(id)
+  deleteProductDialog.value = false
+  product.value = {}
+  toast.add({
+    group: 'message',
+    severity: 'success',
+    summary: res.data,
+    life: CONST.TIME_DELAY,
+    closable: false
+  })
+  closeModal()
+  router.push({ path: PAGE_ROUTE.USER_LIST })
 }
 
 const findIndexById = (id) => {
@@ -141,7 +149,7 @@ const confirmDeleteSelected = () => {
 const deleteSelectedProducts = (e) => {
   console.locale(e)
   products.value = products.value.filter((val) => !selectedProducts.value.includes(val))
-  
+
   deleteProductsDialog.value = false
   selectedProducts.value = null
   toast.add({ severity: 'success', summary: 'Successful', detail: 'Products Deleted', life: 3000 })
@@ -158,42 +166,17 @@ const initFilters = () => {
 <template>
   <div class="grid">
     <div class="col-12">
-      <div class="card">
+      <div class="card order-card">
         <Toast />
-        <Toolbar class="mb-4">
-          <template v-slot:start>
-            <div class="my-2">
-              <Button
-                :label="t('product.new')"
-                icon="pi pi-plus"
-                class="p-button-success mr-2"
-                @click="openNew"
-              />
-            </div>
-          </template>
-
-          <template v-slot:end>
-            <Button
-              :label="t('product.export')"
-              icon="pi pi-download mr-2"
-              class="p-button-help"
-              @click="exportCSV($event)"
-            />
-          </template>
-        </Toolbar>
-
         <DataTable
           ref="dt"
-          :value="storeProduct.getProducts"
-          v-model:selection="selectedProducts"
+          :value="storeCart.getCart"
           dataKey="id"
-          :paginator="true"
           :rows="10"
           :filters="filters"
-          paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
-          :rowsPerPageOptions="[5, 10, 25]"
-          currentPageReportTemplate="Showing {first} to {last} of {totalRecords} products"
+          :style="{ width: '1000px' }"
           responsiveLayout="scroll"
+          size="small"
         >
           <template #header>
             <div
@@ -206,36 +189,22 @@ const initFilters = () => {
               </span>
             </div>
           </template>
-
-          <Column selectionMode="multiple" headerStyle="width: 3rem"></Column>
-          <Column
-            field="productCode"
-            :header="t('product.code')"
-            :sortable="true"
-            headerStyle="width:14%; min-width:10rem;"
-            :filter="true"
-          >
-            <template #body="slotProps">
-              <span class="p-column-title">{{ t('product.code') }}</span>
-              {{ slotProps.data.productCode }}
-            </template>
-          </Column>
           <Column
             field="productName"
             :header="t('product.productName')"
             :sortable="true"
-            headerStyle="width:14%; min-width:10rem;"
+            headerStyle="width: 100px;  text-align: center"
           >
             <template #body="slotProps">
               <span class="p-column-title">{{ t('product.productName') }}</span>
               {{ slotProps.data.productName }}
             </template>
           </Column>
-          <Column :header="t('product.image')" headerStyle="width:14%; min-width:10rem;">
+          <Column :header="t('product.image')" headerStyle="width: 80px">
             <template #body="slotProps">
               <span class="p-column-title">{{ t('product.image') }}</span>
               <img
-                :src="slotProps.data.productImage"
+                :src="'http://localhost:8085/api/product/images/' + slotProps.data.productImage"
                 :alt="slotProps.data.productImage"
                 class="shadow-2"
                 width="100"
@@ -243,63 +212,41 @@ const initFilters = () => {
             </template>
           </Column>
           <Column
-            field="price"
+            field="productPrice"
             :header="t('product.price')"
             :sortable="true"
-            headerStyle="width:14%; min-width:8rem;"
+            headerStyle="width: 100px"
           >
             <template #body="slotProps">
               <span class="p-column-title">{{ t('product.price') }}</span>
-              {{ formatCurrency(slotProps.data.price) }}
+              {{ slotProps.data.productPrice }}
             </template>
           </Column>
           <Column
-            field="category"
-            :header="t('product.category')"
+            field="quantity"
+            :header="t('product.quantity')"
             :sortable="true"
-            headerStyle="width:14%; min-width:10rem;"
+            headerStyle="width: 100px"
           >
             <template #body="slotProps">
-              <span class="p-column-title">{{ t('product.category') }}</span>
-              {{ slotProps.data.category }}
+              <span class="p-column-title">{{ t('product.quantity') }}</span>
+              {{ slotProps.data.quantity }}
             </template>
           </Column>
           <Column
-            field="rating"
-            :header="t('product.rating')"
+            field="totalPrice"
+            :header="t('product.totalPrice')"
             :sortable="true"
-            headerStyle="width:14%; min-width:10rem;"
+            headerStyle="width: 100px;"
           >
             <template #body="slotProps">
-              <span class="p-column-title">{{ t('product.rating') }}</span>
-              <Rating
-                :modelValue="slotProps.data.average_rating"
-                :readonly="true"
-                :cancel="false"
-              />
+              <span class="p-column-title">{{ t('product.totalPrice') }}</span>
+              {{ slotProps.data.quantity * slotProps.data.productPrice }}
             </template>
           </Column>
-          <Column
-            field="status"
-            :header="t('product.status')"
-            :sortable="true"
-            headerStyle="width:14%; min-width:10rem;"
-          >
+
+          <Column headerStyle="width:10px;">
             <template #body="slotProps">
-              <span class="p-column-title">{{ t('product.status') }}</span>
-              <Tag
-                :value="slotProps.data.status ? slotProps.data.status.toLowerCase() : ''"
-                :severity="getSeverity(slotProps.data)"
-              />
-            </template>
-          </Column>
-          <Column headerStyle="min-width:10rem;">
-            <template #body="slotProps">
-              <Button
-                icon="pi pi-pencil"
-                class="p-button-rounded p-button-success mr-2"
-                @click="editProduct(slotProps.data)"
-              />
               <Button
                 icon="pi pi-trash"
                 class="p-button-rounded p-button-warning mt-2"
@@ -308,142 +255,6 @@ const initFilters = () => {
             </template>
           </Column>
         </DataTable>
-
-        <Dialog
-          v-model:visible="productDialog"
-          :style="{ width: '450px' }"
-          :header="t('product.productDetails')"
-          :modal="true"
-          class="p-fluid"
-        >
-          <div>
-            <img
-              v-if="product.productImage"
-              :src="product.productImage"
-              :alt="product.productImage"
-              width="150"
-              class="mt-0 mx-auto mb-5 block shadow-2"
-            />
-            <FileUpload
-              v-else
-              name="demo[]"
-              @uploader="onUpload($event)"
-              :multiple="true"
-              accept="image/*"
-              :maxFileSize="1000000"
-              customUpload
-            >
-              <template #empty>
-                <p>{{ t('product.dragFile') }}.</p>
-              </template>
-            </FileUpload>
-          </div>
-          <div class="field">
-            <label for="name">{{ t('product.productName') }}</label>
-            <InputText
-              id="name"
-              v-model.trim="product.productName"
-              required="true"
-              autofocus
-              :class="{ 'p-invalid': submitted && !product.productName }"
-            />
-            <small class="p-invalid" v-if="submitted && !product.productName">{{
-              t('product.nameRequired')
-            }}</small>
-          </div>
-          <div class="field">
-            <label for="description">{{ t('product.description') }}</label>
-            <Textarea
-              id="description"
-              v-model="product.description"
-              required="true"
-              rows="3"
-              cols="20"
-            />
-          </div>
-
-          <div class="field">
-            <label for="inventoryStatus" class="mb-3">{{ t('product.inventoryStatus') }}</label>
-            <Dropdown
-              id="inventoryStatus"
-              v-model="product.status"
-              :options="statuses"
-              optionLabel="label"
-              :placeholder="t('product.selectStatus')"
-            >
-              <template #value="slotProps">
-                <div v-if="slotProps.value && slotProps.value.value">
-                  <span :class="'product-badge status-' + slotProps.value.value">{{
-                    slotProps.value.label
-                  }}</span>
-                </div>
-                <div v-else-if="slotProps.value && !slotProps.value.value">
-                  <span :class="'product-badge status-' + slotProps.value.toLowerCase()">{{
-                    slotProps.value
-                  }}</span>
-                </div>
-                <span v-else>
-                  {{ slotProps.placeholder }}
-                </span>
-              </template>
-            </Dropdown>
-          </div>
-
-          <div class="field">
-            <label class="mb-3">{{ t('product.category') }}</label>
-            <div class="formgrid grid">
-              <div
-                class="field-radiobutton col-6"
-                v-for="option in DEFAULT.CATEGORY_OPTION"
-                :key="option.value"
-              >
-                <RadioButton
-                  :id="'category' + option.value"
-                  name="category"
-                  :value="option.value"
-                  v-model="product.category"
-                />
-                <label :for="'category' + option.value">{{ option.label }}</label>
-              </div>
-            </div>
-          </div>
-
-          <div class="formgrid grid">
-            <div class="field col">
-              <label for="price">{{ t('product.price') }}</label>
-              <InputNumber
-                id="price"
-                v-model="product.price"
-                mode="currency"
-                currency="USD"
-                locale="en-US"
-                :class="{ 'p-invalid': submitted && !product.price }"
-                :required="true"
-              />
-              <small class="p-invalid" v-if="submitted && !product.price">{{
-                t('product.priceRequired')
-              }}</small>
-            </div>
-            <div class="field col">
-              <label for="quantity">{{ t('product.quantity') }}</label>
-              <InputNumber id="quantity" v-model="product.quantity" integeronly />
-            </div>
-          </div>
-          <template #footer>
-            <Button
-              :label="t('product.cancel')"
-              icon="pi pi-times mr-2"
-              class="p-button-text"
-              @click="hideDialog"
-            />
-            <Button
-              :label="t('product.save')"
-              icon="pi pi-check mr-2"
-              class="p-button-text"
-              @click="saveProduct"
-            />
-          </template>
-        </Dialog>
 
         <Dialog
           v-model:visible="deleteProductDialog"
@@ -486,7 +297,6 @@ const initFilters = () => {
           <template #footer>
             <Button
               :label="t('product.no')"
-           
               icon="pi pi-times"
               class="p-button-text"
               @click="deleteProductsDialog = false"
@@ -499,6 +309,28 @@ const initFilters = () => {
             />
           </template>
         </Dialog>
+      </div>
+      <div class="">
+        <Card>
+          <template #title> Total invoice </template>
+          <template #content>
+            <InputGroup>
+              <InputGroupAddon>$</InputGroupAddon>
+              <InputNumber placeholder="Enter employee code to receive discount code" />
+              <InputGroupAddon>Code</InputGroupAddon>
+            </InputGroup>
+            <div class="total-price">
+                <div>
+                    <p>Total Price:</p>
+                    <p>DisCount:</p>
+                </div>
+                <div>
+                    <p>32000000 $</p>
+                    <p>10%</p>
+                </div>
+            </div>
+          </template>
+        </Card>
       </div>
     </div>
   </div>
@@ -538,5 +370,33 @@ button.p-button.p-component.p-button-text {
 }
 .p-fileupload-file-thumbnail {
   width: 50% !important;
+}
+span.block.mt-2.md\:mt-0.p-input-icon-left {
+  visibility: hidden;
+}
+.card.order-card {
+  display: flex;
+  justify-content: center;
+}
+.p-card.p-component {
+  width: 1000px;
+  margin: auto;
+  border: 1px solid #e5e7eb;
+  border-width: 0 0 1px 0;
+  padding-top: 20px;
+  padding-left: 20px;
+  padding-bottom: 20px;
+}
+.p-inputgroup {
+  width: 80%;
+  margin: auto;
+}
+.total-price[data-v-db72331a] {
+    display: flex;
+    gap: 100px;
+    width: 1000px;
+    justify-content: center;
+    margin-top: 30px;
+    font-weight: bold;
 }
 </style>

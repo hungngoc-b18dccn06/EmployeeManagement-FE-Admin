@@ -22,7 +22,10 @@ const ProductLang = {
     yes: "Yes",
     new: "Add new Product",
     export:"Export Excel",
-    dragFile: "Drag and drop files to here to upload"
+    dragFile: "Drag and drop files to here to upload",
+    totalprice: 'Total price',
+    lgEcommerce: "LG Ecommerce",
+    totalPrice: "Total Price"
 };
 export default ProductLang;
   
