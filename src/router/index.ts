@@ -8,6 +8,7 @@ import ListEmployee from '@/views/user/ListEmployee.vue';
 import DetailEmployee from '@/views/user/DetailEmployee.vue'
 import ListEcormmerce from '@/views/ecommerce/ListEcommerce.vue'
 import ListOrderVue from '@/views/orderEmployee/ListOrder.vue';
+import OrderDetailVue from '@/views/order/OrderDetail.vue';
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -41,6 +42,11 @@ const router = createRouter({
           path: '/ecommerce_order',
           name: 'ListOrderVue',
           component: ListOrderVue
+        },
+        {
+          path: '/order_detail',
+          name: 'OrderDetailVue',
+          component: OrderDetailVue
         }
         
       ]

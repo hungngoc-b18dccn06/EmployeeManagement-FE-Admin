@@ -88,3 +88,8 @@ export const CREATE_PRODUCT = "/api/product/add";
 export const DELETE_PRODUCT =  (id: number) => `/api/product/delete/${id}`;
 
 
+//AddCart
+export const ADD_TO_CART =  `/api/cart/add`;
+export const LIST_CART_ITEM =  `/api/cart/cart-items`;
+
+

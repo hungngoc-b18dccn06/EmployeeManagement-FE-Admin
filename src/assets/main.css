@@ -202,3 +202,17 @@ img.p-fileupload-file-thumbnail {
   display: flex;
   flex-wrap: wrap;
 }
+
+
+i.pi.pi-shopping-cart.p-overlay-badge {
+  cursor: pointer;
+}
+span.p-badge.p-component.p-badge-danger.mr-2 {
+  top: -7px;
+  left: -10px;
+}
+button.p-button.p-component.go_order{
+  margin: auto !important;
+  margin-top: 30px!important;
+  display: flex;
+}

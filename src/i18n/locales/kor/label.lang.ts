@@ -45,6 +45,9 @@ const LabelLang = {
   scope: "입력 가능 범위: {min} ~ {max}",
   login: "로그인",
   regist_new_mem: "직원 등록",
-  back_login: '로그인으로 돌아가기'
-}
+  back_login: '로그인으로 돌아가기',
+  goToOrder: "주문으로 이동"
+};
+
+>>>>>>> develop
 export default LabelLang;
