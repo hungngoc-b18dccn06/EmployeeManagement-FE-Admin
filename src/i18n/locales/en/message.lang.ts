@@ -60,6 +60,7 @@ const MessageLang = {
     phonePattern: 'Phone number must only contain numbers',
     phoneRequired: 'Phone number is required',
     emailFormat: 'Invalid email format',
+    spacevalidate: "Value cannot contain spaces",
     emailDomain: 'Invalid email domain'
 }
 export default MessageLang;

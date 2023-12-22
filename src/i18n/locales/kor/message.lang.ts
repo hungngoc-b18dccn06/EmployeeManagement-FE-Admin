@@ -55,6 +55,7 @@ const MessageLang =  {
     passwordLowercase: '비밀번호에는 소문자가 하나 이상 포함되어야 합니다',
     passwordNumber: '비밀번호에는 숫자가 하나 이상 포함되어야 합니다',
     passwordSpecialChar: '비밀번호에는 다음 특수 문자 중 하나 이상 포함되어야 합니다: !@#$%^&*',
+    spacevalidate: "값에는 공백이 포함될 수 없습니다.",
     passwordConsecutive: '비밀번호는 연속으로 3자 이상 포함될 수 없습니다',
     passwordLengthMin: '비밀번호는 최소 10자 이상이어야 합니다',
     passwordLengthMax: '비밀번호는 최대 20자를 초과할 수 없습니다',

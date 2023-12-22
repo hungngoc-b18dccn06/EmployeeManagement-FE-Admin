@@ -136,5 +136,6 @@ const UserLang = {
   requiredDataType: "Please enter the type",
   userNotFound: "User not found.",
   userLoading: "Loading users data. Please wait.",
+  phone: "Phone"
 };
 export default UserLang;

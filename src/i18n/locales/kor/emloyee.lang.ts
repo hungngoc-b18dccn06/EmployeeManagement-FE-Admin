@@ -29,6 +29,8 @@ const EmployeeLang = {
     role: '역할',
     phone: '전화번호',
     status: '상태',
+    password:"비밀번호",
+    password_confirm: '비밀번호 확인',
     reload: '재장전하다',
     excelName: '직원 관리',
   };

@@ -7,7 +7,7 @@
               <div class="login-form">
                   <div class="mt-2">
                       <div class="flex w-full my-2 justify-content-center font-bold text-2xl">
-                       Login Page
+                        {{ t('page.login_page') }}
                       </div>
                       <div class="field field-input my-5">
                           <Field name="email" v-slot="{meta: metaField, field, errorMessage}">
@@ -19,7 +19,7 @@
                                   v-bind="field"
                                   type="text"
                                   :class="{'p-invalid': errorMessage && !metaField.valid && metaField.touched}"
-                                  :placeholder="'Email'"
+                                  :placeholder="t('user.emailAdress')"
                                   autocomplete="off"
                               />
                               </div>
@@ -40,7 +40,7 @@
                                   class="w-full"
                                   aria-describedby="password-help"
                                   autocomplete="current-password"
-                                  placeholder="password"
+                                  :placeholder="t('user.emailAdress')"
                                   :type="showPass ? 'text' : 'password'"
                                   />
                                   <i class="pi"
@@ -58,14 +58,14 @@
                     <Toast />
               <Button
                 :disabled="state.loading"
-                :label="('Login')"
+                :label="t('label.login')"
                 class="btn-submit w-full mb-2 p-0"
                 type="submit"
               />
               <router-link
                 :to="PAGE_ROUTE.REGISTER"
                 class="text-color underline font-semibold mt-4"
-                >{{ "Regist new Member" }}</router-link
+                >{{ t('label.regist_new_mem') }}</router-link
               >
             </div>
               </div>
@@ -117,6 +117,7 @@ const { t } = useI18n();
     email: yup
       .string()
       .trim()
+      .matches(/^\S*$/, t('message.spacevalidate'))
       .email(t('message.emailInvalid'))
       .required(t('message.required'))
       .max(100, t('message.maxLength100')),

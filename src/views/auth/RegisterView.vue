@@ -7,17 +7,17 @@
               <div class="login-form">
                   <div class="mt-2 group-regist">
                       <div class="flex w-full my-2 justify-content-center font-bold text-2xl">
-                       Register Page
+                       {{ t('page.register_page') }}
                       </div>
                       <div class="field field-input my-5">
                           <Field name="employeeid" v-slot="{meta: metaField, field, errorMessage}">
                               <div class="p-inputgroup common-group">
-                              <span class ="w-span">EmployeeID: </span>
+                              <span class ="w-span">{{ t('employee.employeeid') }} </span>
                               <InputText
                                   v-bind="field"
+                                  :placeholder="t('employee.employeeid')"
                                   type="text"
                                   :class="{'p-invalid': errorMessage && !metaField.valid && metaField.touched}"
-                                  :placeholder="'EmployeeID'"
                                   autocomplete="off"
                               />
                               </div>
@@ -29,12 +29,12 @@
                       <div class="field field-input my-5">
                           <Field name="email" v-slot="{meta: metaField, field, errorMessage}">
                               <div class="p-inputgroup common-group">
-                              <span class ="w-span">Email: </span>
+                              <span class ="w-span">{{ t('user.emailAdress') }}  </span>
                               <InputText
                                   v-bind="field"
                                   type="text"
                                   :class="{'p-invalid': errorMessage && !metaField.valid && metaField.touched}"
-                                  :placeholder="'Email'"
+                                  :placeholder="t('user.emailAdress')"
                                   autocomplete="off"
                               />
                               </div>
@@ -47,12 +47,13 @@
                           <Field name="password" v-slot="{meta: metaField, field, errorMessage}">
                             <div class="p-inputgroup common-group">
                               <span class = "w-span">
-                                  Password
+                                  {{ t('employee.password') }}
                               </span>
                               <span class="p-input-icon-right w-full">
                                   <InputText
                                   v-bind="field"
                                   class="w-full"
+                                  :placeholder="t('employee.password')"
                                   aria-describedby="password-help"
                                   autocomplete="current-password"
                                   :type="showPass ? 'text' : 'password'"
@@ -68,38 +69,40 @@
                           </Field>
                       </div>
                       <div class="field-input custom-password my-5 pb-1">
-                          <Field name="password_confirm" v-slot="{meta: metaField, field, errorMessage}">
+                        <Field name="password_confirm" v-slot="{meta: metaField, field, errorMessage}">
                             <div class="p-inputgroup common-group">
-                              <span class = "w-span">
-                                  Password Confirm
-                              </span>
-                              <span class="p-input-icon-right w-full">
-                                  <InputText
-                                  v-bind="field"
-                                  class="w-full"
-                                  aria-describedby="password-help"
-                                  autocomplete="current-password"
-                                  :type="showPass ? 'text' : 'password'"
-                                  />
-                                  <i class="pi"
-                                  :class="{'pi-eye': showPass, 'pi-eye-slash': !showPass}"
-                                  @click="showPass = !showPass"></i>  
-                              </span>
-                              </div>
-                              <div class="absolute line-height-1 pt-2">
-                              <small v-if="errorMessage && !metaField.valid && metaField.touched" class="p-error">{{ errorMessage }}</small>
-                              </div>
-                          </Field>
-                      </div>
+                                <span class="w-span">
+                                    {{ t('employee.password_confirm') }}
+                                </span>
+                                <span class="p-input-icon-right w-full">
+                                    <InputText
+                                        v-bind="field"
+                                        class="w-full"
+                                        :placeholder="t('employee.password_confirm')"
+                                        aria-describedby="password-help"
+                                        autocomplete="current-password"
+                                        :type="showConfirmPass ? 'text' : 'password'"
+                                    />
+                                    <i class="pi"
+                                      :class="{'pi-eye': showConfirmPass, 'pi-eye-slash': !showConfirmPass}"
+                                      @click="showConfirmPass = !showConfirmPass"></i>  
+                                </span>
+                            </div>
+                            <div class="absolute line-height-1 pt-2">
+                                <small v-if="errorMessage && !metaField.valid && metaField.touched" class="p-error">{{ errorMessage }}</small>
+                            </div>
+                        </Field>
+                    </div>
+
                       <div class="field field-input my-5">
                           <Field name="employeename" v-slot="{meta: metaField, field, errorMessage}">
                               <div class="p-inputgroup common-group">
-                              <span class ="w-span">Employee Name: </span>
+                              <span class ="w-span">{{ t('employee.employee_name') }}</span>
                               <InputText
                                   v-bind="field"
                                   type="text"
                                   :class="{'p-invalid': errorMessage && !metaField.valid && metaField.touched}"
-                                  :placeholder="'EmployeeName'"
+                                  :placeholder="t('employee.employee_name')"
                                   autocomplete="off"
                               />
                               </div>
@@ -112,12 +115,12 @@
                       <div class="field field-input my-5">
                           <Field name="phone" v-slot="{meta: metaField, field, errorMessage}">
                               <div class="p-inputgroup common-group">
-                              <span class ="w-span">Phone: </span>
+                              <span class ="w-span">{{ t('user.phone') }}</span>
                               <InputText
                                   v-bind="field"
                                   type="text"
                                   :class="{'p-invalid': errorMessage && !metaField.valid && metaField.touched}"
-                                  :placeholder="'Phone'"
+                                  :placeholder="t('user.phone')"
                                   autocomplete="off"
                               />
                               </div>
@@ -130,7 +133,7 @@
                   <div class="flex flex-column align-items-center gap-2 footer mt-2 pb-1">
               <Button
                 :disabled="state.loading"
-                :label="('Regist')"
+                :label="t('label.regist_new_mem')"
                 class="btn-submit w-full mb-2 p-0"
                 type="submit"
               />
@@ -138,7 +141,7 @@
               <router-link
                 :to="PAGE_ROUTE.LOGIN"
                 class="text-color underline font-semibold mt-4"
-                >{{ "Back to Login" }}</router-link
+                >{{ t('label.back_login') }}</router-link
               >
             </div>
               </div>
@@ -171,7 +174,8 @@
   const submitted = ref(false);
   const showPass = ref(false);
   const toast = useToast();
-  
+  const showConfirmPass = ref(false);
+
   const { t } = useI18n();
   onMounted(() => {
     localStorage.removeItem(ACCESS_TOKEN);
@@ -182,6 +186,8 @@
   const schema = yup.object({
     employeeid: yup
       .string()
+      .trim()
+      .matches(/^\S*$/, t('message.spacevalidate'))
       .min(4, t('message.idLength'))
       .required(t('message.idRequired')),
     password: yup
@@ -207,24 +213,22 @@
       .required(t('message.nameRequired')),
     phone: yup
       .string()
+      .trim()
+      .matches(/^\S*$/, 'Phone cannot contain spaces')
       .matches(/^[0-9]+$/, t('message.phonePattern'))
       .required(t('message.phoneRequired')),
-    // email: yup
-    //   .string()
-    //   .trim()
-    //   .matches(
-    //   /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/,
-    //   'Invalid email format'
-    // )
-    //   .required(t('message.required'))
-    //   .oneOf(['naver.com', 'daum.net', 'gmail.com', 'nate.com', 'hotmail.com'], t('message.emailDomain')),
-      email: yup
+
+    email: yup
       .string()
       .trim()
       .required(t('message.required'))
       .email(t('message.emailInvalid'))
-      // .oneOf(['naver.com', 'daum.net', 'gmail.com', 'nate.com', 'hotmail.com'], t('message.emailDomain'))
-      .max(100, t('message.maxLength100')),  
+      .matches(
+        /@(naver\.com|daum\.net|gmail\.com|nate\.com|hotmail\.com)$/,
+        t('message.emailDomain')
+      )
+      .max(100, t('message.maxLength100')),
+
   });
 
   const {resetForm, values, errors, handleSubmit} = useForm({
@@ -238,11 +242,22 @@
       password_confirm: ""
     },
   });
+  const cleanData = (data) => {
+  return Object.keys(data).reduce((acc, key) => {
+    if (typeof data[key] === 'string') {
+      acc[key] = data[key].trim().replace(/\s+/g, '');
+    } else {
+      acc[key] = data[key];
+    }
+    return acc;
+  }, {});
+};
   
   const handleSubmitForm = handleSubmit(async (data) => {
+  const cleanedData = cleanData(data);
   submitted.value = true;
   const user = {
-    ...data,
+    ...cleanedData,
   };
   state.loading = true;
   try {
@@ -270,7 +285,7 @@
   
   <style lang="scss" scoped>
   .w-span{
-    width: 100px
+    width: 110px
   }
   .field-input{
     margin: auto;

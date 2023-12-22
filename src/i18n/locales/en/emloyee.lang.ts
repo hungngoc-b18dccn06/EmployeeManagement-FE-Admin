@@ -30,7 +30,8 @@ const EmployeeLang = {
   status: 'Status',
   excelName: 'Employee Management',
   reload: 'Reload',
-  
+  password:"password",
+    password_confirm: 'password confirm',
   };
   export default EmployeeLang;
   
