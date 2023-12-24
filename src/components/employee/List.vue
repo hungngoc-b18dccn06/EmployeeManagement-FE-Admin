@@ -322,6 +322,8 @@ const clearInput = (inputName: any) => {
 onMounted(
     () => {
         storeUser.getListUser();
+        storeUser.getProfileDetail();
+        console.log(storeUser)
     }
 )
 </script>

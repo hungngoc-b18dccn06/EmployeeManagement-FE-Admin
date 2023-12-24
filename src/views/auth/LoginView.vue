@@ -13,7 +13,7 @@
                           <Field name="email" v-slot="{meta: metaField, field, errorMessage}">
                               <div class="p-inputgroup">
                               <span class="p-inputgroup-addon">
-                                  <i class="pi pi-envelope"></i>
+                                  <i :class="[errorMessage && !metaField.valid && metaField.touched ? 'pi pi-envelope p-invalid-icon' : 'pi pi-envelope']"></i>
                               </span>
                               <InputText
                                   v-bind="field"
@@ -37,10 +37,10 @@
                               <span class="p-input-icon-right w-full">
                                   <InputText
                                   v-bind="field"
-                                  class="w-full"
+                                  :class="{'w-full p-invalid': errorMessage && !metaField.valid && metaField.touched}"
                                   aria-describedby="password-help"
                                   autocomplete="current-password"
-                                  :placeholder="t('user.emailAdress')"
+                                  :placeholder="t('employee.password')"
                                   :type="showPass ? 'text' : 'password'"
                                   />
                                   <i class="pi"
@@ -123,8 +123,8 @@ const { t } = useI18n();
       .max(100, t('message.maxLength100')),
     password: yup
       .string()
-      .matches(CONST.REGEX_PASSWORD, t('message.passwordInvalid'))
       .required(t('message.required'))
+      .matches(CONST.REGEX_PASSWORD, t('message.passwordInvalid'))
   });
   
   const {resetForm, values, errors, handleSubmit} = useForm({
@@ -275,5 +275,9 @@ const { t } = useI18n();
       height: 100vh;
       min-height: 700px;
   }
+  .flex.w-full.my-2.justify-content-center.font-bold.text-2xl {
+   
+    font-size: 30px !important;
+}
   </style>
   

@@ -67,7 +67,6 @@ export const useCartItemStore = defineStore({
   actions: {
     async getListCart() {
         const listCart = await api.get(ApiConstant.LIST_CART_ITEM);
-        console.log(listCart)
         this.cart = listCart.data;
     },
 

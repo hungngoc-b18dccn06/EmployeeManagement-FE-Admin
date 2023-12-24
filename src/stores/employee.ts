@@ -63,7 +63,7 @@ interface UserStore {
     
 }
 export const useUserStore = defineStore({
-    id: "user",
+    id: "employee",
     state: (): UserStore =>{
         return {
             profile: {
@@ -114,7 +114,8 @@ export const useUserStore = defineStore({
             role: (DEFAULT.USER_ROLE.find(el => el.value == e.role) ?? DEFAULT.USER_ROLE[0]).label,
         }))),
         getFormUser: (state => state.formUser),
-        getFilterValue: (state => state.filterValue)
+        getFilterValue: (state => state.filterValue),
+        getRole: (state => state.profile.role),
     },
     actions:{
         async getListUser(page) {
@@ -155,6 +156,7 @@ export const useUserStore = defineStore({
                 };
                     const response = await api.get(ApiConstant.GET_PROFILE, {headers});
                     this.profile = response.data;
+                    return response
               } catch (err) {
                 console.log(err);
               }

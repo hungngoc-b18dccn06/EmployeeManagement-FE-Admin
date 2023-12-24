@@ -1,6 +1,6 @@
 <script setup>
 import { FilterMatchMode } from 'primevue/api'
-import { ref, onMounted, onBeforeMount, watch } from 'vue'
+import { ref, onMounted, onBeforeMount, watch, computed } from 'vue'
 import FileUpload from 'primevue/fileupload'
 import Toolbar from 'primevue/toolbar'
 import { useToast } from 'primevue/usetoast'
@@ -91,7 +91,7 @@ const saveProduct = async () => {
   productDialog.value = false
 }
 const onUpload = (event) => {
-  console.log(event)
+
   producImage.value = event.files
 }
 const editProduct = (editProduct) => {
@@ -118,7 +118,15 @@ const deleteProduct = async (id) => {
   closeModal()
   router.push({ path: PAGE_ROUTE.USER_LIST })
 }
+const loading = ref(false)
 
+const load = () => {
+  loading.value = true
+  setTimeout(() => {
+    loading.value = false
+  }, 2000)
+}
+const selectedMethod = ref()
 const findIndexById = (id) => {
   let index = -1
   for (let i = 0; i < products.value.length; i++) {
@@ -147,7 +155,6 @@ const confirmDeleteSelected = () => {
   deleteProductsDialog.value = true
 }
 const deleteSelectedProducts = (e) => {
-  console.locale(e)
   products.value = products.value.filter((val) => !selectedProducts.value.includes(val))
 
   deleteProductsDialog.value = false
@@ -159,8 +166,12 @@ const initFilters = () => {
   filters.value = {
     global: { value: null, matchMode: FilterMatchMode.CONTAINS }
   }
-  console.log(filters.value)
 }
+const totalAmount = computed(() => {
+  return storeCart.getCart.reduce((total, product) => {
+    return total + product.quantity * product.productPrice
+  }, 0)
+})
 </script>
 
 <template>
@@ -249,7 +260,7 @@ const initFilters = () => {
             <template #body="slotProps">
               <Button
                 icon="pi pi-trash"
-                class="p-button-rounded p-button-warning mt-2"
+                class="p-button-rounded mt-2"
                 @click="confirmDeleteProduct(slotProps.data)"
               />
             </template>
@@ -315,20 +326,45 @@ const initFilters = () => {
           <template #title> Total invoice </template>
           <template #content>
             <InputGroup>
-              <InputGroupAddon>$</InputGroupAddon>
+              
               <InputNumber placeholder="Enter employee code to receive discount code" />
               <InputGroupAddon>Code</InputGroupAddon>
             </InputGroup>
             <div class="total-price">
-                <div>
-                    <p>Total Price:</p>
-                    <p>DisCount:</p>
+              <div>
+                <p>DisCount:</p>
+                <p>Total Price:</p>
+                <p class="mt-3">Payment method</p>
+              </div>
+              <div>
+                <p>10%</p>
+                <p>{{ totalAmount * 0.9 }} $</p>
+                <div class="card flex justify-content-center mt-3">
+                  <div class="card flex justify-content-center">
+                    <div class="flex flex-column gap-3">
+                      <div class="flex align-items-center">
+                        <RadioButton v-model="selectedMethod" inputId="momo" value="momo" />
+                        <img src="../../assets/img/momo.webp" class="momo-wallet" />
+                        <label for="momo">Momo E-wallet</label>
+                      </div>
+                      <div class="flex align-items-center">
+                        <RadioButton v-model="selectedMethod" inputId="cod" value="cod" />
+                        <img src="../../assets/img/code.png" class="cod-wallet" />
+                        <label for="cod" class="ml-2">Cash on delivery</label>
+                      </div>
+                    </div>
+                  </div>
                 </div>
-                <div>
-                    <p>32000000 $</p>
-                    <p>10%</p>
-                </div>
+              </div>
             </div>
+            <Button
+              type="button"
+              label="Tap To Pay"
+              icon="pi pi-credit-card mr-2"
+              :loading="loading"
+              @click="load"
+              class="payment"
+            />
           </template>
         </Card>
       </div>
@@ -392,11 +428,32 @@ span.block.mt-2.md\:mt-0.p-input-icon-left {
   margin: auto;
 }
 .total-price[data-v-db72331a] {
-    display: flex;
-    gap: 100px;
-    width: 1000px;
-    justify-content: center;
-    margin-top: 30px;
-    font-weight: bold;
+  display: flex;
+  gap: 100px;
+  width: 1000px;
+  justify-content: center;
+  margin-top: 30px;
+  font-weight: bold;
+}
+button.p-button.p-component.p-button-icon-only.p-button-rounded.mt-2 {
+  background: #fff;
+  color: black;
+  border: 0.5px solid #c8b4b4;
+}
+.payment {
+  display: flex;
+  text-align: center;
+  justify-content: center;
+  margin: auto;
+  margin-top: 40px;
+}
+img.momo-wallet {
+  width: 50px;
+  margin-left: 2px;
+  margin-right: 16px;
+}
+img.cod-wallet {
+  width: 50px;
+  margin-left: 9px;
 }
 </style>
