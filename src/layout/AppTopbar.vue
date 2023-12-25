@@ -28,7 +28,7 @@
               <Button
             type="button"
             icon="pi pi-user mr-2"
-            :label="userStore.getProfile.employeename ?? ''"
+            :label="userStore.getName ?? ''"
             @click="toggle"
             class="p-button-text shadow-none"
             aria-haspopup="true"
@@ -102,6 +102,7 @@ const editProfile = () =>{
   console.log(userStore.getProfile)
   router.push(`/profile`);
 }
+const nameE = userStore.getProfile.employeename ;
 const items = ref([
   {
     items: [

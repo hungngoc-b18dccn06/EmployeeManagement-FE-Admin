@@ -39,18 +39,23 @@ const schema = yup.object({
 const { errors, validate } = useForm({
   validationSchema: schema
 })
+const handleSubmit = () =>{
+  modal.value?.open()
+}
 const updateProfile = async () => {
   try {
     closeModal()
-    const res = await storeProfile.updateProfile(storeUser.getProfile)
+    const res = await storeUser.updateProfile(storeUser.getProfile)
+    console.log(res)
     toast.add({
       group: 'message',
       severity: 'success',
-      summary: res.data.message,
+      summary: res.data,
       life: CONST.TIME_DELAY,
       closable: false
     })
-    await storeProfile.updateProfile(storeUser.getProfile)
+    storeUser.getProfileDetail()
+
     router.push({ path: PAGE_ROUTE.USER_LIST })
   } catch (e: any) {
     closeModal()
@@ -133,6 +138,7 @@ const closeModal = () => {
                 :placeholder="t('employee.employeeid')"
                 v-bind="field"
                 :modelValue="value"
+                disabled="true"
               />
             </div>
             <ErrorMessage class="subtext p-error absolute pt-1" name="employeeid" />
@@ -184,6 +190,7 @@ const closeModal = () => {
                       v-bind="field"
                       :value="ele.value"
                       :modelValue="value"
+                      :disabled="storeUser.getRole != 3"
                     />
                     <span class="px-2">{{ ele.label }}</span>
                   </label>
@@ -216,6 +223,7 @@ const closeModal = () => {
                       v-bind="field"
                       :value="ele.value"
                       :modelValue="value"
+                      :disabled="storeUser.getRole != 3"
                     />
                     <span class="px-2">{{ ele.label }}</span>
                   </label>
