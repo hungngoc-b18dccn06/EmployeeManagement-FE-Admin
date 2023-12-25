@@ -216,3 +216,7 @@ button.p-button.p-component.go_order{
   margin-top: 30px!important;
   display: flex;
 }
+
+button.p-button.p-component.btn-cancel.p-button-secondary.mx-3 {
+  color: #fff;
+}

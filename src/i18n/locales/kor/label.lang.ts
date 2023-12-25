@@ -48,6 +48,4 @@ const LabelLang = {
   back_login: '로그인으로 돌아가기',
   goToOrder: "주문으로 이동"
 };
-
->>>>>>> develop
 export default LabelLang;

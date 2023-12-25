@@ -67,7 +67,7 @@ export const USER_REGISTER = (urlPrefix: string) =>
 export const SEND_MAIL_RESET_PASSWORD = "api/auth/password/email";
 
 export const GET_PROFILE =  "/api/employee/current-employee";
-export const UPDATE_PROFILE = "/api/auth/profile"
+export const UPDATE_PROFILE = "/api/employee/update-profile"
 export const GET_LIST_USER =  "/api/users";
 export const GET_DETAIL_USER = (id: number) => `/api/users/${id}`;
 

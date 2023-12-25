@@ -54,13 +54,16 @@ const hideDialog = () => {
 }
 
 const getSeverity = (product) => {
-  switch (product.inventoryStatus) {
+  switch (product.status) {
     case 'INSTOCK':
-      return 1
+      return 'success'
+
     case 'LOWSTOCK':
-      return 2
+      return 'warning'
+
     case 'OUTOFSTOCK':
-      return 3
+      return 'danger'
+
     default:
       return null
   }

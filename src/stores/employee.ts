@@ -59,11 +59,12 @@ interface UserStore {
     paramSearch: ParamsSearch,
     pagination: Pagination,
     formUser: FormEmployee,
+    current_name: String;
     filterValue: filterValue
     
 }
 export const useUserStore = defineStore({
-    id: "user",
+    id: "employee",
     state: (): UserStore =>{
         return {
             profile: {
@@ -102,7 +103,8 @@ export const useUserStore = defineStore({
                 role: null ,
                 startDate: null,
                 endDate: null,
-            }
+            },
+            current_name: ''
         }
     },
     getters:{
@@ -114,7 +116,9 @@ export const useUserStore = defineStore({
             role: (DEFAULT.USER_ROLE.find(el => el.value == e.role) ?? DEFAULT.USER_ROLE[0]).label,
         }))),
         getFormUser: (state => state.formUser),
-        getFilterValue: (state => state.filterValue)
+        getFilterValue: (state => state.filterValue),
+        getRole: (state => state.profile.role),
+        getName: (state => state.current_name),
     },
     actions:{
         async getListUser(page) {
@@ -155,6 +159,8 @@ export const useUserStore = defineStore({
                 };
                     const response = await api.get(ApiConstant.GET_PROFILE, {headers});
                     this.profile = response.data;
+                    this.current_name = response.data.employeename;
+                    return response
               } catch (err) {
                 console.log(err);
               }
@@ -198,6 +204,15 @@ export const useUserStore = defineStore({
             } catch (error) {
                 console.error('Error downloading file:', error);       
             }
-        }
+        },
+
+        async updateProfile(data: Employee) {
+            try {
+            const res = await api.put(ApiConstant.UPDATE_PROFILE, data);
+            return res
+            } catch (err) {
+                console.log(err);
+            }
+        },
     }
 })

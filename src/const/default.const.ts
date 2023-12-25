@@ -7,6 +7,10 @@ export const USER_ROLE = [
         label: 'Member',
         value: 2,
     },
+    {
+      label: 'Admin',
+      value: 3,
+  },
 ];
 export const STATUS_ITEM = [
     {
