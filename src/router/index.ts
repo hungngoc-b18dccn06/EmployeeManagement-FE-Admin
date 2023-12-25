@@ -7,8 +7,6 @@ import LayoutViewVue from '@/views/LayoutView.vue';
 import ListEmployee from '@/views/user/ListEmployee.vue';
 import DetailEmployee from '@/views/user/DetailEmployee.vue';
 import ListEcormmerce from '@/views/ecommerce/ListEcommerce.vue';
-import ListOrderVue from '@/views/orderEmployee/ListOrder.vue';
-import OrderDetailVue from '@/views/order/OrderDetail.vue';
 import { useUserStore } from '@/stores/employee';
 import PageNotFoundVue from '@/views/PageNotFound.vue';
 import ProfileVue from '@/views/Profile.vue';
@@ -42,18 +40,6 @@ const router = createRouter({
           path: '/ecommerce_manage',
           name: 'ListEcormmerce',
           component: ListEcormmerce,
-          meta: { requiresAuth: true, roles: [3] }
-        },
-        {
-          path: '/ecommerce_order',
-          name: 'ListOrderVue',
-          component: ListOrderVue,
-          meta: { requiresAuth: true, roles: [3] }
-        },
-        {
-          path: '/order_detail',
-          name: 'OrderDetailVue',
-          component: OrderDetailVue,
           meta: { requiresAuth: true, roles: [3] }
         },
         {

@@ -208,7 +208,7 @@ i.pi.pi-shopping-cart.p-overlay-badge {
   cursor: pointer;
 }
 span.p-badge.p-component.p-badge-danger.mr-2 {
-  top: -7px;
+  top: -20px;
   left: -10px;
 }
 button.p-button.p-component.go_order{
@@ -219,4 +219,12 @@ button.p-button.p-component.go_order{
 
 button.p-button.p-component.btn-cancel.p-button-secondary.mx-3 {
   color: #fff;
+}
+
+button.p-button.p-component.btn-cancel.p-button-secondary.mx-3 {
+  color: #fff;
+}
+
+span.p-dropdown-label.p-inputtext {
+  padding: 7px;
 }

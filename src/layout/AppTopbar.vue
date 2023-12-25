@@ -20,7 +20,7 @@
                 </div>
                 <Dropdown v-if="showDropdown" v-model="selectedLanguage" :options="OPTION_LANGUAGE" option-label="label" @change="changeLanguage(selectedLanguage.value)">
                   <template #option="{ option }">
-                    <img :src="option.imgSrc" alt="" class="img-language" style="height: 35px; width: 40px;">
+                    <img :src="option.imgSrc" alt="" class="img-language" style="height: 25px; width: 40px;">
                     {{ option.label }}
                   </template>
                 </Dropdown>
@@ -167,7 +167,7 @@ onMounted(
 img.img-language {
     width: 30px;
     height: 30px;
-    border-radius: 50%;
+
 }
 .p-selectbutton.p-buttonset.p-component{
   border: 1px solid #2B9DCA;
@@ -230,5 +230,8 @@ button.p-button.p-component.p-button-icon-only.p-button-text.p-button-rounded.sh
 }
 button.p-button.p-component.p-button-text.shadow-none {
     color: #fff;
+}
+span.p-dropdown-label.p-inputtext {
+    padding: 8px !important;
 }
 </style>
