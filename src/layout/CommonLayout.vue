@@ -66,17 +66,6 @@ const menuItems = computed(() => {
           },
         ],
       },
-      {
-        items: [
-          {
-            label: t('menu.employee_order'),
-            icon: "pi pi-shopping-cart",
-            to: PAGE_ROUTE.EMPLOYEE_ORDER,
-            public: false,
-          },
-        ],
-      },
-  
   ];
 });
 const toggleSidebar = () => {
