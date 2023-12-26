@@ -1,19 +1,12 @@
 <script setup>
 import { FilterMatchMode } from 'primevue/api'
 import { ref, onMounted, onBeforeMount, watch, computed } from 'vue'
-import FileUpload from 'primevue/fileupload'
-import Toolbar from 'primevue/toolbar'
 import { useToast } from 'primevue/usetoast'
-import Rating from 'primevue/rating'
-import Tag from 'primevue/tag'
 import CONST, { AppConstant, DEFAULT } from '@/const'
 import { useProductStore } from '@/stores/product'
 import PAGE_ROUTE from '@/const/pageRoute'
 import { useI18n } from 'vue-i18n'
 import { useCartItemStore } from '@/stores/cart'
-
-import InputGroup from 'primevue/inputgroup'
-import InputGroupAddon from 'primevue/inputgroupaddon'
 
 const storeCart = useCartItemStore()
 const toast = useToast()
@@ -27,11 +20,7 @@ const selectedProducts = ref(null)
 const dt = ref(null)
 const filters = ref({})
 const submitted = ref(false)
-const statuses = ref([
-  { label: 'INSTOCK', value: 1 },
-  { label: 'LOWSTOCK', value: 2 },
-  { label: 'OUTOFSTOCK', value: 3 }
-])
+
 const storeProduct = useProductStore()
 const producImage = ref()
 
@@ -136,19 +125,6 @@ const findIndexById = (id) => {
     }
   }
   return index
-}
-
-const createId = () => {
-  let id = ''
-  const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
-  for (let i = 0; i < 5; i++) {
-    id += chars.charAt(Math.floor(Math.random() * chars.length))
-  }
-  return id
-}
-
-const exportCSV = () => {
-  dt.value.exportCSV()
 }
 
 const confirmDeleteSelected = () => {
@@ -320,53 +296,6 @@ const totalAmount = computed(() => {
             />
           </template>
         </Dialog>
-      </div>
-      <div class="">
-        <Card>
-          <template #title> Total invoice </template>
-          <template #content>
-            <InputGroup>
-              
-              <InputNumber placeholder="Enter employee code to receive discount code" />
-              <InputGroupAddon>Code</InputGroupAddon>
-            </InputGroup>
-            <div class="total-price">
-              <div>
-                <p>DisCount:</p>
-                <p>Total Price:</p>
-                <p class="mt-3">Payment method</p>
-              </div>
-              <div>
-                <p>10%</p>
-                <p>{{ totalAmount * 0.9 }} $</p>
-                <div class="card flex justify-content-center mt-3">
-                  <div class="card flex justify-content-center">
-                    <div class="flex flex-column gap-3">
-                      <div class="flex align-items-center">
-                        <RadioButton v-model="selectedMethod" inputId="momo" value="momo" />
-                        <img src="../../assets/img/momo.webp" class="momo-wallet" />
-                        <label for="momo">Momo E-wallet</label>
-                      </div>
-                      <div class="flex align-items-center">
-                        <RadioButton v-model="selectedMethod" inputId="cod" value="cod" />
-                        <img src="../../assets/img/code.png" class="cod-wallet" />
-                        <label for="cod" class="ml-2">Cash on delivery</label>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <Button
-              type="button"
-              label="Tap To Pay"
-              icon="pi pi-credit-card mr-2"
-              :loading="loading"
-              @click="load"
-              class="payment"
-            />
-          </template>
-        </Card>
       </div>
     </div>
   </div>

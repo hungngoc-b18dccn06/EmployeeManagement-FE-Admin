@@ -14,11 +14,11 @@ export const USER_ROLE = [
 ];
 export const STATUS_ITEM = [
     {
-      label: 'Active',
+      label: 'EMPLOYEE_STATUS',
       value: 1,
     },
     {
-      label: 'Inactive',
+      label: 'PROJECT_STATUS',
       value: 0,
     },
 ];

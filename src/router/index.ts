@@ -37,7 +37,7 @@ const router = createRouter({
           meta: { requiresAuth: true, roles: [3] }
         },
         {
-          path: '/ecommerce_manage',
+          path: '/products_manage',
           name: 'ListEcormmerce',
           component: ListEcormmerce,
           meta: { requiresAuth: true, roles: [3] }

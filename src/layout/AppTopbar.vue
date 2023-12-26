@@ -16,7 +16,7 @@
           <div class="card flex justify-content-center header-profile">
               <div>
                 <div @click="showDropdown = !showDropdown" class="img-language-container">
-                  <img :src="selectedLanguage.imgSrc" alt="" class="img-language" style="height: 35px; width: 35px;">
+                  <img :src="selectedLanguage.imgSrc" alt="" class="img-language" style="height: 35px; width: 50px;">
                 </div>
                 <Dropdown v-if="showDropdown" v-model="selectedLanguage" :options="OPTION_LANGUAGE" option-label="label" @change="changeLanguage(selectedLanguage.value)">
                   <template #option="{ option }">
