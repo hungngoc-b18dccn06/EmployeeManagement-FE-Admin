@@ -6,8 +6,8 @@ import RegisterViewVue from '@/views/auth/RegisterView.vue';
 import LayoutViewVue from '@/views/LayoutView.vue';
 import ListEmployee from '@/views/user/ListEmployee.vue';
 import DetailEmployee from '@/views/user/DetailEmployee.vue';
+import OrderList from '@/views/order/ListOrder.vue';
 import ListEcormmerce from '@/views/ecommerce/ListEcommerce.vue';
-import { useUserStore } from '@/stores/employee';
 import PageNotFoundVue from '@/views/PageNotFound.vue';
 import ProfileVue from '@/views/Profile.vue';
 const router = createRouter({
@@ -46,6 +46,11 @@ const router = createRouter({
           path: '/profile',
           name: 'profile',
           component: ProfileVue,      
+        },
+        {
+          path: '/orders_manage',
+          name: 'order',
+          component: OrderList,      
         }
       ]
     },
