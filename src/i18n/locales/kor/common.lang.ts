@@ -1,6 +1,6 @@
 const CommonLang = {
   search: "검색",
-  required: "이름",
+  required: "필수의",
   no: "아니요",
   yes: "예",
   confirm: "확인",

@@ -33,6 +33,9 @@ const EmployeeLang = {
     password_confirm: '비밀번호 확인',
     reload: '재장전하다',
     excelName: '직원 관리',
+    created_at: "생성_시간",
+    createdAt: "생성_시간",
+    date_of_birth: "생일"
   };
   export default EmployeeLang;
   

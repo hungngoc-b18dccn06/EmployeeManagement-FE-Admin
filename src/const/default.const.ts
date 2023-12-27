@@ -14,25 +14,16 @@ export const USER_ROLE = [
 ];
 export const STATUS_ITEM = [
     {
-      label: 'EMPLOYEE_STATUS',
+      label: 'Active',
       value: 1,
     },
     {
-      label: 'PROJECT_STATUS',
+      label: 'Inactive',
       value: 0,
     },
 ];
 
-export const DATE_ITEM = [
-    {
-      label: '시작일',
-      value: 'created_at',
-    },
-    {
-      label: '생일',
-      value: 'date_of_birth',
-    },
-];
+
 export const EXPORT_TYPE = {
     CSV: 1,
     EXCEL_APPLICATION: 2,

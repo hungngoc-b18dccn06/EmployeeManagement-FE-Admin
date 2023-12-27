@@ -121,11 +121,12 @@ export const useUserStore = defineStore({
     actions:{
         async getListUser(page) {
             const currentPage = page == null ? 0 : page - 1 ;
+            console.log(currentPage)
 
             const requestData = {
                 filterValue: this.filterValue,
                 sort: "",
-                pageSize: 10 ?? this.pagination.total,
+                pageSize: 10 ?? this.pagination.total ,
                 pageIndex: currentPage,
                 ... this.paramSearch
               };
@@ -135,7 +136,8 @@ export const useUserStore = defineStore({
             
             this.users = listUser.data.content.map(e => ({
                 ...e,
-                status: e.status === 1 ? "active" : e.status === 0 ? "inactive" : e.status
+                status: e.status === 1 ? "active" : e.status === 0 ? "inactive" : e.status,
+                createdAt: new Date(e.createdAt).toISOString().split('T')[0],
             }));
             
             this.pagination = {
@@ -211,6 +213,12 @@ export const useUserStore = defineStore({
             } catch (err) {
                 console.log(err);
             }
+        },
+
+        async deleteUser(id: number) {
+            const res = await api.delete<any>(ApiConstant.DELETE_EMPLOYEE(id));
+            this.getListUser();
+            return res;
         },
     }
 })

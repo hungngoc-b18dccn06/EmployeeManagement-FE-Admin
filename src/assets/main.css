@@ -125,7 +125,7 @@ span.p-column-title {
 /* ----- Form */
 .title-field {
   font-weight: bold;
-  margin-left: 20px;
+  margin-left: 5px;
   font-size: 1rem;
 }
 
@@ -227,4 +227,11 @@ button.p-button.p-component.btn-cancel.p-button-secondary.mx-3 {
 
 span.p-dropdown-label.p-inputtext {
   padding: 7px;
+}
+.required_label {
+  color: red;
+  font-size: 30px;
+  position: absolute;
+  top: 5px;
+  left: 100px;
 }

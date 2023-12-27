@@ -315,7 +315,7 @@ const clickToHome = () => {
 }
 
 .required:after {
-    content: "必須";
+    content: "필수의";
     background-color: red;
     padding: 3px;
     margin-left: 0.5em;

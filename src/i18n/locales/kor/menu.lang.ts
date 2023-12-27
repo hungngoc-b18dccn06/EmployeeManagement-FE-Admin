@@ -29,6 +29,7 @@ const MenuLang = {
   employeeList: "직원 목록",
   eCommerce: "제품 관리",
   employee_order: "LG전자상거래",
-  order_Ecommerce: "LG 매지먼트 주문"
+  order_Ecommerce: "LG 매지먼트 주문",
+ 
 };
 export default MenuLang;
