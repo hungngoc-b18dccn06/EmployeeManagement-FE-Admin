@@ -3,9 +3,9 @@ const EmployeeLang = {
   aggregateOutput: "Aggregate Output",
   keywordSearch: "Keyword Search",
   dateItemSelection: "Date Item Selection",
-  selectDateItem: "Please Select",
+  selectDateItem: "Employee Status",
   exist: "Exist",
-  distribution: "Position",
+  distribution: "Role",
   clear: "Clear",
   pageNavigation: "Page Navigation",
   rowsPerPage: "Rows per Page",
@@ -32,6 +32,9 @@ const EmployeeLang = {
   reload: 'Reload',
   password:"password",
     password_confirm: 'password confirm',
+    created_at: "Created at",
+    createdAt: "Created at",
+    date_of_birth: "Date of birth"
   };
   export default EmployeeLang;
   

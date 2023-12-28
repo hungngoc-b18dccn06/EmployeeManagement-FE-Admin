@@ -23,16 +23,7 @@ export const STATUS_ITEM = [
     },
 ];
 
-export const DATE_ITEM = [
-    {
-      label: '시작일',
-      value: 'created_at',
-    },
-    {
-      label: '생일',
-      value: 'date_of_birth',
-    },
-];
+
 export const EXPORT_TYPE = {
     CSV: 1,
     EXCEL_APPLICATION: 2,

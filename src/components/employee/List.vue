@@ -24,7 +24,7 @@
                         <div class="col-3">
                             <div class="p-inputgroup">
                                 <div class="p-inputgroup flex-1">
-                                    <Dropdown v-model="selectedDate" :options="DEFAULT.DATE_ITEM" :placeholder="t('employee.dateItemSelection')"
+                                    <Dropdown v-model="selectedDate" :options="DATE_ITEM" :placeholder="t('employee.dateItemSelection')"
                                         optionLabel="label" class="w-full md:w-14rem" @change="handelSearchType" />
                                     <ButtonClearCommon v-if="selectedDate" :clearInput="() => clearInput('selectedDate')" />
                                 </div>
@@ -49,22 +49,15 @@
                 </div>
                 <div class="mt-2">
                     <span class="text-field-search">{{ t('employee.selectDateItem') }}</span>
-                    <div class="grid align-items-center">
-                        <div class="col-3">
-                            <div class="p-inputgroup">
-                                <Dropdown v-model="flagRadio" :options="DEFAULT.STATUS_ITEM" :placeholder="t('employee.selectDateItem')"
-                                    optionLabel="label" class="w-full md:w-14rem" @change="handelSearchType" />
-                                <ButtonClearCommon v-if="flagRadio" :clearInput="() => clearInput('flagRadio')" />
-                            </div>
-                        </div>
+                    <div class="grid align-items-center">                  
                         <div class="col-3 flex align-items-center">
-                            <div class="px-4">
-                                <RadioButton v-model="flagValue" inputId="ingredient1" :name="t('employee.active')" :disabled="!flagRadio"
+                            <div class="">
+                                <RadioButton v-model="flagValue" inputId="ingredient1" :name="t('employee.active')" 
                                     value = "1" @change="handelChangeFlag" />
                                 <label for="ingredient1" class="ml-2 white-space-nowrap">{{ t('employee.active') }}</label>
                             </div>
                             <div class="px-4">
-                                <RadioButton v-model="flagValue" inputId="ingredient2" :name="t('employee.inactive')" :disabled="!flagRadio"
+                                <RadioButton v-model="flagValue" inputId="ingredient2" :name="t('employee.inactive')" 
                                     value = "0" @change="handelChangeFlag" />
                                 <label for="ingredient2" class="ml-2 white-space-nowrap">{{ t('employee.inactive') }}</label>
                             </div>
@@ -112,9 +105,11 @@
                 <template #footer>
                     <Paginator v-if="storeUser.getPagination.total > 0"
                         :first="(storeUser.getPagination.currentPage) * storeUser.getPagination.perPage"
-                        :rows="storeUser.getPagination.perPage" :totalRecords="storeUser.getPagination.total"
+                        :rows="storeUser.getPagination.perPage" 
+                        :totalRecords="storeUser.getPagination.total"
                         template="CurrentPageReport FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink RowsPerPageDropdown"
-                        :currentPageReportTemplate="AppConstant.CURRENT_PAGE_REPORT_TEMPLATE" @page="changePage">
+                        :currentPageReportTemplate="AppConstant.CURRENT_PAGE_REPORT_TEMPLATE" 
+                        @page="changePage">
                     </Paginator>
                 </template>
             </DataTable>
@@ -124,23 +119,21 @@
     </div>
 </template>
 <script setup lang="ts">
-import { PrimeIcons, FilterMatchMode, FilterOperator } from 'primevue/api';
+import {FilterMatchMode } from 'primevue/api';
 import Paginator from 'primevue/paginator';
 import TitleCommon from "@/components/common/TitleCommon.vue"
 import Popup from "@/components/PopupConfirm.vue";
 import ButtonClearCommon from "@/components/common/ButtonClearCommon.vue";
 import { useUserStore } from "@/stores/employee";
-import FooterCommon from "@/components/common/FooterCommon.vue";
 import { ref, onMounted, watch, computed } from "vue";
-import { useRoute, useRouter } from "vue-router";
+import { useRouter } from "vue-router";
 import CONST, { AppConstant, DEFAULT } from "@/const";
-import { Field, ErrorMessage, useForm } from "vee-validate";
+import { useForm } from "vee-validate";
 import { useToast } from "primevue/usetoast";
 import { useI18n } from "vue-i18n";
 import * as yup from "yup";
-import { number } from "yup";
 import { format } from "date-fns";
-import axios from 'axios';
+
 const router = useRouter();
 const storeUser = useUserStore();
 const idUser = ref(0);
@@ -161,7 +154,20 @@ const columns = ref([
   'role',
   'phone',
   'status',
+  'createdAt'
 ]);
+const DATE_ITEM = computed(() => {
+  return [
+    {
+      label: t('employee.created_at'),
+      value: t('employee.created_at'),
+    },
+    {
+      label:  t('employee.date_of_birth'),
+      value: t('employee.date_of_birth'),
+    },
+];
+});
 
 const translatedColumns = computed(() => {
   return columns.value.map((field) => ({
@@ -215,7 +221,7 @@ const confirm = async () => {
     try {
         closeModal();
         const res = await storeUser.deleteUser(idUser.value);
-        toast.add({ group: "message", severity: "success", summary: res.data.message, life: CONST.TIME_DELAY, closable: false });
+        toast.add({ group: "message", severity: "success", summary: res.data, life: CONST.TIME_DELAY, closable: false });
     } catch (e) {
         console.log(e);
         closeModal();

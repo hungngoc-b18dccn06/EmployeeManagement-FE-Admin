@@ -72,14 +72,14 @@ export const GET_LIST_USER =  "/api/users";
 export const GET_DETAIL_USER = (id: number) => `/api/users/${id}`;
 
 export const UPDATE_USER = (id: number) => `/api/users/${id}`;
-export const DELETE_USER = (id: number) => `/api/users/${id}`;
+
 
 //Employee
 
 export const GET_EMPLOYEE_LIST =  "/api/employee/list";
 export const GET_EMPLOYEE_DETAIL = (id: number) => `/api/employee/${id}`;
-export const GET_DETAIL_TEACHER = (id: number) => `/api/teachers/${id}`;
 export const UPDATE_TEACHER = (id: number) => `/api/teachers/${id}`;
+export const DELETE_EMPLOYEE = (id: number) => `/api/employee/${id}`;
 export const EXPORT_EXCEL =  "/api/employee/export-excel";
 export const EXPORT_CSV =  "/api/employee/export-csv";
 //product

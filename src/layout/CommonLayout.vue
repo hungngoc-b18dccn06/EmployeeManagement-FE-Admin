@@ -61,6 +61,16 @@ const menuItems = computed(() => {
           {
             label: t('menu.eCommerce'),
             icon: "pi pi-shopping-cart",
+            to: PAGE_ROUTE.MANAGE_PRODUCT,
+            public: false,
+          },
+        ],
+      },
+      {
+        items: [
+          {
+            label: t('menu.order_Ecommerce'),
+            icon: "pi pi-shopping-bag",
             to: PAGE_ROUTE.MANAGE_ORDER,
             public: false,
           },
@@ -305,7 +315,7 @@ const clickToHome = () => {
 }
 
 .required:after {
-    content: "必須";
+    content: "필수의";
     background-color: red;
     padding: 3px;
     margin-left: 0.5em;

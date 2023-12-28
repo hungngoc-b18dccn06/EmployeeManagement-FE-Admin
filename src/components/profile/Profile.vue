@@ -55,8 +55,6 @@ const updateProfile = async () => {
       closable: false
     })
     storeUser.getProfileDetail()
-
-    router.push({ path: PAGE_ROUTE.USER_LIST })
   } catch (e: any) {
     closeModal()
   }
@@ -74,9 +72,9 @@ const closeModal = () => {
     <TitleCommon :title="t('page.updateProfile')" />
     <div class="p-4 bg-white border-round-2xl grid mx-0">
     <div class="col-10">
-      <div class="grid mt-3">
+      <div class="grid mt-6">
         <div class="title-card col-4">
-          <label class="title-field mt-2 required">{{t('employee.employee_name')}}</label>
+          <label class="title-field mt-2">{{t('employee.employee_name')}}</label>
         </div>
         <div class="col-4">
           <label class="d-block mb-1 font-weight-bold">{{t('employee.employee_name')}}</label>
@@ -100,7 +98,7 @@ const closeModal = () => {
       </div>
       <div class="grid mt-6">
         <div class="title-card col-4">
-          <label class="title-field inline-block mt-2 required">{{ t('user.emailAdress') }}</label>
+          <label class="title-field inline-block mt-2">{{ t('user.emailAdress') }}</label>
         </div>
         <div class="col-8">
           <Field
@@ -123,7 +121,7 @@ const closeModal = () => {
       </div>
       <div class="grid mt-6">
         <div class="title-card col-4">
-          <label class="title-field inline-block mt-2 required">{{ t('employee.employeeid') }}</label>
+          <label class="title-field inline-block mt-2">{{ t('employee.employeeid') }}</label>
         </div>
         <div class="col-8">
           <Field
@@ -147,7 +145,7 @@ const closeModal = () => {
       </div>
       <div class="grid mt-6">
         <div class="title-card col-4">
-          <label class="title-field inline-block mt-2 required">{{ t('employee.phone') }}</label>
+          <label class="title-field inline-block mt-2">{{ t('employee.phone') }}</label>
         </div>
         <div class="col-8">
           <Field
