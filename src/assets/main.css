@@ -235,3 +235,8 @@ span.p-dropdown-label.p-inputtext {
   top: 5px;
   left: 100px;
 }
+
+.swiper-cube .swiper-slide-active, .swiper-cube .swiper-slide-next, .swiper-cube .swiper-slide-prev{
+  pointer-events: auto;
+  visibility: visible;
+}

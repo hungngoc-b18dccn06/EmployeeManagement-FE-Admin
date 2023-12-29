@@ -188,7 +188,6 @@ const closeModal = () => {
                       v-bind="field"
                       :value="ele.value"
                       :modelValue="value"
-                      :disabled="storeUser.getRole != 3"
                     />
                     <span class="px-2">{{ ele.label }}</span>
                   </label>
@@ -220,8 +219,7 @@ const closeModal = () => {
                     <RadioButton
                       v-bind="field"
                       :value="ele.value"
-                      :modelValue="value"
-                      :disabled="storeUser.getRole != 3"
+                      :modelValue="value"      
                     />
                     <span class="px-2">{{ ele.label }}</span>
                   </label>
