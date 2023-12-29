@@ -19,9 +19,11 @@ const EmployeeLang = {
   active: "Active",
   inactive: "Inactive",
   flagItemLabel: "Employee Status",
+  orderStatus: "Order Status",
   dateItemLabel: "Date Filter",
   userRoleLabel: "Role System",
   employeeid: 'EmployeeID',
+  employeeId: 'EmployeeID',
   employee_name: 'Employee Name',
   employeename: 'Employee Name',
   email: 'Email',
@@ -34,7 +36,11 @@ const EmployeeLang = {
     password_confirm: 'password confirm',
     created_at: "Created at",
     createdAt: "Created at",
-    date_of_birth: "Date of birth"
+    date_of_birth: "Date of birth",
+    cartItemId: "Cart Item ID",
+    methodPayment: "Method Payment",
+    orderDate: "Order Date",
+    totalPrice: "Total Price"
   };
   export default EmployeeLang;
   

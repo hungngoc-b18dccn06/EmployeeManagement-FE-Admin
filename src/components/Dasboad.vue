@@ -266,6 +266,7 @@ onMounted(() => {
 
 .abc {
   margin-bottom: 50px;
+  max-height: 700px;
   /* background-image: radial-gradient(
       circle at 20% 100%,
       rgba(184, 184, 184, 0.1) 0%,

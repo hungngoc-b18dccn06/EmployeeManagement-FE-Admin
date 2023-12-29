@@ -93,3 +93,5 @@ export const ADD_TO_CART =  `/api/cart/add`;
 export const LIST_CART_ITEM =  `/api/cart/cart-items`;
 
 
+//order
+export const GET_ORDER_LIST =  "/api/orders/list";

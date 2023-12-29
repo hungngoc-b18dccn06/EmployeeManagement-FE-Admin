@@ -20,9 +20,11 @@ const EmployeeLang = {
     inactive: "비활성",
     excelLabel: "Excel 출력",
     flagItemLabel: "직원 상태",
+    orderStatus:"주문 상태",
     dateItemLabel: "날짜 필터",
     userRoleLabel: "시스템 역할",
     employeeid: '사원 번호',
+    employeeId: '사원 번호',
     employee_name: '사원 이름',
     employeename: '사원 이름',
     email: '이메일',
@@ -35,7 +37,11 @@ const EmployeeLang = {
     excelName: '직원 관리',
     created_at: "생성_시간",
     createdAt: "생성_시간",
-    date_of_birth: "생일"
+    date_of_birth: "생일",
+    cartItemId: "카트 품목 식별자",
+    methodPayment: "결제 방법",
+    orderDate: "주문 일자",
+    totalPrice: "총 가격"
   };
   export default EmployeeLang;
   

@@ -1,6 +1,7 @@
 const PageTitleLang = {
   userList: "Admin account management",
-  userCreate: "Admin account management / New registration",
+  userCreate: "Admin account management",
+  orderManage: "Order Management",
   userUpdate: "Admin account management / Edit",
   categoryList: "Category management",
   updateProfile:"Update Profile",
