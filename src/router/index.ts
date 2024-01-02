@@ -10,6 +10,7 @@ import OrderList from '@/views/order/ListOrder.vue';
 import ListEcormmerce from '@/views/ecommerce/ListEcommerce.vue';
 import PageNotFoundVue from '@/views/PageNotFound.vue';
 import ProfileVue from '@/views/Profile.vue';
+import UpdateOrder from '@/views/order/UpdateOrder.vue'
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -51,6 +52,11 @@ const router = createRouter({
           path: '/orders_manage',
           name: 'order',
           component: OrderList,      
+        },
+        {
+          path: '/order/:id/detail',
+          name: 'UpdateOrder',
+          component: UpdateOrder,      
         }
       ]
     },
@@ -122,4 +128,3 @@ const router = createRouter({
 // });
 
 export default router;
-

@@ -1,12 +1,12 @@
 <script setup lang="ts">
-    import ListOrder from "../../components/order/ListOrder.vue"
+    import UpdateOrder from "../../components/order/UpdateOrder.vue"
 </script>
 
 <template>
-    <ListOrder>
+    <UpdateOrder>
         <template #main>
             <router-view />
         </template>
-    </ListOrder>
+    </UpdateOrder>
 </template>
 <style lang="scss"></style>

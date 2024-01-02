@@ -95,3 +95,5 @@ export const LIST_CART_ITEM =  `/api/cart/cart-items`;
 
 //order
 export const GET_ORDER_LIST =  "/api/orders/list";
+
+export const UPDATE_STATUS_ORDER = (orderId: number, newStatus :number) =>  `api/orders/update-status/${orderId}/${newStatus}`;

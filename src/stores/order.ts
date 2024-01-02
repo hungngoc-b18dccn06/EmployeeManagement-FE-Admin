@@ -60,7 +60,7 @@ export const useOrderStore = defineStore({
     getParamSearch: (state) => state.paramSearch,
   },
   actions: {
-    async getListOrder(page?: number) {
+    async getListOrder() {
       const listOrder = await api.get(ApiConstant.GET_ORDER_LIST);
      
       const updatedProductList = listOrder.data.map(orders => ({
@@ -72,6 +72,11 @@ export const useOrderStore = defineStore({
     
       this.orders = updatedProductList;
       console.log(this.orders)
+    },
+    async updateStatus(orderId: number, newStatus: number) {
+      const res = await api.put(ApiConstant.UPDATE_STATUS_ORDER(orderId, newStatus));
+      this.getListOrder();
+      return res;
     },
   },
 });
