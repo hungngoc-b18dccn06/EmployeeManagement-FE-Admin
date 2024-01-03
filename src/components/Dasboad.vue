@@ -1,10 +1,11 @@
 <script setup>
 import { onMounted, ref, watch } from 'vue'
 import { useProductStore } from '@/stores/product'
+import { useOrderStore } from '@/stores/order'
 import { useI18n } from 'vue-i18n'
 import Swiper from 'swiper/bundle'
 import Tag from 'primevue/tag'
-
+const storeOrder = useOrderStore();
 const { t } = useI18n()
 const products = ref(null)
 
@@ -44,54 +45,6 @@ const formatCurrency = (value) => {
 onMounted(() => {
   storeProduct.getListProduct()
 })
-const productService = {
-  async getProductsSmall() {
-    try {
-      const data = [
-        {
-          id: '1007',
-          code: 'mbvjkgip5',
-          name: 'Galaxy Earrings',
-          description: 'Product Description',
-          image: '',
-          price: 34,
-          category: 'Accessories',
-          quantity: 23,
-          inventoryStatus: 'INSTOCK',
-          rating: 5
-        },
-        {
-          id: '1008',
-          code: 'vbb124btr',
-          name: 'Game Controller',
-          description: 'Product Description',
-          image: '',
-          price: 99,
-          category: 'Electronics',
-          quantity: 2,
-          inventoryStatus: 'LOWSTOCK',
-          rating: 4
-        },
-        {
-          id: '1009',
-          code: 'cm230f032',
-          name: 'Gaming Set',
-          description: 'Product Description',
-          image: '',
-          price: 299,
-          category: 'Electronics',
-          quantity: 63,
-          inventoryStatus: 'INSTOCK',
-          rating: 3
-        }
-      ]
-
-      products.value = data
-    } catch (error) {
-      console.error('Error fetching products:', error)
-    }
-  }
-}
 
 const getSeverity = (product) => {
   switch (product.status) {
@@ -110,7 +63,7 @@ const getSeverity = (product) => {
 }
 
 onMounted(() => {
-  productService.getProductsSmall()
+  storeOrder.getListOrder();
 })
 </script>
 
@@ -126,7 +79,7 @@ onMounted(() => {
         <div class="flex justify-content-between mb-3">
           <div>
             <span class="block text-500 font-medium mb-3">Orders</span>
-            <div class="text-900 font-medium text-xl">152</div>
+            <div class="text-900 font-medium text-xl">{{ storeOrder.getOrders.length }}</div>
           </div>
           <div
             class="flex align-items-center justify-content-center bg-blue-100 border-round"
@@ -135,7 +88,7 @@ onMounted(() => {
             <i class="pi pi-shopping-cart text-blue-500 text-xl"></i>
           </div>
         </div>
-        <span class="text-green-500 font-medium">24 new </span>
+        <span class="text-green-500 font-medium">{{ storeOrder.getOrders.length }} new </span>
         <span class="text-500">since last visit</span>
       </div>
     </div>
@@ -203,8 +156,8 @@ onMounted(() => {
           :paginator="true"
           responsiveLayout="scroll"
         >
-          <Column style="width: 20%">
-            <template #header> Image </template>
+          <Column style="width: 30%">
+            <template #header> {{ t('product.image') }} </template>
             <template #body="slotProps">
               <img
                 :src="slotProps.data.productImage"
@@ -214,8 +167,8 @@ onMounted(() => {
               />
             </template>
           </Column>
-          <Column field="productName" header="Name" :sortable="true" style="width: 35%"></Column>
-          <Column field="price" header="Price" :sortable="true" style="width: 35%">
+          <Column field="productName" :header="t('product.productName')" :sortable="true" style="width: 35%"></Column>
+          <Column field="price" :header="t('product.price')" :sortable="true" style="width: 35%">
             <template #body="slotProps"> {{ formatCurrency(slotProps.data.price) }} $ </template>
           </Column>
           <Column
