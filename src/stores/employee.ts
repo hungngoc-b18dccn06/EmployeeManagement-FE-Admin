@@ -168,8 +168,7 @@ export const useUserStore = defineStore({
 
         async getUserDetail(id: number) {
             const response = await api.get<any>(ApiConstant.GET_EMPLOYEE_DETAIL(id));
-            this.formUser = response.data;
-            console.log(response);
+            this.formUser = response.data;  
         },
 
         async dowloadEmployee(type : any, name: any, ext: any) {

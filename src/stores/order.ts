@@ -28,6 +28,7 @@ interface OrderStore {
   orders: Order[];
   paramSearch: ParamsSearch;
   pagination: Pagination;
+  getAmount: number,
 }
 
 export const useOrderStore = defineStore({
@@ -53,11 +54,13 @@ export const useOrderStore = defineStore({
       total: 0,
       perPage: 0,
     },
+    getAmount: 0
   }),
   getters: {
     getOrders: (state) => state.orders,
     getPagination: (state) => state.pagination,
     getParamSearch: (state) => state.paramSearch,
+    getAmount: (state) => state.getAmount
   },
   actions: {
     async getListOrder() {
@@ -71,8 +74,9 @@ export const useOrderStore = defineStore({
       }));
     
       this.orders = updatedProductList;
-      console.log(this.orders)
     },
+
+
     async updateStatus(orderId: number, newStatus: number) {
       const res = await api.put(ApiConstant.UPDATE_STATUS_ORDER(orderId, newStatus));
       this.getListOrder();

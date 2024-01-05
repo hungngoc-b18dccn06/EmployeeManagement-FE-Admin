@@ -92,7 +92,7 @@
                     <template #body="slotProps">
                         <Button class="p-button-danger p-button-sm white-space-nowrap" icon="pi pi-trash"
                             v-if="slotProps.data.email !== storeUser.getProfile.email"
-                            @click="deleteUser(slotProps.data.id)" :label="t('common.delete')"></Button>
+                            @click="deleteUser(slotProps.data.id)" ></Button>
                     </template>
                 </Column>
                 <template #empty>

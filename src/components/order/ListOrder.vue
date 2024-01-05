@@ -40,24 +40,6 @@
                         </div>
                     </div>
                 </div>
-                <div class="mt-2">
-                    <span class="text-field-search">{{ t('employee.orderStatus') }}</span>
-                    <div class="grid align-items-center">                  
-                        <div class="col-3 flex align-items-center">
-                            <div class="">
-                                <RadioButton v-model="flagValue" inputId="ingredient1" :name="t('employee.active')" 
-                                    value = "1" @change="handelChangeFlag" />
-                                <label for="ingredient1" class="ml-2 white-space-nowrap">{{ t('employee.active') }}</label>
-                            </div>
-                            <div class="px-4">
-                                <RadioButton v-model="flagValue" inputId="ingredient2" :name="t('employee.inactive')" 
-                                    value = "0" @change="handelChangeFlag" />
-                                <label for="ingredient2" class="ml-2 white-space-nowrap">{{ t('employee.inactive') }}</label>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
                 <div class="reset_search flex justify-content-center align-items-center mt-2">
                     <Button class="p-button-sm white-space-nowrap refresh" icon="pi pi-refresh mr-2" @click="reloadSearch()"
                         :label=" t('employee.reload') ">
